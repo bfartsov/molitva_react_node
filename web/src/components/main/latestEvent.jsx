@@ -2,7 +2,6 @@ import React from "react";
 import img from "../../images/0233622001395215466_20118_600x458.jpg";
 import Event from "../events/event";
 const LatestEvents = ({ events }) => {
-  console.log(events);
   return (
     <section className="latest-event">
       <div className="container">

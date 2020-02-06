@@ -10,6 +10,8 @@ import VideosHomePage from "./VideosHomePage";
 const Main = () => {
   const [events, setEvents] = useState("");
   const [videos, setVideos] = useState("");
+  const [news, setNews] = useState("");
+
   const fetchData = async (url, cb, number) => {
     // const response = await axios.get(url, {
     //   headers: {
@@ -34,10 +36,10 @@ const Main = () => {
     }
   };
   useEffect(() => {
-    fetchData("http://localhost:8080/api/events/filter/4", setEvents);
+    fetchData("http://localhost:8080/api/events/limit/4", setEvents);
     fetchData("http://localhost:8080/api/videos/HomePage", setVideos);
+    fetchData("http://localhost:8080/api/news/limit/2", setNews);
   }, []);
-
   return (
     <div id="main">
       <SermonBox />
@@ -46,7 +48,7 @@ const Main = () => {
       <QuoteMessage />
       <LatestEvents events={events} />
       <VideosHomePage videos={videos} />
-      <News />
+      <News newsHome={news} />
     </div>
   );
 };

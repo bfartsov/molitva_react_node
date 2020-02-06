@@ -37,6 +37,33 @@ router.get(
     }
   }
 );
+// @route  GET api/news/filter/numer
+// @desc   Get sertern number of nuews
+// @access Public
+
+router.get(
+  "/limit/:number",
+
+  async (req, res) => {
+    try {
+      const news = await News.find().limit(+req.params.number);
+      if (news.length === 0) {
+        return res.status(400).json({
+          error: [
+            {
+              msg: "News not found"
+            }
+          ]
+        });
+      }
+
+      res.status(200).json(news);
+    } catch (error) {
+      console.log(error.message);
+      res.json(error.message);
+    }
+  }
+);
 
 // @route  GET api/news/id
 // @desc   Get single news

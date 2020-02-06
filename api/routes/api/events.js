@@ -23,7 +23,7 @@ router.get("/", getEvents);
 // @route  GET api/events/number
 // @desc   Get surgain number of events
 // @access Public
-router.get("/filter/:number", getEventsNumber);
+router.get("/limit/:number", getEventsNumber);
 router.get("/:id", getEvent);
 
 // @route  POST api/events/
