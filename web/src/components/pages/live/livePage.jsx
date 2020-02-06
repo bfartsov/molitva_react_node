@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageTitle from "../../main/pageTittle";
 import JWPlayer from "./jwplayer";
 const LivePage = () => {
+  const [live, setLive] = useState("");
+  const fetchData = async (url, cb, number) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
+        }
+      });
+      const data = await response.json();
+
+      cb(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData("http://localhost:8080/api/live", setLive);
+  }, []);
   return (
     <div id="main">
       <PageTitle title={"На Живо"} />
@@ -12,29 +33,18 @@ const LivePage = () => {
             <div className="col-md-9 col-sm-7">
               <div className="sermon-frame">
                 <div className="sermon-detail-row">
-                  <JWPlayer
-                    id={"1"}
-                    url={
-                      "https://59ce9bf092176.streamlock.net:1935/securestreaming/ngrp:720.sdp_all/playlist.m3u8"
-                    }
-                  />
+                  <JWPlayer id={"1"} url={live.url} />
                 </div>
               </div>
 
               <blockquote>
                 <i className="fa"></i>
                 <p>
-                  <strong>
-                    Всяка регионална молитва ще се излъчва "на живо" по
-                    интернет. Църквите в другите региони, които участват в
-                    инициативата, по същото време ще направят свое молитвено
-                    събрание и чрез телемост ще участват в тази обща регионална
-                    молитвата, в реално време. Така "всички части на Тялото
-                    Христово се молят заеднo", както и за съживление в цяла
-                    България. Всяка година ще провеждаме национална обща
-                    молитва, на която всички - събрани заедно, ще се молим за
-                    съживление.
-                  </strong>
+                  <strong
+                    dangerouslySetInnerHTML={{
+                      __html: live.text
+                    }}
+                  ></strong>
                 </p>
                 <i className="fa"></i>{" "}
               </blockquote>

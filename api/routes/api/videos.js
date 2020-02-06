@@ -56,6 +56,33 @@ router.get("/:feature", async (req, res) => {
 // @access Public
 
 router.get(
+  "/year/:year",
+
+  async (req, res) => {
+    try {
+      const videos = await Video.find({ date: +req.params.year });
+      if (videos.length === 0) {
+        return res.status(400).json({
+          error: [
+            {
+              msg: "Videos not found"
+            }
+          ]
+        });
+      }
+
+      res.status(200).json(videos);
+    } catch (error) {
+      console.log(error.message);
+      res.json(error.message);
+    }
+  }
+);
+// @route  GET api/videos
+// @desc   Get video by Id
+// @access Public
+
+router.get(
   "/:id",
   check("id", "Invalid Id")
     .isMongoId()

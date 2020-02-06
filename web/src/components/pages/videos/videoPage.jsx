@@ -1,26 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PageTitle from "../../main/pageTittle";
 import VideoVideoPage from "../../videos/videoVideoPage";
 
-const VideoPage = () => {
+const VideoPage = props => {
+  console.log(props.match.params.year);
+  const [videos, setVideos] = useState("");
+  const fetchData = async (url, cb, number) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json"
+        }
+      });
+      const data = await response.json();
+
+      cb(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchData(
+      `http://localhost:8080/api/videos/year/${props.match.params.year}`,
+      setVideos
+    );
+  }, []);
+  console.log(videos);
   return (
     <div id="main">
       <PageTitle title={"Видео"} />
-      <section class="sermon-page">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-9 col-sm-7">
+      <section className="sermon-page">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-9 col-sm-7">
               <ul>
-                <VideoVideoPage
-                  img={
-                    "https://cdn.molitvabg.org/images/resized_360x174x1570951873991_ruse.jpg"
-                  }
-                  title={"Обща регионална молитва, за Северен централен район"}
-                  description={
-                    "На 12 Октомври 2019 г. в гр. Русе се проведе бща регионална молитва, за Северен централен район."
-                  }
-                  url={""}
-                />
+                {videos.length > 0 &&
+                  videos.map(video => {
+                    return (
+                      <VideoVideoPage
+                        key={video._id}
+                        img={video.img}
+                        title={video.title}
+                        description={video.description}
+                        url={video._id}
+                      />
+                    );
+                  })}
               </ul>
             </div>
           </div>
