@@ -1,0 +1,63 @@
+version: "3"
+services:
+  web:
+    container_name: molitvabg
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    volumes:
+      - ./web:/home/node/app/
+      - /home/node/app/node_modules
+    environment:
+      env_file: .env
+      NODE_ENV: development
+    expose:
+      - 3000
+    networks:
+      - molitvabg
+    ports:
+      - "0.0.0.0:3000:3000"
+    depends_on:
+      - api
+
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api:/home/node/app/
+      - /home/node/app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      env_file: .env
+      NODE_ENV: development
+    networks:
+      - molitvabg
+
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.2.0
+    volumes:
+      - ./data/db:/data/db
+      - ./backup:/data/backup
+    entrypoint:
+      - mongod
+    expose:
+      - 27017
+    ports:
+      - "27018:27017"
+    networks:
+      - molitvabg
+
+    command: --bind_ip_all
+networks:
+  molitvabg:
+    driver: bridge

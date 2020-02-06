@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb://mongo:27017/molitvaapi",
+  "jwToken": "mysecrettoken"
+}
