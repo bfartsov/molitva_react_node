@@ -1,8 +1,6 @@
 import React from "react";
 import VideoHomePage from "../videos/singleVideoHomePage";
 const VideosHomePage = ({ videos }) => {
-  console.log(videos);
-
   return (
     <section className="latest-sermons-box">
       <div className="container">

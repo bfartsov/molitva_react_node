@@ -33,3 +33,24 @@ export const dateCorrection = events => {
     event.shortD = short(event.date);
   });
 };
+export const fetchData = async (url, cb, type) => {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      }
+    });
+    const data = await response.json();
+    if (type === "events") {
+      dateCorrection(data);
+
+      return cb(data);
+    }
+    cb(data);
+  } catch (error) {
+    console.log(error);
+  }
+};

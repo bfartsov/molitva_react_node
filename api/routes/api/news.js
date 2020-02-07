@@ -70,7 +70,7 @@ router.get(
 // @access Private
 
 router.get(
-  "/:id",
+  "/id/:id",
   check("id", "Invalid Id")
     .isMongoId()
     .trim(),
@@ -83,6 +83,33 @@ router.get(
         });
       }
       const singleNews = await News.findById(req.params.id);
+      if (!singleNews) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg: "News not found"
+            }
+          ]
+        });
+      }
+      return res.status(200).json(singleNews);
+    } catch (error) {
+      console.log(error);
+
+      res.json(error);
+    }
+  }
+);
+// @route  GET api/news/id
+// @desc   Get single news
+// @access Private
+
+router.get(
+  "/:link",
+
+  async (req, res) => {
+    try {
+      const singleNews = await News.findOne({ link: req.params.link });
       if (!singleNews) {
         return res.status(400).json({
           errors: [
