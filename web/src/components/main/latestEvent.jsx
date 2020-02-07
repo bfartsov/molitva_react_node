@@ -20,6 +20,7 @@ const LatestEvents = ({ events }) => {
                   city={event.city}
                   description={event.description}
                   date={event.date}
+                  shortDate={event.shortD}
                 />
               );
             })}

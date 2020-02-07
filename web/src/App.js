@@ -25,7 +25,7 @@ function App() {
         <Route exact path={"/about"} component={AboutPage} />
         <Route exact path={"/cause"} component={CausePage} />
         <Route exact path={"/messages"} component={MessagesPage} />
-        <Route exact path={"/contacts"} component={ContactPage} />
+        <Route exact path={"/contact"} component={ContactPage} />
         <Route exact path={"/live"} component={LivePage} />
         <Route exact path={"/videos/:year"} component={VideoPage} />
         <Route exact path={"/watch/:id"} component={WatchPage} />

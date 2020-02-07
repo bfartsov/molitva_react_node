@@ -21,6 +21,7 @@ const VideoPage = props => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchData(
       `http://localhost:8080/api/videos/year/${props.match.params.year}`,
@@ -38,12 +39,20 @@ const VideoPage = props => {
               <ul>
                 {videos.length > 0 &&
                   videos.map(video => {
+                    String.prototype.trunc =
+                      String.prototype.trunc ||
+                      function(n) {
+                        return this.length > n
+                          ? this.substr(0, n - 1) + " ...;"
+                          : this;
+                      };
+
                     return (
                       <VideoVideoPage
                         key={video._id}
                         img={video.img}
                         title={video.title}
-                        description={video.description}
+                        description={video.description.trunc(155)}
                         url={`/watch/${video._id}`}
                       />
                     );
