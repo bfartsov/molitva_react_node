@@ -6,8 +6,8 @@ const MenuItem = ({ className, title, url, children }) => {
       <ul>
         {children.map(child => {
           return (
-            <li key={child.id}>
-              <a href={child.url}>{child.title}</a>
+            <li key={child._id}>
+              <a href={child.url}>{child.name}</a>
             </li>
           );
         })}

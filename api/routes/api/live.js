@@ -8,7 +8,7 @@ const { check, validationResult } = require("express-validator");
 // @desc   get live details
 // @access Public
 
-router.get("/", async (rq, res) => {
+router.get("/", async (req, res) => {
   try {
     const live = await Live.find();
     if (live.length <= 0) {

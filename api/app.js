@@ -33,7 +33,7 @@ app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/events", require("./routes/api/events"));
 app.use("/api/news", require("./routes/api/news"));
 app.use("/api/videos", require("./routes/api/videos"));
-
+app.use("/api/menus", require("./routes/api/menus"));
 app.use("/api/live", require("./routes/api/live"));
 
 app.use((req, res, next) => {

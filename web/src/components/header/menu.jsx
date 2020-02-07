@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import menuData from "../../data/menues";
+import React from "react";
 import MenuItem from "./menuItem";
 import ".././../css/bootstrap.css";
 
-const Menue = () => {
-  const [menues] = useState(menuData);
-
+const Menue = ({ menus }) => {
   return (
     <section className="navigation-row">
       <div className="container">
@@ -27,16 +24,17 @@ const Menue = () => {
             <div className="collapse navbar-collapse">
               <nav>
                 <ul id="nav">
-                  {menues.map(menu => {
-                    return (
-                      <MenuItem
-                        key={menu.id}
-                        title={menu.title}
-                        children={menu.children}
-                        url={menu.url}
-                      ></MenuItem>
-                    );
-                  })}
+                  {menus.length > 0 &&
+                    menus.map(menu => {
+                      return (
+                        <MenuItem
+                          key={menu._id}
+                          title={menu.name}
+                          children={menu.subMenu}
+                          url={menu.url}
+                        ></MenuItem>
+                      );
+                    })}
                 </ul>
               </nav>
             </div>
