@@ -29,13 +29,38 @@ jQuery(document).ready(function($) {
     $("#search-box-form").toggle("slide");
   });
   //Next Event Countdown on Heared
-  if ($(".countdown").length) {
-    $(".countdown").final_countdown({
-      start: parseInt(new Date().getTime() / 1000),
-      end: parseInt(new Date("September 21, 2020 11:00:00").getTime() / 1000),
-      now: parseInt(new Date().getTime() / 1000)
-    });
-  }
+  const endDate = async () => {
+    try {
+      const timer = await fetch(
+        "https://admin.molitvabg.org/timer/endDate",
+        {}
+      );
+      const timerResponse = await timer.json();
+      return {
+        date: timerResponse.date,
+        time: timerResponse.time
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const date = async () => {
+    const days = await endDate();
+    const time = days.time.split(":");
+    const day = days.date.split("-");
+    //const day = new Date(days.date).getUTCDate();
+    const newDate = new Date(day[0], day[1] - 1, day[2], time[0], time[1]);
+
+    if ($(".countdown").length) {
+      $(".countdown").final_countdown({
+        start: parseInt(new Date().getTime() / 1000),
+        end: parseInt(newDate / 1000),
+        now: parseInt(new Date().getTime() / 1000)
+      });
+    }
+  };
+  date();
 
   //Parallax Effect
   $(window).stellar();
