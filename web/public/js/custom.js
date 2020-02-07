@@ -1,5 +1,4 @@
 jQuery(document).ready(function($) {
-  "use strict";
   //For Pretty Photo Validation
   $("a[data-rel]").each(function() {
     $(this).attr("rel", $(this).data("rel"));

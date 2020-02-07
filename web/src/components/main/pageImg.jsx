@@ -2,7 +2,7 @@ import React from "react";
 
 const PageImg = ({ img }) => {
   return (
-    <div class="frame">
+    <div className="frame">
       <a href="/">
         <img src={img} alt="img" />
       </a>

@@ -8,7 +8,7 @@ const Readepage = ({ match: { params } }) => {
 
   useEffect(() => {
     fetchData(`http://localhost:8080/api/news/${params.link}`, setNews);
-  }, []);
+  }, [params.link]);
   return (
     <div id="main">
       <PageTitle title={news.title} />

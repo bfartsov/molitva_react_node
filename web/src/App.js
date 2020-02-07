@@ -13,6 +13,7 @@ import Footer from "./components/footer/footer";
 import NewsPage from "./components/pages/news/newsPage";
 import ReadePage from "./components/pages/read/readPage";
 import EventPage from "./components/pages/events/eventPage";
+import PrayerPage from "./components/pages/prayers/prayersPage";
 import { Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/responsive.css";
@@ -35,6 +36,7 @@ function App() {
         <Route exact path={"/news"} component={NewsPage} />
         <Route exact path={"/news/:link"} component={ReadePage} />
         <Route exact path={"/events"} component={EventPage} />
+        <Route exact path={"/nationalPrayer/:year"} component={PrayerPage} />
       </Switch>
       <Footer />
     </div>

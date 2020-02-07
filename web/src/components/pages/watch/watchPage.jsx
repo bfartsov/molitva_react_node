@@ -21,8 +21,7 @@ const WatchPage = ({ match: { params } }) => {
   };
   useEffect(() => {
     fetchData(`http://localhost:8080/api/videos/id/${params.id}`, setVideo);
-  }, []);
-  console.log(video);
+  }, [params.id]);
   return (
     <div id="main">
       {video.title && <PageTitle title={video.title} />}
@@ -40,7 +39,7 @@ const WatchPage = ({ match: { params } }) => {
               ></iframe>
               <div className="sermon-detail-row"> </div>
             </div>
-            <h2></h2>
+
             <blockquote>
               <i className="fa"></i>
               <q>{video.description}</q>

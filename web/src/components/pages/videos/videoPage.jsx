@@ -27,7 +27,7 @@ const VideoPage = props => {
       `http://localhost:8080/api/videos/year/${props.match.params.year}`,
       setVideos
     );
-  }, []);
+  }, [props.match.params.year]);
 
   return (
     <div id="main">
