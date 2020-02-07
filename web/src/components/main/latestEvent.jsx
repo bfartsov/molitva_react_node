@@ -10,18 +10,19 @@ const LatestEvents = ({ events }) => {
           {events.length > 0 &&
             events.map(event => {
               return (
-                <Event
-                  key={event._id}
-                  img={img}
-                  title={event.title}
-                  startTime={event.startTime}
-                  endTime={event.endTime}
-                  place={event.place}
-                  city={event.city}
-                  description={event.description}
-                  date={event.date}
-                  shortDate={event.shortD}
-                />
+                <div className="col-md-3 col-sm-6" key={event._id}>
+                  <Event
+                    img={img}
+                    title={event.title}
+                    startTime={event.startTime}
+                    endTime={event.endTime}
+                    place={event.place}
+                    city={event.city}
+                    description={event.description}
+                    date={event.date}
+                    shortDate={event.shortD}
+                  />
+                </div>
               );
             })}
         </div>
