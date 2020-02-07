@@ -1,14 +1,14 @@
 import React from "react";
 
-const VideoHomePage = ({ img, title, description }) => {
+const VideoHomePage = ({ img, title, description, _id }) => {
   return (
     <div className="col-md-4 col-sm-4">
       <div className="sermons-box">
         <div className="frame">
-          <a href="/">
+          <a href={`/watch/${_id}`}>
             <img src={img} alt={title} />
           </a>
-          <a href="/watch/5d89cf6dbc5178577b80ba99">
+          <a href={`/watch/${_id}`}>
             <div className="caption">
               <div className="inner">
                 <p>{description}</p>

@@ -83,7 +83,7 @@ router.get(
 // @access Public
 
 router.get(
-  "/:id",
+  "/id/:id",
   check("id", "Invalid Id")
     .isMongoId()
     .trim(),

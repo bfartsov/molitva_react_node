@@ -1,6 +1,8 @@
 import React from "react";
 import VideoHomePage from "../videos/singleVideoHomePage";
 const VideosHomePage = ({ videos }) => {
+  console.log(videos);
+
   return (
     <section className="latest-sermons-box">
       <div className="container">
@@ -14,6 +16,7 @@ const VideosHomePage = ({ videos }) => {
                   title={video.title}
                   img={video.img}
                   description={video.description}
+                  _id={video._id}
                 />
               );
             })}

@@ -25,7 +25,6 @@ const Header = () => {
   useEffect(() => {
     fetchData("http://localhost:8080/api/menus", setMenus);
   }, []);
-  console.log(menus);
   return (
     <header id="header">
       <HeaderInfo />

@@ -3,7 +3,6 @@ import PageTitle from "../../main/pageTittle";
 import VideoVideoPage from "../../videos/videoVideoPage";
 
 const VideoPage = props => {
-  console.log(props.match.params.year);
   const [videos, setVideos] = useState("");
   const fetchData = async (url, cb, number) => {
     try {
@@ -28,7 +27,7 @@ const VideoPage = props => {
       setVideos
     );
   }, []);
-  console.log(videos);
+
   return (
     <div id="main">
       <PageTitle title={"Видео"} />
@@ -45,7 +44,7 @@ const VideoPage = props => {
                         img={video.img}
                         title={video.title}
                         description={video.description}
-                        url={video._id}
+                        url={`/watch/${video._id}`}
                       />
                     );
                   })}
