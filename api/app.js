@@ -10,7 +10,7 @@ app.use(express.json({ extended: true }));
 const publicFolder = path.join(__dirname, "/public");
 app.use("/public", express.static(publicFolder));
 app.use(express.static(publicFolder));
-
+app.use(express.urlencoded());
 app.use(
   cors({
     origin: "*"
@@ -19,15 +19,15 @@ app.use(
 app.get("/", (req, res) => {
   res.json("app running");
 });
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "DELETE, PUT, GET, POST");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 app.use("/api/banners", require("./routes/api/banners"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/events", require("./routes/api/events"));

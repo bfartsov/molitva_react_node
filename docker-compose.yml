@@ -19,6 +19,25 @@ services:
       - "0.0.0.0:3000:3000"
     depends_on:
       - api
+  admin:
+    container_name: admin.molitvabg
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    volumes:
+      - ./admin:/home/node/app/
+      - /home/node/app/node_modules
+    environment:
+      env_file: .env
+      NODE_ENV: development
+    expose:
+      - 2000
+    networks:
+      - molitvabg
+    ports:
+      - "0.0.0.0:2000:2000"
+    depends_on:
+      - api
 
   api:
     container_name: api
