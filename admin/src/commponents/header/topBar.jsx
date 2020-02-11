@@ -1,6 +1,13 @@
-import React from "react";
+import React, { Redirect } from "react";
+import { withRouter } from "react-router-dom";
 
-const TopBar = () => {
+const TopBar = props => {
+  const handleLogOut = e => {
+    e.preventDefault();
+    localStorage.clear();
+    props.history.push("/login");
+  };
+
   return (
     <header className="header black-bg">
       <div className="sidebar-toggle-box">
@@ -21,9 +28,9 @@ const TopBar = () => {
         <div className="top-menu">
           <ul className="nav pull-right top-menu">
             <li>
-              <a className="logout" href="login.html">
-                Login
-              </a>
+              <div className="logout" onClick={handleLogOut}>
+                Logout
+              </div>
             </li>
           </ul>
         </div>
@@ -32,4 +39,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default withRouter(TopBar);

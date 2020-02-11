@@ -71,7 +71,7 @@ router.post(
         payload,
         config.get("jwToken"),
         {
-          expiresIn: 360000000
+          expiresIn: 3600
         },
         (err, token) => {
           if (err) throw Error;
@@ -100,7 +100,6 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    console.log(req.body);
 
     if (!errors.isEmpty) {
       return res.status(400).json({
@@ -121,7 +120,7 @@ router.post(
           ]
         });
       }
-      const isMatch = bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({
           error: [
@@ -131,6 +130,7 @@ router.post(
           ]
         });
       }
+
       const payload = {
         user: {
           email: user.email,
@@ -147,6 +147,7 @@ router.post(
         (err, token) => {
           if (err) throw Error;
           return res.json({
+            user: payload.user,
             token
           });
         }
