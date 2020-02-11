@@ -22,7 +22,7 @@ const TopBar = () => {
           <ul className="nav pull-right top-menu">
             <li>
               <a className="logout" href="login.html">
-                Logout
+                Login
               </a>
             </li>
           </ul>
