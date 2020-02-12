@@ -1,5 +1,5 @@
-import React, { useState, Redirect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
+import { withRouter, Redirect } from "react-router-dom";
 const LoginPage = props => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +22,13 @@ const LoginPage = props => {
         return;
       }
       localStorage.setItem("user", user);
+      return (
+        <Redirect
+          to={{
+            pathname: "/"
+          }}
+        />
+      );
     } catch (error) {
       console.log(error);
     }

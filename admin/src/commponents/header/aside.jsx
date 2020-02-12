@@ -12,7 +12,7 @@ const Aside = () => {
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/videos">
               <i className="fa fa-desktop"></i>
               <span>Videos</span>
             </a>
