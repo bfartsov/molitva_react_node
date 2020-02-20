@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import "../css/table-responsive.css";
 
-const Table = ({ titles, items, handleDelete, path }) => {
+const Table = ({ titles, items, handleDelete }) => {
   const history = useHistory();
   const location = useLocation();
   return (
@@ -33,6 +33,7 @@ const Table = ({ titles, items, handleDelete, path }) => {
                   <i className="fa fa-pencil"></i>
                 </button>
                 <button
+                  id={item.id}
                   onClick={handleDelete}
                   className="btn btn-danger btn-xs"
                 >

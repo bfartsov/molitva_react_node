@@ -26,7 +26,10 @@ function VideoPage() {
     });
   }
   items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
-
+  const handleDelete = e => {
+    e.preventDefault();
+    fetch();
+  };
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -40,7 +43,13 @@ function VideoPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {videos && <Table titles={title} items={items} />}
+                {videos && (
+                  <Table
+                    titles={title}
+                    items={items}
+                    handleDelete={handleDelete}
+                  />
+                )}
               </section>
             </div>
           </div>
