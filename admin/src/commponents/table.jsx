@@ -1,7 +1,11 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
+
 import "../css/table-responsive.css";
 
-const Table = ({ titles, items, handleDelete, handleEdit }) => {
+const Table = ({ titles, items, handleDelete, path }) => {
+  const history = useHistory();
+  const location = useLocation();
   return (
     <table className="table table-bordered table-striped table-condensed">
       <thead>
@@ -20,8 +24,13 @@ const Table = ({ titles, items, handleDelete, handleEdit }) => {
                 return <td>{value}</td>;
               })}
               <td>
-                <button onClick={handleEdit} className="btn btn-primary btn-xs">
-                  <i id={item.title} className="fa fa-pencil"></i>
+                <button
+                  onClick={() => {
+                    history.push(`${location.pathname}/edit/${item.id}`);
+                  }}
+                  className="btn btn-primary btn-xs"
+                >
+                  <i className="fa fa-pencil"></i>
                 </button>
                 <button
                   onClick={handleDelete}

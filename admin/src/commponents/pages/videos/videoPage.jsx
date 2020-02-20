@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { fetchData } from "../../../utils/helpers";
 import Table from "../../table";
 import "../../../css/table-responsive.css";
@@ -13,6 +14,7 @@ function VideoPage() {
   if (videos.length > 0) {
     videos.map(video => {
       const item = {
+        id: video._id,
         title: video.title,
         description: video.description,
         img: video.img,
@@ -24,10 +26,7 @@ function VideoPage() {
     });
   }
   items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
-  const handeEdit = e => {
-    e.preventDefault();
-    console.log(e.target.id);
-  };
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -41,9 +40,7 @@ function VideoPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {videos && (
-                  <Table titles={title} items={items} handleEdit={handeEdit} />
-                )}
+                {videos && <Table titles={title} items={items} />}
               </section>
             </div>
           </div>
