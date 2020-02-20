@@ -28,7 +28,6 @@ function VideoPage() {
   items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
   const handleDelete = e => {
     e.preventDefault();
-    fetch();
   };
   return (
     <section id="main-content">

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { fetchData } from "../../utils/helpers";
 
 import Input from "./imput";
-
+import Buttons from "./button";
 const Edit = ({ match }) => {
   const [items, setItem] = useState("");
+  const [names, setName] = useState("");
 
   useEffect(() => {
     const category = match.url.split("/");
@@ -13,7 +14,17 @@ const Edit = ({ match }) => {
       setItem
     );
   }, []);
-  console.log(items);
+  const handnleSave = e => {
+    e.preventDefault();
+    console.log(e);
+  };
+
+  const handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setName(newItem);
+  };
+  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -31,13 +42,14 @@ const Edit = ({ match }) => {
                 {items &&
                   Object.keys(items).map(item => {
                     const text = items[item];
-                    console.log(text);
                     if (item === "img") {
                       return (
                         <Input
+                          handleChange={handleChange}
                           title={item.toUpperCase()}
                           text={text}
                           type={"file"}
+                          name={item}
                         />
                       );
                     } else if (
@@ -49,13 +61,16 @@ const Edit = ({ match }) => {
                     } else {
                       return (
                         <Input
+                          handleChange={handleChange}
                           title={item.toUpperCase()}
                           text={text}
                           type={"text"}
+                          name={item}
                         />
                       );
                     }
                   })}
+                <Buttons handnleSave={handnleSave} />
               </form>
             </div>
           </div>
