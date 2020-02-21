@@ -3,22 +3,21 @@ import { fetchData } from "../../../utils/helpers";
 import Table from "../../table";
 import "../../../css/table-responsive.css";
 
-function BannerPage() {
-  const [banners, setBanners] = useState("");
+function NewsPage() {
+  const [news, setNews] = useState("");
   useEffect(() => {
-    fetchData("http://localhost:8080/api/banners", setBanners);
+    fetchData("http://localhost:8080/api/news", setNews);
   }, []);
   let title = {};
   let items = [];
-  if (banners.length > 0) {
-    banners.map(banner => {
+  if (news.length > 0) {
+    news.map(event => {
       const item = {
-        id: banner._id,
-        title: banner.title,
-
-        img: banner.banner,
-
-        Date: banner.eventDate
+        id: event._id,
+        title: event.title,
+        img: event.img,
+        date: event.date,
+        link: event.link
       };
       items.push(item);
     });
@@ -31,7 +30,7 @@ function BannerPage() {
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Videos
+          <i className="fa fa-angle-right"></i> news
         </h3>
         <div className="row mt">
           <div className="col-lg-12">
@@ -40,7 +39,7 @@ function BannerPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {banners && (
+                {news && (
                   <Table
                     titles={title}
                     items={items}
@@ -56,4 +55,4 @@ function BannerPage() {
   );
 }
 
-export default BannerPage;
+export default NewsPage;

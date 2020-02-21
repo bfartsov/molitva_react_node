@@ -19,9 +19,9 @@ const Table = ({ titles, items, handleDelete }) => {
       <tbody>
         {items.map(item => {
           return (
-            <tr>
+            <tr key={Object.values(item)}>
               {Object.values(item).map(value => {
-                return <td>{value}</td>;
+                return <td key={value}>{value}</td>;
               })}
               <td>
                 <button

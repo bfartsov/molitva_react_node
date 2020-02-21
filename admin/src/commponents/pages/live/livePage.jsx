@@ -3,27 +3,26 @@ import { fetchData } from "../../../utils/helpers";
 import Table from "../../table";
 import "../../../css/table-responsive.css";
 
-function BannerPage() {
-  const [banners, setBanners] = useState("");
+const LivePage = () => {
+  const [live, setLive] = useState("");
   useEffect(() => {
-    fetchData("http://localhost:8080/api/banners", setBanners);
+    fetchData("http://localhost:8080/api/live", setLive);
   }, []);
   let title = {};
   let items = [];
-  if (banners.length > 0) {
-    banners.map(banner => {
-      const item = {
-        id: banner._id,
-        title: banner.title,
+  if (live) {
+    const item = {
+      id: live._id,
+      url: live.url,
 
-        img: banner.banner,
+      type: live.type,
 
-        Date: banner.eventDate
-      };
-      items.push(item);
-    });
+      player: live.player
+    };
+    items.push(item);
   }
-  items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+
+  items.length > 0 ? (title = Object.keys(items[0])) : (title = []);
   const handleDelete = e => {
     e.preventDefault();
   };
@@ -31,7 +30,7 @@ function BannerPage() {
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Videos
+          <i className="fa fa-angle-right"></i> Live
         </h3>
         <div className="row mt">
           <div className="col-lg-12">
@@ -40,7 +39,7 @@ function BannerPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {banners && (
+                {live && (
                   <Table
                     titles={title}
                     items={items}
@@ -54,6 +53,6 @@ function BannerPage() {
       </section>
     </section>
   );
-}
+};
 
-export default BannerPage;
+export default LivePage;

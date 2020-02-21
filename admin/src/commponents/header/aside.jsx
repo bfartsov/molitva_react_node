@@ -24,37 +24,37 @@ const Aside = () => {
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/events">
               <i className="fa fa-book"></i>
               <span>Events</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/news">
               <i className="fa fa-tasks"></i>
               <span>News</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/live">
               <i className="fa fa-th"></i>
               <span>Live</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/timer">
               <i className="fa fa-th"></i>
               <span>Timer</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/menus">
               <i className="fa fa-th"></i>
               <span>Menus</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/prayers">
               <i className="fa fa-comments-o"></i>
               <span>National Prayers</span>
             </a>

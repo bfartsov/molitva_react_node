@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
 import { fetchData } from "../../../utils/helpers";
 import Table from "../../table";
 import "../../../css/table-responsive.css";

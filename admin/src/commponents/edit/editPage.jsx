@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "../../utils/helpers";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Input from "./imput";
 import Buttons from "./button";
-const Edit = ({ match }) => {
+const Edit = ({ match, location }) => {
   const [items, setItem] = useState({});
   const [names, setName] = useState({});
 
   useEffect(() => {
     const category = match.url.split("/");
-    fetchData(
-      `http://localhost:8080/api/${category[1]}/id/${match.params.id}`,
-      setItem
-    );
+    category[1] === "live"
+      ? fetchData(`http://localhost:8080/api/${category[1]}`, setItem)
+      : fetchData(
+          `http://localhost:8080/api/${category[1]}/id/${match.params.id}`,
+          setItem
+        );
   }, []);
   const handnleSave = e => {
     e.preventDefault();
@@ -23,11 +26,9 @@ const Edit = ({ match }) => {
     const value = e.target.value;
     const newItem = {};
     newItem[name] = value;
-    console.log(newItem);
 
     setName({ ...names, ...newItem });
   };
-  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -59,7 +60,9 @@ const Edit = ({ match }) => {
                     } else if (
                       item === "_id" ||
                       item === "__v" ||
-                      item === "dateCreated"
+                      item === "dateCreated" ||
+                      item === "updated" ||
+                      item === "name"
                     ) {
                       return "";
                     } else {

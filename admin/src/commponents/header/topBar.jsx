@@ -1,4 +1,4 @@
-import React, { Redirect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 
 const TopBar = props => {
