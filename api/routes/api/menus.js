@@ -9,15 +9,30 @@ const { check, validationResult } = require("express-validator");
 router.get("/", async (req, res) => {
   try {
     const menus = await Menus.find();
-    const sortedMenus = menus.sort((a, b) => {
-      return a.order - b.order;
-    });
     if (menus.length <= 0) {
       return res.status(400).json({
         msg: "No information found"
       });
     }
+    const sortedMenus = menus.sort((a, b) => {
+      return a.order - b.order;
+    });
+
     res.status(200).json(sortedMenus);
+  } catch (error) {}
+});
+router.get("/id/:id", async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const menu = await Menus.findById(req.params.id);
+    console.log(menu);
+    if (!menu) {
+      return res.status(400).json({
+        msg: "No information found"
+      });
+    }
+    console.log("in");
+    res.status(200).json(menu);
   } catch (error) {}
 });
 module.exports = router;
