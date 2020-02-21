@@ -4,8 +4,8 @@ import { fetchData } from "../../utils/helpers";
 import Input from "./imput";
 import Buttons from "./button";
 const Edit = ({ match }) => {
-  const [items, setItem] = useState("");
-  const [names, setName] = useState("");
+  const [items, setItem] = useState({});
+  const [names, setName] = useState({});
 
   useEffect(() => {
     const category = match.url.split("/");
@@ -16,13 +16,16 @@ const Edit = ({ match }) => {
   }, []);
   const handnleSave = e => {
     e.preventDefault();
-    console.log(e);
   };
 
   const handleChange = e => {
-    const name = e.target.name;
+    let name = e.target.name;
     const value = e.target.value;
-    setName(newItem);
+    const newItem = {};
+    newItem[name] = value;
+    console.log(newItem);
+
+    setName({ ...names, ...newItem });
   };
   console.log(names);
   return (
@@ -42,9 +45,10 @@ const Edit = ({ match }) => {
                 {items &&
                   Object.keys(items).map(item => {
                     const text = items[item];
-                    if (item === "img") {
+                    if (item === "img" || item === "banner") {
                       return (
                         <Input
+                          key={item}
                           handleChange={handleChange}
                           title={item.toUpperCase()}
                           text={text}
@@ -61,6 +65,7 @@ const Edit = ({ match }) => {
                     } else {
                       return (
                         <Input
+                          key={item}
                           handleChange={handleChange}
                           title={item.toUpperCase()}
                           text={text}

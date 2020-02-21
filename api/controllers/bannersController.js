@@ -10,7 +10,7 @@ const { validationResult } = require("express-validator");
 const getBanners = async (req, res, next) => {
   try {
     const banners = await Banner.find();
-    if (banners.length > 0) {
+    if (banners.length <= 0) {
       return res.status(400).json({
         errors: [
           {

@@ -7,6 +7,7 @@ import { PrivateRoute } from "./commponents/auth/privateRoute";
 import HomePage from "./commponents/pages/home/homePage";
 import LoginPage from "./commponents/pages/login/loginPage";
 import VideoPage from "./commponents/pages/videos/videoPage";
+import BannerPage from "./commponents/pages/banners/bannerPage";
 import Edit from "./commponents/edit/editPage";
 import { Route } from "react-router-dom";
 
@@ -33,7 +34,13 @@ function App() {
         component={Edit}
         loggedIn={loggedIn}
       />
-
+      <Route exact path="/banners" component={BannerPage} loggedIn={loggedIn} />
+      <Route
+        exact
+        path="/banners/edit/:id"
+        component={Edit}
+        loggedIn={loggedIn}
+      />
       <Footer />
     </Fragment>
   );

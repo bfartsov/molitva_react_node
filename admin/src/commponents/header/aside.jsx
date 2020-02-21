@@ -18,13 +18,13 @@ const Aside = () => {
             </a>
           </li>
           <li className="sub-menu">
-            <a href="javascript:;">
+            <a href="/banners">
               <i className="fa fa-cogs"></i>
               <span>Banners</span>
             </a>
           </li>
           <li className="sub-menu">
-            <a className="active" href="javascript:;">
+            <a href="javascript:;">
               <i className="fa fa-book"></i>
               <span>Events</span>
             </a>
