@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Header from "./commponents/header/header";
 import Footer from "./commponents/footer/footer";
 import { PrivateRoute } from "./commponents/auth/privateRoute";
+//Redux
 
 import HomePage from "./commponents/pages/home/homePage";
 import LoginPage from "./commponents/pages/login/loginPage";

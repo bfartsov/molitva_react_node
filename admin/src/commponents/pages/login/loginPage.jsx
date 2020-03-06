@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 const LoginPage = props => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+  const { email, password } = formData;
 
-  const handleSubmit = async e => {
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = async e => {
     e.preventDefault();
 
     try {
@@ -17,7 +23,7 @@ const LoginPage = props => {
         }
       });
       const user = await response.json();
-
+      console.log(user, data);
       if (user.error) {
         return;
       }
@@ -37,7 +43,7 @@ const LoginPage = props => {
   return (
     <div id="login-page">
       <div className="container">
-        <form className="form-login" onSubmit={handleSubmit}>
+        <form className="form-login" onSubmit={e => onSubmit(e)}>
           <h2 className="form-login-heading">sign in now</h2>
           <div className="login-wrap">
             <input
@@ -46,14 +52,16 @@ const LoginPage = props => {
               placeholder="User ID"
               autoFocus
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              name="email"
+              onChange={e => onChange(e)}
             />
             <br /> <br />
             <input
               type="password"
               className="form-control"
               placeholder="Password"
-              onChange={e => setPassword(e.target.value)}
+              name="password"
+              onChange={e => onChange(e)}
             />
             <br /> <br />
             <button className="btn btn-theme btn-block" type="submit">

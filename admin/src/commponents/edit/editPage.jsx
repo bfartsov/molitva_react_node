@@ -29,6 +29,7 @@ const Edit = ({ match, location }) => {
 
     setName({ ...names, ...newItem });
   };
+  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
