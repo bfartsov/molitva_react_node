@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import {connect} from 'react-redux'
 import { withRouter, Redirect } from "react-router-dom";
+import {setAlert} from '../../../redux/actions/alert'
 const LoginPage = props => {
   const [formData, setFormData] = useState({
     email: "",
@@ -23,18 +25,12 @@ const LoginPage = props => {
         }
       });
       const user = await response.json();
-      console.log(user, data);
       if (user.error) {
+        props.setAlert('invalid cred', 'denger')
         return;
       }
       localStorage.setItem("user", user);
-      return (
-        <Redirect
-          to={{
-            pathname: "/"
-          }}
-        />
-      );
+      
     } catch (error) {
       console.log(error);
     }
@@ -83,4 +79,4 @@ const LoginPage = props => {
     </div>
   );
 };
-export default withRouter(LoginPage);
+export default connect(null,{setAlert})(LoginPage);
