@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 
 import Header from "./commponents/header/header";
 import Footer from "./commponents/footer/footer";
+import { Redirect } from "react-router-dom";
 
 import { PrivateRoute } from "./commponents/auth/privateRoute";
 //Redux
@@ -25,23 +26,27 @@ import "./css/style-responsive.css";
 import "./css/table-responsive.css";
 import "./css//App.css";
 
-const App = ({ loadUser }) => {
+const App = ({ loadUser, isAuthenticated }) => {
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
-      console.log("if");
     }
-    console.log("loadUser");
     loadUser();
   }, []);
+
   return (
     <Fragment>
-      <Header />
+      {isAuthenticated && <Header />}
       <Alert />
       <Route exact path={"/login"} component={LoginPage} />
-      <Route exact path="/" component={HomePage} />
+      <PrivateRoute
+        exact
+        isAuthenticated={isAuthenticated}
+        path="/"
+        component={HomePage}
+      />
       <Route exact path="/videos" component={VideoPage} />
-      ``
+
       <Route exact path="/videos/edit/:id" component={Edit} />
       <Route exact path="/banners" component={BannerPage} />
       <Route exact path="/banners/edit/:id" component={Edit} />
@@ -55,5 +60,7 @@ const App = ({ loadUser }) => {
     </Fragment>
   );
 };
-
-export default connect(null, { loadUser })(App);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, { loadUser })(App);

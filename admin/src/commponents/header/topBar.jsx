@@ -1,13 +1,8 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../../redux/actions/auth";
 
-const TopBar = props => {
-  const handleLogOut = e => {
-    e.preventDefault();
-    localStorage.clear();
-    props.history.push("/login");
-  };
-
+const TopBar = ({ logout, isAuthenticated }) => {
   return (
     <header className="header black-bg">
       <div className="sidebar-toggle-box">
@@ -28,7 +23,7 @@ const TopBar = props => {
         <div className="top-menu">
           <ul className="nav pull-right top-menu">
             <li>
-              <div className="logout" onClick={handleLogOut}>
+              <div className="logout" onClick={logout}>
                 Logout
               </div>
             </li>
@@ -38,5 +33,8 @@ const TopBar = props => {
     </header>
   );
 };
+const mapPropsToState = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 
-export default withRouter(TopBar);
+export default connect(mapPropsToState, { logout })(TopBar);

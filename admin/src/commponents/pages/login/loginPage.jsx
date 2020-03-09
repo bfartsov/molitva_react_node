@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { setAlert } from "../../../redux/actions/alert";
 import { loadUser } from "../../../redux/actions/auth";
-const LoginPage = ({ setAlert, loadUser }) => {
+import { login } from "../../../redux/actions/auth";
+import { Redirect } from "react-router-dom";
+const LoginPage = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -14,29 +16,13 @@ const LoginPage = ({ setAlert, loadUser }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-
-    try {
-      const data = { email, password };
-      const response = await fetch("http://localhost:8080/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-      const token = await response.json();
-      if (token.error) {
-        setAlert("invalid cred", "denger");
-      } else {
-        localStorage.setItem("token", token.token);
-
-        loadUser();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    login(email, password);
   };
+  //Redirect
 
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <div id="login-page">
       <div className="container">
@@ -80,4 +66,9 @@ const LoginPage = ({ setAlert, loadUser }) => {
     </div>
   );
 };
-export default connect(null, { setAlert, loadUser })(LoginPage);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+export default connect(mapStateToProps, { setAlert, loadUser, login })(
+  LoginPage
+);

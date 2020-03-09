@@ -5,7 +5,10 @@ import {
   REGISTER_FAIL,
   REGSTER_SUCCESS,
   USER_LOADED,
-  AUTH_ERROR
+  AUTH_ERROR,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT
 } from "./types";
 
 //LOAD user
@@ -26,7 +29,7 @@ export const loadUser = () => async dispach => {
   }
 };
 
-export const register = ({ name, email, password }) => async dispach => {
+export const register = (name, email, password) => async dispach => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -48,4 +51,42 @@ export const register = ({ name, email, password }) => async dispach => {
     }
     dispach({ type: REGISTER_FAIL });
   }
+};
+
+export const login = (email, password) => async dispach => {
+  const body = JSON.stringify({ email, password });
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      body: body,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const token = await response.json();
+    console.log(token);
+    if (token.error) {
+      dispach(setAlert("Invalid crede", "denger"));
+      return dispach({ type: LOGIN_FAIL });
+    }
+    dispach({
+      type: LOGIN_SUCCESS,
+      payload: token
+    });
+    dispach(loadUser());
+  } catch (err) {
+    console.log(err);
+    if (err) {
+      err.forEach(error => {
+        setAlert("Invalid crede", "denger");
+      });
+    }
+    dispach({ type: LOGIN_FAIL });
+  }
+};
+
+export const logout = () => dispach => {
+  dispach({
+    type: LOGOUT
+  });
 };

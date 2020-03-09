@@ -1,11 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-const AuthContext = React.createContext();
-export const PrivateRoute = ({ component: Component, loggedin, ...rest }) => (
+export const PrivateRoute = ({
+  component: Component,
+  isAuthenticated,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={props =>
-      localStorage.getItem("user") ? (
+      isAuthenticated ? (
         <Component {...props} />
       ) : (
         <Redirect
