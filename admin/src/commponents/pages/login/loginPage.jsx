@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import {connect} from 'react-redux'
-import { withRouter, Redirect } from "react-router-dom";
-import {setAlert} from '../../../redux/actions/alert'
-const LoginPage = props => {
+import { connect } from "react-redux";
+import { setAlert } from "../../../redux/actions/alert";
+import { loadUser } from "../../../redux/actions/auth";
+const LoginPage = ({ setAlert, loadUser }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -24,13 +24,14 @@ const LoginPage = props => {
           "Content-Type": "application/json"
         }
       });
-      const user = await response.json();
-      if (user.error) {
-        props.setAlert('invalid cred', 'denger')
-        return;
+      const token = await response.json();
+      if (token.error) {
+        setAlert("invalid cred", "denger");
+      } else {
+        localStorage.setItem("token", token.token);
+
+        loadUser();
       }
-      localStorage.setItem("user", user);
-      
     } catch (error) {
       console.log(error);
     }
@@ -79,4 +80,4 @@ const LoginPage = props => {
     </div>
   );
 };
-export default connect(null,{setAlert})(LoginPage);
+export default connect(null, { setAlert, loadUser })(LoginPage);

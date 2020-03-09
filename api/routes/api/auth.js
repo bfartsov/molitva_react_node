@@ -142,12 +142,11 @@ router.post(
         payload,
         config.get("jwToken"),
         {
-          expiresIn: 360000000
+          expiresIn: 3600
         },
         (err, token) => {
           if (err) throw Error;
           return res.json({
-            user: payload.user,
             token
           });
         }
@@ -156,6 +155,40 @@ router.post(
       console.log(error);
       res.status(400).json({
         errors: [{ msg: error }]
+      });
+    }
+  }
+);
+// @route  GET api/auth
+// @desc   Login
+// @access Public
+
+router.get(
+  "/login",
+
+  async (req, res) => {
+    try {
+      if (req.headers && req.headers["x-auth-token"]) {
+        // const usertoken = req.headers.authorization;
+        // const token = usertoken.split(" ");
+        const token = req.headers["x-auth-token"];
+        const user = jwt.verify(token, config.get("jwToken"));
+        if (user) {
+          return res.status(200).json(user.user);
+        } else {
+          res.status(400).json({
+            errors: [{ msg: "Invalid token" }]
+          });
+        }
+      } else {
+        res.status(400).json({
+          errors: [{ msg: "token missing" }]
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        errors: [{ msg: error.message }]
       });
     }
   }
