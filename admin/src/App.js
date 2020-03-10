@@ -2,9 +2,8 @@ import React, { Fragment, useEffect } from "react";
 
 import Header from "./commponents/header/header";
 import Footer from "./commponents/footer/footer";
-import { Redirect } from "react-router-dom";
 
-import { PrivateRoute } from "./commponents/auth/privateRoute";
+import PrivateRoute  from "./commponents/auth/privateRoute";
 //Redux
 import { connect } from "react-redux";
 
@@ -20,7 +19,7 @@ import Alert from "./commponents/alert";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import "./css/style-responsive.css";
 import "./css/table-responsive.css";
@@ -38,24 +37,24 @@ const App = ({ loadUser, isAuthenticated }) => {
     <Fragment>
       {isAuthenticated && <Header />}
       <Alert />
+
       <Route exact path={"/login"} component={LoginPage} />
       <PrivateRoute
         exact
-        isAuthenticated={isAuthenticated}
         path="/"
         component={HomePage}
       />
-      <Route exact path="/videos" component={VideoPage} />
+      <PrivateRoute exact path="/videos" component={VideoPage} />
 
-      <Route exact path="/videos/edit/:id" component={Edit} />
-      <Route exact path="/banners" component={BannerPage} />
-      <Route exact path="/banners/edit/:id" component={Edit} />
-      <Route exact path="/events" component={EventPage} />
-      <Route exact path="/events/edit/:id" component={Edit} />
-      <Route exact path="/news" component={NewsPage} />
-      <Route exact path="/news/edit/:id" component={Edit} />
-      <Route exact path="/live" component={LivePage} />
-      <Route exact path="/live/edit/:id" component={Edit} />
+      <PrivateRoute exact path="/videos/edit/:id" component={Edit} />
+      <PrivateRoute exact path="/banners" component={BannerPage} />
+      <PrivateRoute exact path="/banners/edit/:id" component={Edit} />
+      <PrivateRoute exact path="/events" component={EventPage} />
+      <PrivateRoute exact path="/events/edit/:id" component={Edit} />
+      <PrivateRoute exact path="/news" component={NewsPage} />
+      <PrivateRoute exact path="/news/edit/:id" component={Edit} />
+      <PrivateRoute exact path="/live" component={LivePage} />
+      <PrivateRoute exact path="/live/edit/:id" component={Edit} />
       <Footer />
     </Fragment>
   );
