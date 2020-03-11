@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../utils/helpers";
+import React, { useEffect } from "react";
 import Table from "../../table";
-import "../../../css/table-responsive.css";
+import { connect } from "react-redux";
+import { getBanners } from "../../../redux/actions/banners";
 
-function BannerPage() {
-  const [banners, setBanners] = useState("");
+const BannerPage = ({ banners, items, title, loading, getBanners }) => {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/banners", setBanners);
+    getBanners();
   }, []);
-  let title = {};
-  let items = [];
-  if (banners.length > 0) {
-    banners.map(banner => {
-      const item = {
-        id: banner._id,
-        title: banner.title,
 
-        img: banner.banner,
-
-        Date: banner.eventDate
-      };
-      items.push(item);
-    });
-  }
-  items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
   const handleDelete = e => {
     e.preventDefault();
   };
@@ -40,7 +24,7 @@ function BannerPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {banners && (
+                {banners.length > 0 && !loading && (
                   <Table
                     titles={title}
                     items={items}
@@ -54,6 +38,11 @@ function BannerPage() {
       </section>
     </section>
   );
-}
-
-export default BannerPage;
+};
+const mapStateToProps = state => ({
+  banners: state.banners.banners,
+  items: state.banners.items,
+  title: state.banners.title,
+  loading: state.banners.loading
+});
+export default connect(mapStateToProps, { getBanners })(BannerPage);

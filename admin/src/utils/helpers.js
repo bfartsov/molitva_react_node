@@ -15,3 +15,24 @@ export const fetchData = async (url, cb, type) => {
     console.log(error);
   }
 };
+
+export const tableInfo = data => {
+  let title = {};
+  let items = [];
+  if (data.length > 0) {
+    data.forEach(video => {
+      const item = {
+        id: video._id,
+        title: video.title,
+        description: video.description,
+        img: video.img,
+        video: video.video,
+        date: video.date,
+        feature: video.feature
+      };
+      items.push(item);
+    });
+  }
+  items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+  return { title, items };
+};

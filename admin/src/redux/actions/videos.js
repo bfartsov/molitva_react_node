@@ -21,6 +21,7 @@ export const getVideos = () => async dispach => {
       });
     }
     items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+
     dispach({
       type: GET_VIDEOS,
       payload: { videos: videos.data, title, items }

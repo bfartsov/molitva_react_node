@@ -2715,7 +2715,9 @@ ul.inbox-pagination li {
     color: #767676;
 }
 
-
+.table {
+     word-break: break-all
+}
 /*CHAT ROOM & LOBBY CONFIGURATION*/
 
 /*chat room*/
