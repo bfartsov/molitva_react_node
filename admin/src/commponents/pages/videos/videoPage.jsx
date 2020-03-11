@@ -1,33 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../utils/helpers";
+import React, { useEffect } from "react";
 import Table from "../../table";
+import { connect } from "react-redux";
+import { getVideos } from "../../../redux/actions/videos";
+
 import "../../../css/table-responsive.css";
 
-function VideoPage() {
-  const [videos, setVideos] = useState("");
+const VideoPage = ({ getVideos, title, items, videos, loading }) => {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/videos", setVideos);
+    getVideos();
   }, []);
-  let title = {};
-  let items = [];
-  if (videos.length > 0) {
-    videos.map(video => {
-      const item = {
-        id: video._id,
-        title: video.title,
-        description: video.description,
-        img: video.img,
-        video: video.video,
-        date: video.date,
-        feature: video.feature
-      };
-      items.push(item);
-    });
-  }
-  items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+
   const handleDelete = e => {
     e.preventDefault();
   };
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -41,7 +27,7 @@ function VideoPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {videos && (
+                {videos.length > 0 && !loading && (
                   <Table
                     titles={title}
                     items={items}
@@ -55,6 +41,11 @@ function VideoPage() {
       </section>
     </section>
   );
-}
-
-export default VideoPage;
+};
+const mapStateToProps = state => ({
+  videos: state.videos.videos,
+  items: state.videos.items,
+  title: state.videos.title,
+  loading: state.videos.loading
+});
+export default connect(mapStateToProps, { getVideos })(VideoPage);

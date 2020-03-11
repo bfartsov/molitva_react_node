@@ -1,11 +1,13 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import uuid from "uuid";
 
 import "../css/table-responsive.css";
 
 const Table = ({ titles, items, handleDelete }) => {
   const history = useHistory();
   const location = useLocation();
+
   return (
     <table className="table table-bordered table-striped table-condensed">
       <thead>
@@ -19,9 +21,9 @@ const Table = ({ titles, items, handleDelete }) => {
       <tbody>
         {items.map(item => {
           return (
-            <tr key={Object.values(item)}>
+            <tr key={uuid.v4()}>
               {Object.values(item).map(value => {
-                return <td key={value}>{value}</td>;
+                return <td key={uuid.v4()}>{value}</td>;
               })}
               <td>
                 <button
