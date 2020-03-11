@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const Input = ({ title, text, type, handleChange, name }) => {
   return (
@@ -7,10 +8,10 @@ const Input = ({ title, text, type, handleChange, name }) => {
       <div className="col-sm-10">
         <input
           onChange={handleChange}
-          name={`${name}`}
-          type={`${type}`}
+          name={name}
+          type={type}
           className="form-control"
-          placeholder={`${text}`}
+          placeholder={text}
         />
       </div>
     </div>

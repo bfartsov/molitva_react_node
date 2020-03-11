@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { fetchData } from "../../utils/helpers";
 import { useHistory, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import { edit } from "../../redux/actions/edit";
 
 import Input from "./imput";
 import Buttons from "./button";
-const Edit = ({ match, location }) => {
-  const [items, setItem] = useState({});
+const Edit = ({ match, edit, items }) => {
   const [names, setName] = useState({});
 
   useEffect(() => {
     const category = match.url.split("/");
-    category[1] === "live"
-      ? fetchData(`http://localhost:8080/api/${category[1]}`, setItem)
-      : fetchData(
-          `http://localhost:8080/api/${category[1]}/id/${match.params.id}`,
-          setItem
-        );
+    edit(category[1], match.params.id);
   }, []);
   const handnleSave = e => {
     e.preventDefault();
@@ -29,7 +25,6 @@ const Edit = ({ match, location }) => {
 
     setName({ ...names, ...newItem });
   };
-  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -43,7 +38,7 @@ const Edit = ({ match, location }) => {
               <h4 className="mb">
                 <i className="fa fa-angle-right"></i> Form Elements
               </h4>
-              <form className="form-horizontal style-form" method="get">
+              <form className="form-horizontal style-form">
                 {items &&
                   Object.keys(items).map(item => {
                     const text = items[item];
@@ -88,4 +83,7 @@ const Edit = ({ match, location }) => {
     </section>
   );
 };
-export default Edit;
+const mapStateToProps = state => ({
+  items: state.edit
+});
+export default connect(mapStateToProps, { edit })(Edit);

@@ -11,7 +11,6 @@ export const getVideos = () => async dispach => {
         const item = {
           id: video._id,
           title: video.title,
-          description: video.description,
           img: video.img,
           video: video.video,
           date: video.date,
