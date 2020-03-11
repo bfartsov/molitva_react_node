@@ -4,6 +4,8 @@ import { setAlert } from "../../../redux/actions/alert";
 import { loadUser } from "../../../redux/actions/auth";
 import { login } from "../../../redux/actions/auth";
 import { Redirect } from "react-router-dom";
+import Alert from "../../alert";
+
 const LoginPage = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -29,6 +31,7 @@ const LoginPage = ({ login, isAuthenticated }) => {
         <form className="form-login" onSubmit={e => onSubmit(e)}>
           <h2 className="form-login-heading">sign in now</h2>
           <div className="login-wrap">
+            <Alert />
             <input
               type="text"
               className="form-control"

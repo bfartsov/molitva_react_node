@@ -21,9 +21,10 @@ import setAuthToken from "./utils/setAuthToken";
 
 import { Route, Switch } from "react-router-dom";
 
-import "./css/style-responsive.css";
 import "./css/table-responsive.css";
 import "./css//App.css";
+
+import "./css/style-responsive.css";
 
 const App = ({ loadUser, isAuthenticated }) => {
   useEffect(() => {
@@ -36,8 +37,6 @@ const App = ({ loadUser, isAuthenticated }) => {
   return (
     <Fragment>
       {isAuthenticated && <Header />}
-      <Alert />
-
       <Switch>
         <Route exact path={"/login"} component={LoginPage} />
         <PrivateRoute exact path="/" component={HomePage} />

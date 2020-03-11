@@ -66,7 +66,8 @@ export const login = (email, password) => async dispach => {
     const token = await response.json();
     console.log(token);
     if (token.error) {
-      dispach(setAlert("Invalid crede", "denger"));
+      console.log(token.error);
+      dispach(setAlert("Invalid credential", "danger"));
       return dispach({ type: LOGIN_FAIL });
     }
     dispach({
@@ -78,7 +79,7 @@ export const login = (email, password) => async dispach => {
     console.log(err);
     if (err) {
       err.forEach(error => {
-        setAlert("Invalid crede", "denger");
+        setAlert("Invalid credential", "danger");
       });
     }
     dispach({ type: LOGIN_FAIL });
