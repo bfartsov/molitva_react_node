@@ -158,16 +158,15 @@ router.post(
 
 router.put(
   "/:id",
-  [
-    check("title", "Title is required").exists(),
-    check("description", "description is required").exists(),
-    check("img", "Image is required").exists(),
-    check("video", "Video URL is required").exists(),
-    check("date", "Date is required").exists(),
-    check("id", "Invalid ID")
-      .isMongoId()
-      .trim()
-  ],
+  // [
+  //   check("title", "Title is required").exists(),
+  //   check("description", "description is required").exists(),
+  //   check("video", "Video URL is required").exists(),
+  //   check("date", "Date is required").exists(),
+  //   check("id", "Invalid ID")
+  //     .isMongoId()
+  //     .trim()
+  // ],
   upload,
   auth,
   async (req, res) => {
@@ -189,10 +188,11 @@ router.put(
           ]
         });
       }
-      const url = fullUrl(req);
-
+      // const url = fullUrl(req);
       const resizeImg = await resizeImage(req.file, 360, 174);
-      const img = path.join(url, resizeImg.options.fileOut);
+      const img = resizeImg.options.fileOut.split("/");
+      console.log(img[2]);
+      //const img = path.join(url, resizeImg.options.fileOut);
       video.title = req.body.title;
       video.description = req.body.description;
       video.img = img;

@@ -3,10 +3,11 @@ import { fetchData } from "../../utils/helpers";
 import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { edit } from "../../redux/actions/edit";
+import { save } from "../../redux/actions/save";
 
 import Input from "./imput";
 import Buttons from "./button";
-const Edit = ({ match, edit, items }) => {
+const Edit = ({ match, edit, items, save }) => {
   const [names, setName] = useState({});
 
   useEffect(() => {
@@ -15,14 +16,19 @@ const Edit = ({ match, edit, items }) => {
   }, []);
   const handnleSave = e => {
     e.preventDefault();
+    const category = match.url.split("/");
+    const url = `http://localhost:8080/api/${category[1]}/${match.params.id}`;
+
+    save(url, names);
   };
 
   const handleChange = e => {
     let name = e.target.name;
-    const value = e.target.value;
-    const newItem = {};
-    newItem[name] = value;
+    const value = name === "img" ? e.target.files[0] : e.target.value;
 
+    const newItem = {};
+
+    newItem[name] = value;
     setName({ ...names, ...newItem });
   };
   return (
@@ -58,7 +64,8 @@ const Edit = ({ match, edit, items }) => {
                       item === "__v" ||
                       item === "dateCreated" ||
                       item === "updated" ||
-                      item === "name"
+                      item === "name" ||
+                      item === "desciption"
                     ) {
                       return "";
                     } else {
@@ -86,4 +93,4 @@ const Edit = ({ match, edit, items }) => {
 const mapStateToProps = state => ({
   items: state.edit
 });
-export default connect(mapStateToProps, { edit })(Edit);
+export default connect(mapStateToProps, { edit, save })(Edit);
