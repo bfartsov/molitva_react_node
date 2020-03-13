@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import HomePage from "./commponents/pages/home/homePage";
 import LoginPage from "./commponents/pages/login/loginPage";
 import VideoPage from "./commponents/pages/videos/videoPage";
+import EditVIdeo from "./commponents/pages/videos/videoEdit";
+
 import BannerPage from "./commponents/pages/banners/bannerPage";
 import EventPage from "./commponents/pages/events/eventPage";
 import NewsPage from "./commponents/pages/news/newsPage";
@@ -42,7 +44,7 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/videos" component={VideoPage} />
 
-        <PrivateRoute exact path="/videos/edit/:id" component={Edit} />
+        <PrivateRoute exact path="/videos/edit/:id" component={EditVIdeo} />
         <PrivateRoute exact path="/banners" component={BannerPage} />
         <PrivateRoute exact path="/banners/edit/:id" component={Edit} />
         <PrivateRoute exact path="/events" component={EventPage} />
