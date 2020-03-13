@@ -9,12 +9,15 @@ const EditVIdeo = ({ match, edit, video, save }) => {
   useEffect(() => {
     edit("videos", match.params.id);
   }, []);
-  const defautValue = {
-    title: video.ttile,
-    description: video.description,
-    video: video.video
-  };
-  const [names, setName] = useState(defautValue);
+
+  const [names, setName] = useState({
+    title: video.ttile || "",
+    description: video.description || "",
+    video: video.video || "",
+    img: video.img || "",
+    dateCreated: video.dateCreated || "",
+    feature: video.feature || ""
+  });
 
   const handnleSave = e => {
     e.preventDefault();
@@ -32,6 +35,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
     newItem[name] = value;
     setName({ ...names, ...newItem });
   };
+  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -55,7 +59,8 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                       <input
                         onChange={onChange}
                         type="text"
-                        defaultValue={video.title}
+                        value={video.title}
+                        // defaultValue={video.title}
                         name="title"
                         className="form-control"
                       />
@@ -89,12 +94,17 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                       />
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
                       Image
                     </label>
-                    <div class="col-md-4">
-                      <input type="file" class="default" />
+                    <div className="col-md-4">
+                      <input
+                        onChange={e => onChange(e)}
+                        type="file"
+                        name="img"
+                        className="default"
+                      />
                     </div>
                   </div>
                   <div className="form-group">
@@ -113,15 +123,15 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                           type="date"
                           value={video.dateCreated}
                           size="16"
-                          class="form-control"
+                          className="form-control"
                         />
-                        <span class="input-group-btn add-on">
-                          <button class="btn btn-theme" type="button">
-                            <i class="fa fa-calendar"></i>
+                        <span className="input-group-btn add-on">
+                          <button className="btn btn-theme" type="button">
+                            <i className="fa fa-calendar"></i>
                           </button>
                         </span>
                       </div>
-                      <span class="help-block">Select date</span>
+                      <span className="help-block">Select date</span>
                     </div>
                   </div>
                   <div className="form-group">
