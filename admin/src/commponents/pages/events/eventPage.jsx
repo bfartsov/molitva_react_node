@@ -9,8 +9,8 @@ const  EventPage=({events, getEvents, loading,  history, location})=> {
     getEvents()
   }, []);
   
-  const handleDelete = e => {
-    e.preventDefault();
+  const handleDelete = id => {
+    console.log(id)
   };
   console.log(events)
   return (
