@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Alert from '../../alert'
 import { connect } from "react-redux";
-import { getEvents } from "../../../redux/actions/events";
+import { getEvents, removeEvent } from "../../../redux/actions/events";
 import "../../../css/table-responsive.css";
 
-const  EventPage=({events, getEvents, loading,  history, location})=> {
+const  EventPage=({events, getEvents, loading,  history, removeEvent, location})=> {
   useEffect(() => {
     getEvents()
   }, []);
   
   const handleDelete = id => {
     console.log(id)
+    removeEvent(id)
   };
   console.log(events)
   return (
@@ -89,4 +90,4 @@ const mapStateToProps = state=>({
   events: state.events.events,
   loading: state.events.loading
 });
-export default connect(mapStateToProps, {getEvents})(EventPage);
+export default connect(mapStateToProps, {getEvents, removeEvent})(EventPage);

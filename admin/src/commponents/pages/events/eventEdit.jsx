@@ -20,6 +20,7 @@ const EditEvent = ({ match, edit, event, save }) => {
   };
 
   const onChange = e => {
+    e.preventDefault()
     let name = e.target.name;
     const value = name === "img" ? e.target.files[0] : e.target.value;
 
@@ -51,10 +52,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                        onChange={e=>onChange(e)}
                         type="text"
                         value={event.title}
-                        // defaultValue={video.title}
                         name="title"
                         className="form-control"
                       />
@@ -66,10 +66,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                       onChange={e=>onChange(e)}
                         type="text"
                         value={event.place}
-                        // defaultValue={video.title}
                         name="place"
                         className="form-control"
                       />
@@ -81,10 +80,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                       onChange={e=>onChange(e)}
                         type="date"
                         value={event.date}
-                        // defaultValue={video.title}
                         name="date"
                         className="form-control"
                       />
@@ -96,10 +94,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                         onChange={e=>onChange(e)}
                         type="time"
                         value={event.startTime}
-                        // defaultValue={video.title}
                         name="startTime"
                         className="form-control"
                       />
@@ -111,10 +108,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
-                        type="text"
+                       onChange={e=>onChange(e)}
+                        type="time"
                         value={event.endTime}
-                        // defaultValue={video.title}
                         name="endTime"
                         className="form-control"
                       />
@@ -126,10 +122,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                         onChange={e=>onChange(e)}
                         type="text"
                         value={event.region}
-                        // defaultValue={video.title}
                         name="region"
                         className="form-control"
                       />
@@ -141,10 +136,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                         onChange={e=>onChange(e)}
                         type="text"
                         value={event.city}
-                        // defaultValue={video.title}
                         name="city"
                         className="form-control"
                       />
@@ -156,10 +150,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                        onChange={e=>onChange(e)}
                         type="text"
                         value={event.desciption}
-                        // defaultValue={video.title}
                         name="description"
                         className="form-control"
                       />

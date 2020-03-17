@@ -1,4 +1,4 @@
-import { GET_EVENTS } from "../actions/types";
+import { GET_EVENTS, REMOVE_EVENT_SUCCESS } from "../actions/types";
 
 const initialState = {
   events: [],
@@ -14,6 +14,12 @@ export default function(state = initialState, actions) {
         events: payload.events,
         loading: false
       };
+      case REMOVE_EVENT_SUCCESS:
+      return{
+        ...state,
+        events: state.events.filter(event=>event._id!==payload),
+        loading: false
+      } 
     
     default:
       return state;
