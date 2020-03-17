@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { getBanners } from "../../../redux/actions/banners";
+import Alert from '../../alert'
 
-const BannerPage = ({ banners, loading, getBanners , history}) => {
+import { connect } from "react-redux";
+import { getBanners, removeBanner } from "../../../redux/actions/banners";
+
+const BannerPage = ({ banners, loading, getBanners , removeBanner, history}) => {
   useEffect(() => {
     getBanners();
   }, []);
 
-  const handleDelete = e => {
-    e.preventDefault();
+  const handleDelete = id => {
+   removeBanner(id)
+   
   };
   return (
     <section id="main-content">
@@ -20,7 +23,7 @@ const BannerPage = ({ banners, loading, getBanners , history}) => {
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-                <i className="fa fa-angle-right"></i> Responsive Table
+              <Alert/>
               </h4>
               <section id="unseen">
                 <table className="table table-bordered table-striped table-condensed">
@@ -34,7 +37,7 @@ const BannerPage = ({ banners, loading, getBanners , history}) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {banners.map(banner => {
+                    {banners.length>0 && !loading && banners.map(banner => {
                       return (
                         <tr key={banner._id}>
                           <td> {banner._id}</td>
@@ -55,7 +58,7 @@ const BannerPage = ({ banners, loading, getBanners , history}) => {
                             </button>
                             <button
                               id={banner._id}
-                              onClick={handleDelete}
+                              onClick={()=>handleDelete(banner._id)}
                               className="btn btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>
@@ -78,4 +81,4 @@ const mapStateToProps = state => ({
   banners: state.banners.banners,
   loading: state.banners.loading
 });
-export default connect(mapStateToProps, { getBanners })(BannerPage);
+export default connect(mapStateToProps, { getBanners, removeBanner })(BannerPage);

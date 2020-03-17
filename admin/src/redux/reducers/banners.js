@@ -1,9 +1,8 @@
-import { GET_BANNERS } from "../actions/types";
+import { GET_BANNERS, REMOVE_BANNER_SUCCESS, REMOVE_BANNER_FAIL } from "../actions/types";
 
 const initialState = {
   banners: [],
-  title: {},
-  items: [],
+ 
   loading: true
 };
 
@@ -15,8 +14,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         banners: payload.banners,
-        title: payload.title,
-        items: payload.items,
+        loading: false
+      };
+      case REMOVE_BANNER_SUCCESS:
+      return {
+        ...state,
+        banners: state.banners.filter(banner=>banner._id !== payload),
         loading: false
       };
     default:

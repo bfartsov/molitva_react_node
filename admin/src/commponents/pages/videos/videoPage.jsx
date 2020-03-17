@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import Table from "../../table";
+import Alert from '../../alert'
 import { connect } from "react-redux";
-import { getVideos } from "../../../redux/actions/videos";
+import { getVideos, removeVideo } from "../../../redux/actions/videos";
 
 import "../../../css/table-responsive.css";
 
-const VideoPage = ({ getVideos, videos, loading, history, location }) => {
+const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo }) => {
   useEffect(() => {
     getVideos();
   }, []);
 
-  const handleDelete = e => {
-    e.preventDefault();
+  const handleDelete = (id) => {
+      removeVideo(id)
   };
 
   return (
@@ -24,7 +24,8 @@ const VideoPage = ({ getVideos, videos, loading, history, location }) => {
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-                <i className="fa fa-angle-right"></i> Responsive Table
+              <Alert/>
+
               </h4>
               <section id="unseen">
                 <table className="table table-bordered table-striped table-condensed">
@@ -41,7 +42,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {videos.map(video => {
+                    {videos.length>0 && videos.map(video => {
                       return (
                         <tr key={video._id}>
                           <td> {video._id}</td>
@@ -64,8 +65,8 @@ const VideoPage = ({ getVideos, videos, loading, history, location }) => {
                             </button>
                             <button
                               id={video._id}
-                              onClick={handleDelete}
-                              className="btn btn-danger btn-xs"
+                              onClick={()=>handleDelete(video._id)}
+                              className="btn remove btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>
                             </button>
@@ -90,4 +91,4 @@ const mapStateToProps = state => ({
   title: state.videos.title,
   loading: state.videos.loading
 });
-export default connect(mapStateToProps, { getVideos })(VideoPage);
+export default connect(mapStateToProps, { getVideos, removeVideo })(VideoPage);

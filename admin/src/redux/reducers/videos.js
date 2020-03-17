@@ -1,9 +1,7 @@
-import { GET_VIDEOS } from "../actions/types";
+import { GET_VIDEOS, REMOVE_VIDEO_SUCCESS, REMOVE_VIDEO_FAIL } from "../actions/types";
 
 const initialState = {
   videos: [],
-  title: {},
-  items: [],
   loading: true
 };
 
@@ -17,6 +15,12 @@ export default function(state = initialState, actions) {
 
         loading: false
       };
+    case REMOVE_VIDEO_SUCCESS:
+      return{
+        ...state,
+        videos: state.videos.filter(video=>video._id!==payload),
+        loading: false
+      } 
     default:
       return state;
   }

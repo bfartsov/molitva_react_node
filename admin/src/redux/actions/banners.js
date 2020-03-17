@@ -1,28 +1,35 @@
-import { GET_BANNERS } from "./types";
+import { GET_BANNERS, REMOVE_BANNER_SUCCESS } from "./types";
+import {setAlert} from './alert'
+
 import axios from "axios";
 
 export const getBanners = () => async dispach => {
   try {
     const banners = await axios.get("http://localhost:8080/api/banners");
-    let title = {};
-    let items = [];
-    if (banners.data.length > 0) {
-      banners.data.forEach(banner => {
-        const item = {
-          id: banner._id,
-          title: banner.title,
-          img: banner.banner,
-          Date: banner.eventDate
-        };
-        items.push(item);
-      });
-    }
-    items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+   console.log('banners')
     dispach({
       type: GET_BANNERS,
-      payload: { banners: banners.data, title, items }
+      payload: { banners: banners.data, }
     });
   } catch (error) {
     console.log(error);
   }
 };
+
+export const removeBanner = id=> async dispach=>{
+  try {
+    console.log('banners');
+    const banner = await axios.delete(`http://localhost:8080/api/banners/${id}`);
+    console.log(banner);
+    dispach({
+      type: REMOVE_BANNER_SUCCESS,
+      payload: id
+    });
+    dispach(setAlert('Item deleted', 'success'))
+
+  } catch (error) {
+    console.log(error)
+  }
+
+
+}
