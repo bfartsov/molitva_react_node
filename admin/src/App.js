@@ -11,13 +11,14 @@ import HomePage from "./commponents/pages/home/homePage";
 import LoginPage from "./commponents/pages/login/loginPage";
 import VideoPage from "./commponents/pages/videos/videoPage";
 import EditVIdeo from "./commponents/pages/videos/videoEdit";
+import EditBanner from "./commponents/pages/banners/banerEdit";
+
 
 import BannerPage from "./commponents/pages/banners/bannerPage";
 import EventPage from "./commponents/pages/events/eventPage";
 import NewsPage from "./commponents/pages/news/newsPage";
 import LivePage from "./commponents/pages/live/livePage";
 import Edit from "./commponents/edit/editPage";
-import Alert from "./commponents/alert";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -46,7 +47,7 @@ const App = ({ loadUser, isAuthenticated }) => {
 
         <PrivateRoute exact path="/videos/edit/:id" component={EditVIdeo} />
         <PrivateRoute exact path="/banners" component={BannerPage} />
-        <PrivateRoute exact path="/banners/edit/:id" component={Edit} />
+        <PrivateRoute exact path="/banners/edit/:id" component={EditBanner} />
         <PrivateRoute exact path="/events" component={EventPage} />
         <PrivateRoute exact path="/events/edit/:id" component={Edit} />
         <PrivateRoute exact path="/news" component={NewsPage} />

@@ -75,13 +75,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location }) => {
                     })}
                   </tbody>
                 </table>
-                {/* {videos.length > 0 && !loading && (
-                  <Table
-                    titles={title}
-                    items={items}
-                    handleDelete={handleDelete}
-                  />
-                )} */}
+               
               </section>
             </div>
           </div>

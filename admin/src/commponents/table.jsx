@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import uuid from "uuid";
+import {v4} from "uuid";
 
 import "../css/table-responsive.css";
 
@@ -21,9 +21,9 @@ const Table = ({ titles, items, handleDelete }) => {
       <tbody>
         {items.map(item => {
           return (
-            <tr key={uuid.v4()}>
+            <tr key={v4()}>
               {Object.values(item).map(value => {
-                return <td key={uuid.v4()}>{value}</td>;
+                return <td key={v4()}>{value}</td>;
               })}
               <td>
                 <button
