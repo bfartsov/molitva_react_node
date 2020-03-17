@@ -31,6 +31,12 @@ const  EventPage=({events, getEvents, loading,  history, location})=> {
                     <tr>
                       <th> Id</th>
                       <th> Title</th>
+                      <th> Plce</th>
+                      <th> Date</th>
+                      <th> Start</th>
+                      <th> End</th>
+                      <th> Region</th>
+                      <th> City</th>
                      
                       <th> Action</th>
                     </tr>
@@ -41,7 +47,12 @@ const  EventPage=({events, getEvents, loading,  history, location})=> {
                         <tr key={event._id}>
                           <td> {event._id}</td>
                           <td> {event.title}</td>
-                          
+                          <td> {event.place}</td>
+                          <td> {event.date}</td>
+                          <td> {event.startTime}</td>
+                          <td> {event.endTime}</td>
+                          <td> {event.region}</td>
+                          <td> {event.city}</td>
                           <td>
                             <button
                               onClick={() => {

@@ -15,7 +15,10 @@ import EditBanner from "./commponents/pages/banners/banerEdit";
 
 
 import BannerPage from "./commponents/pages/banners/bannerPage";
+
 import EventPage from "./commponents/pages/events/eventPage";
+import EditEvent from "./commponents/pages/events/eventEdit";
+
 import NewsPage from "./commponents/pages/news/newsPage";
 import LivePage from "./commponents/pages/live/livePage";
 import Edit from "./commponents/edit/editPage";
@@ -49,7 +52,7 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/banners" component={BannerPage} />
         <PrivateRoute exact path="/banners/edit/:id" component={EditBanner} />
         <PrivateRoute exact path="/events" component={EventPage} />
-        <PrivateRoute exact path="/events/edit/:id" component={Edit} />
+        <PrivateRoute exact path="/events/edit/:id" component={EditEvent} />
         <PrivateRoute exact path="/news" component={NewsPage} />
         <PrivateRoute exact path="/news/edit/:id" component={Edit} />
         <PrivateRoute exact path="/live" component={LivePage} />
