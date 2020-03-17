@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import alert from "./alert";
 import auth from "./auth";
 import videos from "./videos";
+import events from "./events";
 import banners from "./banners";
 import edit from "./edit";
 import save from "./save";
@@ -12,5 +13,6 @@ export default combineReducers({
   videos,
   banners,
   edit,
-  save
+  save,
+  events
 });

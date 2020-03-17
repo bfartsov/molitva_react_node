@@ -87,8 +87,6 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
 };
 const mapStateToProps = state => ({
   videos: state.videos.videos,
-  items: state.videos.items,
-  title: state.videos.title,
   loading: state.videos.loading
 });
 export default connect(mapStateToProps, { getVideos, removeVideo })(VideoPage);

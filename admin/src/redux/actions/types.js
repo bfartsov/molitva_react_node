@@ -9,6 +9,7 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const GET_VIDEOS = "GET_VIDEOS";
 export const GET_BANNERS = "GET_BANNERS";
+export const GET_EVENTS= "GET_BANNERS";
 export const EDIT = "EDIT";
 export const SAVE = "SAVE";
 export const REMOVE_VIDEO_SUCCESS = "REMOVE_VIDEO_SUCCESS";

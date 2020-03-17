@@ -1,36 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../utils/helpers";
-import Table from "../../table";
+import Alert from '../../alert'
+import { connect } from "react-redux";
+import { getEvents } from "../../../redux/actions/events";
 import "../../../css/table-responsive.css";
 
-function EventPage() {
-  const [events, setEvents] = useState("");
+const  EventPage=({events, getEvents, loading,  history, location})=> {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/events", setEvents);
+    getEvents()
   }, []);
-  let title = {};
-  let items = [];
-  if (events.length > 0) {
-    events.map(event => {
-      const item = {
-        id: event._id,
-        title: event.title,
-        description: event.description,
-        img: event.img,
-        date: event.date,
-        place: event.place,
-        start: event.startTime,
-        end: event.endTime,
-        city: event.city,
-        region: event.region
-      };
-      items.push(item);
-    });
-  }
-  items.length > 0 ? (title = Object.keys(items[0])) : (title = {});
+  
   const handleDelete = e => {
     e.preventDefault();
   };
+  console.log(events)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -44,13 +26,46 @@ function EventPage() {
                 <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {events && (
-                  <Table
-                    titles={title}
-                    items={items}
-                    handleDelete={handleDelete}
-                  />
-                )}
+              <table className="table table-bordered table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <th> Id</th>
+                      <th> Title</th>
+                     
+                      <th> Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {events.length>0 && !loading && events.map(event => {
+                      return (
+                        <tr key={event._id}>
+                          <td> {event._id}</td>
+                          <td> {event.title}</td>
+                          
+                          <td>
+                            <button
+                              onClick={() => {
+                                history.push(
+                                  `${location.pathname}/edit/${event._id}`
+                                );
+                              }}
+                              className="btn btn-primary btn-xs"
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </button>
+                            <button
+                              id={event._id}
+                              onClick={()=>handleDelete(event._id)}
+                              className="btn remove btn-danger btn-xs"
+                            >
+                              <i className="fa fa-trash-o "></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </section>
             </div>
           </div>
@@ -59,5 +74,8 @@ function EventPage() {
     </section>
   );
 }
-
-export default EventPage;
+const mapStateToProps = state=>({
+  events: state.events.events,
+  loading: state.events.loading
+});
+export default connect(mapStateToProps, {getEvents})(EventPage);
