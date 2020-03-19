@@ -9,7 +9,8 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const GET_VIDEOS = "GET_VIDEOS";
 export const GET_BANNERS = "GET_BANNERS";
-export const GET_EVENTS= "GET_BANNERS";
+export const GET_EVENTS= "GET_EVENTS";
+export const GET_NEWS= "GET_NEWS";
 export const EDIT = "EDIT";
 export const SAVE = "SAVE";
 export const REMOVE_VIDEO_SUCCESS = "REMOVE_VIDEO_SUCCESS";
@@ -17,6 +18,8 @@ export const REMOVE_VIDEO_FAIL = "REMOVE_VIDEO_FAIL";
 export const REMOVE_BANNER_SUCCESS = "REMOVE_BANNER_SUCCESS";
 export const REMOVE_BANNER_FAIL = "REMOVE_BANNER_FAIL";
 export const REMOVE_EVENT_SUCCESS = "REMOVE_EVENT_SUCCESS";
+export const REMOVE_NEWS_SUCCESS = "REMOVE_NEWS_SUCCESS";
+
 export const REMOVE_EVENT_FAIL = "REMOVE_EVENT_FAIL";
 
 
