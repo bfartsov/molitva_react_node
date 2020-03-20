@@ -1,11 +1,13 @@
 import { EDIT } from "../actions/types";
-const initialState = {};
+const initialState = {
+  loading: true
+};
 
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case EDIT:
-      return { ...state, ...payload };
+      return { ...state, ...payload, loading: false };
 
     default:
       return state;
