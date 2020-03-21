@@ -1,31 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../utils/helpers";
-import Table from "../../table";
+import { connect } from "react-redux";
+import { getLive } from "../../../redux/actions/live";
 import "../../../css/table-responsive.css";
 
-const LivePage = () => {
-  const [live, setLive] = useState("");
+const LivePage = ({ getLive, loading, live, history, location }) => {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/live", setLive);
+    getLive()
   }, []);
-  let title = {};
-  let items = [];
-  if (live) {
-    const item = {
-      id: live._id,
-      url: live.url,
-
-      type: live.type,
-
-      player: live.player
-    };
-    items.push(item);
-  }
-
-  items.length > 0 ? (title = Object.keys(items[0])) : (title = []);
   const handleDelete = e => {
-    e.preventDefault();
+
   };
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -36,16 +21,52 @@ const LivePage = () => {
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-                <i className="fa fa-angle-right"></i> Responsive Table
               </h4>
               <section id="unseen">
-                {live && (
-                  <Table
-                    titles={title}
-                    items={items}
-                    handleDelete={handleDelete}
-                  />
-                )}
+                <table className="table table-bordered table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <th> Id</th>
+                      <th> Url</th>
+
+                      <th> Type</th>
+                      <th> Player</th>
+                      <th> Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {!loading &&
+                      (
+                        <tr >
+                          <td> {live._id}</td>
+                          <td> {live.url}</td>
+                          <td> {live.type}</td>
+                          <td> {live.player}</td>
+
+                          <td>
+                            <button
+                              onClick={() => {
+                                history.push(
+                                  `${location.pathname}/edit/${live._id}`
+                                );
+                              }}
+                              className="btn btn-primary btn-xs"
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </button>
+                            <button
+                              id={live._id}
+                              onClick={() => handleDelete(live._id)}
+                              className="btn remove btn-danger btn-xs"
+                            >
+                              <i className="fa fa-trash-o "></i>
+                            </button>
+                          </td>
+                        </tr>
+
+                      )}
+                  </tbody>
+                </table>
               </section>
             </div>
           </div>
@@ -54,5 +75,8 @@ const LivePage = () => {
     </section>
   );
 };
-
-export default LivePage;
+const mapStateToProps = state => ({
+  live: state.live.live,
+  loading: state.live.loading
+});
+export default connect(mapStateToProps, { getLive })(LivePage);

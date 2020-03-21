@@ -7,6 +7,7 @@ import banners from "./banners";
 import edit from "./edit";
 import save from "./save";
 import news from "./news";
+import live from "./live";
 
 export default combineReducers({
   alert,
@@ -16,5 +17,6 @@ export default combineReducers({
   edit,
   save,
   events,
-  news
+  news,
+  live
 });

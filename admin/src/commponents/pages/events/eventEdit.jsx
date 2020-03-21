@@ -5,13 +5,33 @@ import { save } from "../../../redux/actions/save";
 
 import Buttons from "../../edit/button";
 const EditEvent = ({ match, edit, event, save }) => {
+  const [formData, setFormData] = useState({
+    titile: '',
+    place: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    reagion: '',
+    city: '',
+    description: '',
+    img: ''
+  });
   useEffect(() => {
     edit("events", match.params.id);
-  }, []);
+    setFormData({
+      titile: event.title ? event.title : '',
+      place: event.place ? event.place : '',
+      date: event.date ? event.date : '',
+      startTime: event.startTime ? event.startTime : '',
+      endTime: event.endTime ? event.endTime : '',
+      reagion: event.region ? event.region : '',
+      city: event.city ? event.city : '',
+      description: event.description? event.description: '',
+      img: event.img ? event.img : ''
+    })
+  }, [event.loading]);
 
-  const [names, setName] = useState({
-   
-  });
+
 
   const handnleSave = e => {
     e.preventDefault();
@@ -19,32 +39,21 @@ const EditEvent = ({ match, edit, event, save }) => {
     //save(url, names);
   };
 
-  const onChange = e => {
-    e.preventDefault()
-    let name = e.target.name;
-    const value = name === "img" ? e.target.files[0] : e.target.value;
-
-    const newItem = {};
-
-    newItem[name] = value;
-    setName({ ...names, ...newItem });
-    
-  };
-  console.log(names)
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  console.log(formData)
   return (
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Form Components
+          <i className="fa fa-angle-right"></i> Events
         </h3>
 
         <div className="row mt">
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
-                <i className="fa fa-angle-right"></i> Form Elements
               </h4>
-              {event && (
+              {event && !event.loading && (
                 <form className="form-horizontal style-form">
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
@@ -52,9 +61,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
-                        value={event.title}
+                        defaultValue={event.title}
                         name="title"
                         className="form-control"
                       />
@@ -66,9 +75,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                       onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
-                        value={event.place}
+                        defaultValue={event.place}
                         name="place"
                         className="form-control"
                       />
@@ -80,9 +89,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                       onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="date"
-                        value={event.date}
+                        defaultValue={event.date}
                         name="date"
                         className="form-control"
                       />
@@ -94,9 +103,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                         onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="time"
-                        value={event.startTime}
+                        defaultValue={event.startTime}
                         name="startTime"
                         className="form-control"
                       />
@@ -108,9 +117,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                       onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="time"
-                        value={event.endTime}
+                        defaultValue={event.endTime}
                         name="endTime"
                         className="form-control"
                       />
@@ -122,9 +131,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                         onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
-                        value={event.region}
+                        defaultValue={event.region}
                         name="region"
                         className="form-control"
                       />
@@ -136,9 +145,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                         onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
-                        value={event.city}
+                        defaultValue={event.city}
                         name="city"
                         className="form-control"
                       />
@@ -150,9 +159,9 @@ const EditEvent = ({ match, edit, event, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
-                        value={event.desciption}
+                        defaultValue={event.desciption}
                         name="description"
                         className="form-control"
                       />
@@ -171,7 +180,7 @@ const EditEvent = ({ match, edit, event, save }) => {
                       />
                     </div>
                   </div>
-                
+
 
                   <Buttons handnleSave={handnleSave} />
                 </form>

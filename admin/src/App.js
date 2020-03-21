@@ -23,6 +23,8 @@ import NewsPage from "./commponents/pages/news/newsPage";
 import EditNews from "./commponents/pages/news/newsEdit";
 
 import LivePage from "./commponents/pages/live/livePage";
+import EditLIve from "./commponents/pages/live/liveEdit";
+
 import Edit from "./commponents/edit/editPage";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
@@ -58,7 +60,7 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/news" component={NewsPage} />
         <PrivateRoute exact path="/news/edit/:id" component={EditNews} />
         <PrivateRoute exact path="/live" component={LivePage} />
-        <PrivateRoute exact path="/live/edit/:id" component={Edit} />
+        <PrivateRoute exact path="/live/edit/:id" component={EditLIve} />
       </Switch>
       <Footer />
     </Fragment>

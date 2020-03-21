@@ -5,33 +5,29 @@ import { save } from "../../../redux/actions/save";
 
 import Buttons from "../../edit/button";
 const EditBanner = ({ match, edit, banner, save }) => {
+  const [formData, setFormData] = useState({
+    title:  "",
+    img:  "",
+    eventDate:  "",
+  });
   useEffect(() => {
     edit("banners", match.params.id);
-  }, []);
+    setFormData({
+      title: !banner.loading && banner ? banner.title : "",
+      img: !banner.loading && banner ?  banner.banner : "",
+      eventDate: !banner.loading && banner ?  banner.eventDate : ""
+    })
+  }, [banner.loading]);
 
-  const [names, setName] = useState({
-    title: banner.ttile || "",
-    img: banner.banner || "",
-    eventDate: banner.eventDate || "",
-  });
+
 
   const handnleSave = e => {
     e.preventDefault();
     const url = `http://localhost:8080/api/banners/${match.params.id}`;
-    console.log(names);
     //save(url, names);
   };
 
-  const onChange = e => {
-    let name = e.target.name;
-    const value = name === "img" ? e.target.files[0] : e.target.value;
-
-    const newItem = {};
-
-    newItem[name] = value;
-    setName({ ...names, ...newItem });
-  };
-  console.log(names);
+  const onChange = e =>  setFormData({ ...formData, [e.target.name]:e.target.value });
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -45,7 +41,7 @@ const EditBanner = ({ match, edit, banner, save }) => {
               <h4 className="mb">
                 <i className="fa fa-angle-right"></i> Form Elements
               </h4>
-              {banner && (
+              {banner && !banner.loading && (
                 <form className="form-horizontal style-form">
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
@@ -53,10 +49,9 @@ const EditBanner = ({ match, edit, banner, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                        onChange={e=>onChange(e)}
                         type="text"
-                        value={banner.title}
-                        // defaultValue={video.title}
+                        defaultValue={banner.title}
                         name="title"
                         className="form-control"
                       />
@@ -69,7 +64,7 @@ const EditBanner = ({ match, edit, banner, save }) => {
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={e => setFormData({...formData, img: e.target.files[0]})}
                         type="file"
                         name="img"
                         className="default"
@@ -82,15 +77,13 @@ const EditBanner = ({ match, edit, banner, save }) => {
                     </label>
                     <div className="col-sm-9">
                       <div
-                        data-date-viewmode="years"
-                        data-date-format="dd-mm-yyyy"
-                        data-date="01-01-2014"
-                        class="input-append date dpYears"
+                        
+                        className="input-append date dpYears"
                       >
                         <input
                           onChange={e => onChange(e)}
                           type="date"
-                          value={banner.eventDate}
+                          defaultValue={banner.eventDate}
                           size="16"
                           className="form-control"
                         />
