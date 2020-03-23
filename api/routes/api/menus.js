@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     const menus = await Menus.find();
     if (menus.length <= 0) {
       return res.status(400).json({
-        msg: "No information found"
+        msg: "No menus found"
       });
     }
     const sortedMenus = menus.sort((a, b) => {
@@ -21,6 +21,8 @@ router.get("/", async (req, res) => {
     res.status(200).json(sortedMenus);
   } catch (error) {}
 });
+
+
 router.get("/id/:id", async (req, res) => {
   try {
     console.log(req.params.id);
@@ -28,11 +30,11 @@ router.get("/id/:id", async (req, res) => {
     console.log(menu);
     if (!menu) {
       return res.status(400).json({
-        msg: "No information found"
+        msg: "No menu found"
       });
     }
-    console.log("in");
     res.status(200).json(menu);
   } catch (error) {}
 });
+
 module.exports = router;

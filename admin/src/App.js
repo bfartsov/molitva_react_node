@@ -25,6 +25,13 @@ import EditNews from "./commponents/pages/news/newsEdit";
 import LivePage from "./commponents/pages/live/livePage";
 import EditLIve from "./commponents/pages/live/liveEdit";
 
+import MenuPage from "./commponents/pages/menus/menuPage";
+import EditMenu from "./commponents/pages/menus/menuEdit";
+import SubMenuedit from "./commponents/pages/menus/subMenuEdit";
+
+
+
+
 import Edit from "./commponents/edit/editPage";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
@@ -61,6 +68,12 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/news/edit/:id" component={EditNews} />
         <PrivateRoute exact path="/live" component={LivePage} />
         <PrivateRoute exact path="/live/edit/:id" component={EditLIve} />
+        <PrivateRoute exact path="/menus" component={MenuPage} />
+        <PrivateRoute exact path="/menus/edit/:id" component={EditMenu} />
+        <PrivateRoute exact path="/menus/edit/:id/subMenu/:subMenu" component={SubMenuedit} />
+
+
+
       </Switch>
       <Footer />
     </Fragment>

@@ -8,7 +8,7 @@ import edit from "./edit";
 import save from "./save";
 import news from "./news";
 import live from "./live";
-
+import menus from "./menus"
 export default combineReducers({
   alert,
   auth,
@@ -18,5 +18,6 @@ export default combineReducers({
   save,
   events,
   news,
-  live
+  live,
+  menus
 });
