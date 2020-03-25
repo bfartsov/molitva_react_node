@@ -1,16 +1,21 @@
 import { SAVE } from "./types";
+import { setAlert } from "./alert";
+
 import axios from "axios";
 
 export const save = (url, data) => async dispach => {
   try {
     let formData = new FormData();
-    console.log(formData)
     for ( var key in data ) {
       formData.append(key, data[key]);
-  }
-  console.log(formData)
+  };
     const res = await axios.put(url, formData);
-    console.log(res)
+    dispach({
+      type: SAVE,
+      payload: res.data
+    });
+    res.status ===200 && dispach(setAlert('Item edited', 'success'));
+
   } catch (error) {
     console.log(error.response);
   }

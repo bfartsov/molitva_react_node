@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import Alert from '../../alert'
+
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
 import { save } from "../../../redux/actions/save";
 
 
 import Buttons from "../../edit/button";
-const EditVIdeo = ({ match, edit, video, save }) => {
+const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
 
 
   const [formData, setFormData] = useState({
@@ -27,7 +30,8 @@ const EditVIdeo = ({ match, edit, video, save }) => {
       dateCreated: video.dateCreated ? video.dateCreated : "",
       feature: video.feature ? video.feature : ""
     });
-  }, [video.loading])
+
+  }, [video.loading, editLoading])
 
 
   const handnleSave = e => {
@@ -38,11 +42,11 @@ const EditVIdeo = ({ match, edit, video, save }) => {
 
     save(url, formData);
   };
-  const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
+  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  console.log(formData)
 
   return (
+    // !editLoading?  history.push('/videos'):
     <section id="main-content">
       <section className="wrapper">
         <h3>
@@ -53,7 +57,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
-                <i className="fa fa-angle-right"></i> Form Elements
+                <Alert />
               </h4>
               {video && (
                 <form className="form-horizontal style-form">
@@ -63,7 +67,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e=>onChange(e)}
+                        onChange={e => onChange(e)}
                         type="text"
                         defaultValue={formData.title}
                         name="title"
@@ -105,7 +109,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e => setFormData({...formData, img: e.target.files[0]})}
+                        onChange={e => setFormData({ ...formData, img: e.target.files[0] })}
                         type="file"
                         name="img"
                         className="default"
@@ -166,6 +170,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
   );
 };
 const mapStateToProps = state => ({
-  video: state.edit
+  video: state.edit,
+  editLoading: state.save.loading
 });
 export default connect(mapStateToProps, { edit, save })(EditVIdeo);
