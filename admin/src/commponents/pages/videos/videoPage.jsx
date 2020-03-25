@@ -11,7 +11,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
   }, []);
 
   const handleDelete = (id) => {
-      removeVideo(id)
+    removeVideo(id)
   };
 
   return (
@@ -24,10 +24,18 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-              <Alert/>
+                <Alert />
 
               </h4>
               <section id="unseen">
+                <div className="form-group">
+                  <div className="col-lg-offset-2 col-lg-10">
+                    <button className="btn btn-theme" onClick={()=>history.push('/videos/add')} >
+                      Add video
+                    </button>
+
+                  </div>
+                </div>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
@@ -42,7 +50,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
                     </tr>
                   </thead>
                   <tbody>
-                    {videos.length>0 && videos.map(video => {
+                    {videos.length > 0 && videos.map(video => {
                       return (
                         <tr key={video._id}>
                           <td> {video._id}</td>
@@ -65,7 +73,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
                             </button>
                             <button
                               id={video._id}
-                              onClick={()=>handleDelete(video._id)}
+                              onClick={() => handleDelete(video._id)}
                               className="btn remove btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>
@@ -76,7 +84,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
                     })}
                   </tbody>
                 </table>
-               
+
               </section>
             </div>
           </div>

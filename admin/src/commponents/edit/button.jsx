@@ -4,12 +4,12 @@ const Buttons = ({ handnleSave, handleCancel }) => {
   return (
     <div className="form-group">
       <div className="col-lg-offset-2 col-lg-10">
-        <button className="btn btn-theme" onClick={handnleSave}>
+        <button className="btn btn-theme" onClick={e=>handnleSave(e)}>
           Save
         </button>
         <button
           className="btn btn-theme04"
-          onClick={handleCancel}
+          onClick= {e=>handleCancel()}
           type="button"
         >
           Cancel

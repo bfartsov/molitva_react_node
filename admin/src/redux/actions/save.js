@@ -1,9 +1,9 @@
-import { SAVE } from "./types";
+import { SAVE} from "./types";
 import { setAlert } from "./alert";
 
 import axios from "axios";
 
-export const save = (url, data) => async dispach => {
+export const save = (url, data, history, path) => async dispach => {
   try {
     let formData = new FormData();
     for ( var key in data ) {
@@ -14,8 +14,8 @@ export const save = (url, data) => async dispach => {
       type: SAVE,
       payload: res.data
     });
-    res.status ===200 && dispach(setAlert('Item edited', 'success'));
-
+    res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+    res.status ===200 && history.push(path)
   } catch (error) {
     console.log(error.response);
   }

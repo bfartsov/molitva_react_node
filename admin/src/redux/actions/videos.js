@@ -31,16 +31,16 @@ export const removeVideo = (id)=> async dispach =>{
   }
 };
 
-export const saveVideo = (formData)=> async dispach =>{
-  const confit = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  console.log(formData)
-  const data = new FormData()
+export const saveVideo = (data)=> async dispach =>{
+  console.log(data)
+ 
+  let formData = new FormData();
+  for ( var key in data ) {
+    formData.append(key, data[key]);
+};
 
-  // const videos = await axios.post("http://localhost:8080/api/videos");
+  const videos = await axios.post("http://localhost:8080/api/videos",formData );
+  console.log(videos)
 
 }
 

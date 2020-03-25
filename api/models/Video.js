@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 const VideoSchema = new Schema({
   title: {
     type: String,
-    require: true
   },
-  desciption: {
+  description: {
     type: String
   },
   img: {
@@ -16,7 +15,7 @@ const VideoSchema = new Schema({
 
   },
   date: {
-    type: Number
+    
   }
 });
 

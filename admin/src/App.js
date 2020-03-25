@@ -11,6 +11,8 @@ import HomePage from "./commponents/pages/home/homePage";
 import LoginPage from "./commponents/pages/login/loginPage";
 import VideoPage from "./commponents/pages/videos/videoPage";
 import EditVIdeo from "./commponents/pages/videos/videoEdit";
+import AddVideo from "./commponents/pages/videos/videoAdd";
+
 import EditBanner from "./commponents/pages/banners/banerEdit";
 
 
@@ -56,10 +58,10 @@ const App = ({ loadUser, isAuthenticated }) => {
     <Fragment>
       {isAuthenticated && <Header />}
       <Switch>
-        <Route exact path={"/login"} component={LoginPage} /> d
+        <Route exact path={"/login"} component={LoginPage} /> 
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/videos" component={VideoPage} />
-
+        <PrivateRoute exact path="/videos/add" component={AddVideo} />
         <PrivateRoute exact path="/videos/edit/:id" component={EditVIdeo} />
         <PrivateRoute exact path="/banners" component={BannerPage} />
         <PrivateRoute exact path="/banners/edit/:id" component={EditBanner} />

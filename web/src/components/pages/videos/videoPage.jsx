@@ -28,7 +28,6 @@ const VideoPage = props => {
       setVideos
     );
   }, [props.match.params.year]);
-
   return (
     <div id="main">
       <PageTitle title={"Видео"} />

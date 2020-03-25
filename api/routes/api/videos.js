@@ -117,22 +117,24 @@ router.get(
 
 router.post(
   "/",
-  [
-    check("title", "Title is required").exists(),
-    check("description", "description is required").exists(),
-    check("img", "Image is required").exists(),
-    check("video", "Video URL is required").exists(),
-    check("date", "Date is required").exists()
-  ],
+  // [
+  //   check("title", "Title is required").exists(),
+  //   check("description", "description is required").exists(),
+  //   check("img", "Image is required").exists(),
+  //   check("video", "Video URL is required").exists(),
+  //   check("date", "Date is required").exists()
+  // ],
   auth,
   upload,
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({
-        errors: errors.array()
-      });
-    }
+    console.log(req.body)
+
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(422).json({
+    //     errors: errors.array()
+    //   });
+    // }
     try {
       const resizeImg = await resizeImage(req.file, 360, 174);
       const url = fullUrl(req);
@@ -187,7 +189,12 @@ router.put(
             }
           ]
         });
-      }
+      };
+
+      const dateCreated = req.body.date;
+      let year = new Date(dateCreated).getFullYear();
+  
+
       const url = fullUrl(req);
       const resizeImg = await resizeImage(req.file, 360, 174);
       const img = resizeImg.options.fileOut.split("/");
@@ -196,7 +203,7 @@ router.put(
       video.title = req.body.title;
       video.description = req.body.description;
       video.img = cdn;
-      video.date = req.body.date;
+      video.date = year;
       video.video = req.body.video;
       const updatedVideo = await video.save();
       return res.status(200).json(updatedVideo);

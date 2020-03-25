@@ -27,7 +27,7 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
       description: video.description ? video.description : "",
       video: video.video ? video.video : "",
       img: video.img ? video.img : "",
-      dateCreated: video.dateCreated ? video.dateCreated : "",
+      date: video.date ? video.date : "",
       feature: video.feature ? video.feature : ""
     });
 
@@ -40,8 +40,10 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
 
     const url = `http://localhost:8080/api/videos/${match.params.id}`;
 
-    save(url, formData);
+    save(url, formData, history, '/videos');
   };
+  const handleCancel = ()=> history.push('/videos');
+  
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
 
@@ -50,7 +52,7 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Form Components
+          <i className="fa fa-angle-right"></i> Video
         </h3>
 
         <div className="row mt">
@@ -130,7 +132,8 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
                         <input
                           onChange={e => onChange(e)}
                           type="date"
-                          defaultValue={formData.dateCreated}
+                          name="date"
+                          defaultValue={formData.date}
                           size="16"
                           className="form-control"
                         />
@@ -159,7 +162,7 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
                       </select>
                     </div>
                   </div>
-                  <Buttons handnleSave={handnleSave} />
+                  <Buttons handnleSave={handnleSave} handleCancel={handleCancel}/>
                 </form>
               )}
             </div>
