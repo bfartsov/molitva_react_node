@@ -25,9 +25,7 @@ router.get("/", async (req, res) => {
 
 router.get("/id/:id", async (req, res) => {
   try {
-    console.log(req.params.id);
     const menu = await Menus.findById(req.params.id);
-    console.log(menu);
     if (!menu) {
       return res.status(400).json({
         msg: "No menu found"
@@ -36,5 +34,88 @@ router.get("/id/:id", async (req, res) => {
     res.status(200).json(menu);
   } catch (error) {}
 });
+
+router.post('/',  async(req, res, next)=>{
+  try {
+      // const menu = await Menu.find();
+    
+      const errors= [];
+      const {name, url, parentElement, checkActive, order} = req.body;
+
+      if(!url){
+          errors.push({text:'url is required'});
+      }
+      if(!order){
+          errors.push({text:'Order is required'});
+      }
+      if(!name){
+          errors.push({text:'Name is required'});
+      }
+      if(errors.length>0){
+        return res.status(400).json({
+          msg: errors
+        });ß
+      }
+      let status = '';
+      checkActive ? status = 'Enabled': status = 'Disabled'; 
+      if(parentElement === 'topLevel'){
+          const newMenuItem = {
+              name,url, status, order
+          };
+          const newItem = new Menus(newMenuItem);
+        
+          await newItem.save();
+          return res.status(200).json(newItem);
+      }
+      const topMenuElement = await Menus.findOne({
+          name: parentElement
+      });
+      const subMenu = topMenuElement.subMenu;
+      const subMenuItem = {name, url, status, order};
+      subMenu.push(subMenuItem);
+      const ubdatedMenu = await topMenuElement.save();
+      return res.status(200).json(ubdatedMenu);
+    } catch (error) {
+      console.log(error);
+      next(error);
+  }
+});
+
+router.post('/edit/:id', async(req, res, next)=>{
+  try {
+      const menuItem  = await Menus.findById(req.params.id);
+      let status = '';
+      const {name, url, order, checkActive} = req.body;
+      checkActive ? status = 'Enabled': status = 'Disabled'; 
+      if(!menuItem){
+
+          const mainItem = await Menus.findOne({'subMenu._id': req.params.id});
+          const itemIndex = mainItem.subMenu.findIndex(item => {
+              const items =  item._id == req.params.id;
+              return items;
+          });
+          
+          const item = mainItem.subMenu[itemIndex];
+          item.name = name;
+          item.url = url;
+          item.status = status;
+          item.order = order;
+          mainItem.subMenu.splice(itemIndex,1,item);
+          await mainItem.save();
+          
+      }
+      menuItem.name = name;
+      menuItem.url = url;
+      menuItem.status = status;
+      menuItem.order = order; 
+      await menuItem.save();   
+     
+  } catch (error) {
+      console.log(error);
+      next(error); 
+  }
+});
+
+
 
 module.exports = router;

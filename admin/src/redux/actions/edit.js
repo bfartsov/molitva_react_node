@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const edit = (category, id, subMenu) => async dispatch => {
   try {
-    console.log(category, id);
     const res =
       category === "live"
         ? await axios.get(`http://localhost:8080/api/${category}`)

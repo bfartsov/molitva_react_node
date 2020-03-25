@@ -1,41 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
 import { save } from "../../../redux/actions/save";
 
+
 import Buttons from "../../edit/button";
 const EditVIdeo = ({ match, edit, video, save }) => {
+
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    video: "",
+    img: "",
+    dateCreated: "",
+    feature: ""
+  });
+
   useEffect(() => {
     edit("videos", match.params.id);
-  }, []);
+    setFormData({
+      title: video.title ? video.title : " ",
+      description: video.description ? video.description : "",
+      video: video.video ? video.video : "",
+      img: video.img ? video.img : "",
+      dateCreated: video.dateCreated ? video.dateCreated : "",
+      feature: video.feature ? video.feature : ""
+    });
+  }, [video.loading])
 
-  const [names, setName] = useState({
-    title: video.ttile || "",
-    description: video.description || "",
-    video: video.video || "",
-    img: video.img || "",
-    dateCreated: video.dateCreated || "",
-    feature: video.feature || ""
-  });
 
   const handnleSave = e => {
     e.preventDefault();
+
+
     const url = `http://localhost:8080/api/videos/${match.params.id}`;
-    console.log(names);
-    //save(url, names);
+
+    save(url, formData);
   };
+  const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
 
-  const onChange = e => {
-    let name = e.target.name;
-    const value = name === "img" ? e.target.files[0] : e.target.value;
+  console.log(formData)
 
-    const newItem = {};
-
-    newItem[name] = value;
-    setName({ ...names, ...newItem });
-  };
-  console.log(names);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -57,10 +63,9 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={onChange}
+                        onChange={e=>onChange(e)}
                         type="text"
-                        value={video.title}
-                        // defaultValue={video.title}
+                        defaultValue={formData.title}
                         name="title"
                         className="form-control"
                       />
@@ -75,7 +80,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                         onChange={e => onChange(e)}
                         type="text"
                         name="description"
-                        value={video.description}
+                        defaultValue={formData.description}
                         className="form-control"
                       />
                     </div>
@@ -89,7 +94,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                         onChange={e => onChange(e)}
                         type="text"
                         name="video"
-                        value={video.video}
+                        defaultValue={formData.video}
                         className="form-control"
                       />
                     </div>
@@ -100,7 +105,7 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={e => setFormData({...formData, img: e.target.files[0]})}
                         type="file"
                         name="img"
                         className="default"
@@ -116,12 +121,12 @@ const EditVIdeo = ({ match, edit, video, save }) => {
                         data-date-viewmode="years"
                         data-date-format="dd-mm-yyyy"
                         data-date="01-01-2014"
-                        class="input-append date dpYears"
+                        className="input-append date dpYears"
                       >
                         <input
                           onChange={e => onChange(e)}
                           type="date"
-                          value={video.dateCreated}
+                          defaultValue={formData.dateCreated}
                           size="16"
                           className="form-control"
                         />

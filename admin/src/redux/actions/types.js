@@ -12,6 +12,7 @@ export const GET_BANNERS = "GET_BANNERS";
 export const GET_EVENTS= "GET_EVENTS";
 export const GET_NEWS= "GET_NEWS";
 export const GET_LIVE= "GET_LIVE";
+export const GET_TIMER= "GET_TIMER";
 export const GET_MENUS_FRONT= "GET_MENUS_FRONT";
 export const EDIT = "EDIT";
 export const SAVE = "SAVE";
@@ -22,6 +23,7 @@ export const REMOVE_BANNER_FAIL = "REMOVE_BANNER_FAIL";
 export const REMOVE_EVENT_SUCCESS = "REMOVE_EVENT_SUCCESS";
 export const REMOVE_NEWS_SUCCESS = "REMOVE_NEWS_SUCCESS";
 export const REMOVE_EVENT_FAIL = "REMOVE_EVENT_FAIL";
+export const SAVE_VIDEO = "SAVE_VIDEO";
 
 
 

@@ -29,6 +29,7 @@ import MenuPage from "./commponents/pages/menus/menuPage";
 import EditMenu from "./commponents/pages/menus/menuEdit";
 import SubMenuedit from "./commponents/pages/menus/subMenuEdit";
 
+import TimerPage from "./commponents/pages/timer/timerPage";
 
 
 
@@ -55,7 +56,7 @@ const App = ({ loadUser, isAuthenticated }) => {
     <Fragment>
       {isAuthenticated && <Header />}
       <Switch>
-        <Route exact path={"/login"} component={LoginPage} />
+        <Route exact path={"/login"} component={LoginPage} /> d
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/videos" component={VideoPage} />
 
@@ -71,8 +72,7 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/menus" component={MenuPage} />
         <PrivateRoute exact path="/menus/edit/:id" component={EditMenu} />
         <PrivateRoute exact path="/menus/edit/:id/subMenu/:subMenu" component={SubMenuedit} />
-
-
+        <PrivateRoute exact path="/timer" component={TimerPage} />
 
       </Switch>
       <Footer />

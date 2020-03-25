@@ -170,12 +170,12 @@ router.put(
   upload,
   auth,
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({
-        errors: errors.array()
-      });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   return res.status(422).json({
+    //     errors: errors.array()
+    //   });
+    // }
 
     try {
       const video = await Video.findById(req.params.id);
@@ -188,14 +188,14 @@ router.put(
           ]
         });
       }
-      // const url = fullUrl(req);
+      const url = fullUrl(req);
       const resizeImg = await resizeImage(req.file, 360, 174);
       const img = resizeImg.options.fileOut.split("/");
       console.log(img[2]);
-      //const img = path.join(url, resizeImg.options.fileOut);
+      const cdn = path.join(url, resizeImg.options.fileOut);
       video.title = req.body.title;
       video.description = req.body.description;
-      video.img = img;
+      video.img = cdn;
       video.date = req.body.date;
       video.video = req.body.video;
       const updatedVideo = await video.save();

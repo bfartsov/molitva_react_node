@@ -10,25 +10,24 @@ const SubMenuedit = ({ match, edit, menu, save, history, location }) => {
     url: '',
     status: '',
     order: '',
-    subMenu: '',
     
   });
 
   
   useEffect(() => {
     edit("menus", match.params.id);
-   
+    const subMenu = menu && !menu.loading && menu.subMenu.find(item=> item._id === match.params.subMenu) 
     setFormData({
-      name: menu.name ? menu.name : '',
-      url: menu.url ? menu.url : '',
-      status: menu.status ? menu.status : '',
-      order: menu.order ? menu.order : '',
-      subMenu: menu.subMenu ? menu.subMenu : '',
+      name: subMenu.name ? subMenu.name : '',
+      url: subMenu.url ? subMenu.url : '',
+      status: subMenu.status ? subMenu.status : '',
+      order: subMenu.order ? subMenu.order : '',
      
     })
     
   }, [menu.loading]);
  
+
 const handleDelete = ()=>{
 
 }
@@ -41,6 +40,7 @@ const handleDelete = ()=>{
   };
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  console.log(formData)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -64,7 +64,7 @@ const handleDelete = ()=>{
                       <input
                         onChange={onChange}
                         type="text"
-                        value={menu.name}
+                        defaultValue={formData.name}
                         // defaultValue={menu.title}
                         name="name"
                         className="form-control"
@@ -80,7 +80,7 @@ const handleDelete = ()=>{
                         onChange={e => onChange(e)}
                         type="text"
                         name="url"
-                        value={menu.url}
+                        defaultValue={formData.url}
                         className="form-control"
                       />
                     </div>
@@ -90,7 +90,7 @@ const handleDelete = ()=>{
                       Status
                     </label>
                     <div className="col-sm-10">
-                    <select name='status' class="form-control" onChange={e => onChange(e)}>
+                    <select name='status' className="form-control" onChange={e => onChange(e)}>
                         <option >Enable</option>
                         <option >Disable</option>
                       </select>
@@ -106,7 +106,7 @@ const handleDelete = ()=>{
                         type="number"
                         name="order"
                         className="default"
-                        defaultValue={menu.order}
+                        defaultValue={formData.order}
                       />
                     </div>
                   </div>

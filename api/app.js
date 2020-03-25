@@ -36,6 +36,7 @@ app.use("/api/videos", require("./routes/api/videos"));
 app.use("/api/menus", require("./routes/api/menus"));
 app.use("/api/live", require("./routes/api/live"));
 app.use("/api/nationalprayers", require("./routes/api/nationalPrayers"));
+app.use("/api/timer", require("./routes/api/time"));
 
 app.use((req, res, next) => {
   const error = new Error("Item not found");
