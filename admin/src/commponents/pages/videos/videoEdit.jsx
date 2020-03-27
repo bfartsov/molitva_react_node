@@ -17,7 +17,7 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
     video: "",
     img: "",
     dateCreated: "",
-    feature: ""
+    feature:[]
   });
 
   useEffect(() => {
@@ -27,8 +27,8 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
       description: video.description ? video.description : "",
       video: video.video ? video.video : "",
       img: video.img ? video.img : "",
-      date: video.date ? video.date : "",
-      feature: video.feature ? video.feature : ""
+      dateCreated: video.dateCreated ? video.dateCreated : "",
+      feature: video.feature ? video.feature : []
     });
 
   }, [video.loading, editLoading])
@@ -132,8 +132,8 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
                         <input
                           onChange={e => onChange(e)}
                           type="date"
-                          name="date"
-                          defaultValue={formData.date}
+                          name="dateCreated"
+                          defaultValue={formData.dateCreated}
                           size="16"
                           className="form-control"
                         />
@@ -152,7 +152,16 @@ const EditVIdeo = ({ match, edit, video, save, editLoading, history }) => {
                     </label>
                     <div className="col-sm-10">
                       <select
-                        onChange={e => onChange(e)}
+                        onChange={e => {
+                          var options = e.target.options;
+                          var value = [];
+                          for (var i = 0, l = options.length; i < l; i++) {
+                            if (options[i].selected) {
+                              value.push(options[i].value);
+                            }
+                          }
+                          setFormData({ ...formData, feature: value })
+                        }}
                         name="feature"
                         className="form-control"
                         multiple

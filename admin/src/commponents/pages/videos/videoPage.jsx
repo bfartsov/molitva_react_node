@@ -5,10 +5,11 @@ import { getVideos, removeVideo } from "../../../redux/actions/videos";
 
 import "../../../css/table-responsive.css";
 
-const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo }) => {
+const VideoPage = ({ getVideos, videos, history, location, removeVideo }) => {
   useEffect(() => {
     getVideos();
-  }, []);
+
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   const handleDelete = (id) => {
     removeVideo(id)
@@ -28,14 +29,12 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
 
               </h4>
               <section id="unseen">
-                <div className="form-group">
-                  <div className="col-lg-offset-2 col-lg-10">
-                    <button className="btn btn-theme" onClick={()=>history.push('/videos/add')} >
-                      Add video
+
+                <button className="btn btn-theme" onClick={() => history.push('/videos/add')} >
+                  Add video
                     </button>
 
-                  </div>
-                </div>
+
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
@@ -59,7 +58,7 @@ const VideoPage = ({ getVideos, videos, loading, history, location, removeVideo 
                           <td> {video.img}</td>
                           <td> {video.video}</td>
                           <td> {video.date}</td>
-                          <td> {video.feature}</td>
+                          <td> {video.feature.join(' ')}</td>
                           <td>
                             <button
                               onClick={() => {

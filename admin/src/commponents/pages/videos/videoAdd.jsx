@@ -15,16 +15,16 @@ const EditVIdeo = ({saveVideo, history }) => {
     description: "",
     video: "",
     img: "",
-    date: "",
+    dateCreated: "",
     feature: []
   });
 
 
-
+console.log(formData)
 
   const handnleSave = e => {
     e.preventDefault();
-    saveVideo(formData)
+    saveVideo(formData, history)
   };
   const handleCancel = () => history.push('/videos');
 
@@ -114,8 +114,8 @@ const EditVIdeo = ({saveVideo, history }) => {
                       <input
                         onChange={e => onChange(e)}
                         type="date"
-                        name="date"
-                        defaultValue={formData.date}
+                        name="dateCreated"
+                        defaultValue={formData.dateCreated}
                         size="16"
                         className="form-control"
                       />
@@ -163,7 +163,5 @@ const EditVIdeo = ({saveVideo, history }) => {
     </section>
   );
 };
-const mapStateToProps = state => ({
 
-});
 export default connect(null, {saveVideo})(EditVIdeo);

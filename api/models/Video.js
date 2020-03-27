@@ -4,19 +4,24 @@ const Schema = mongoose.Schema;
 const VideoSchema = new Schema({
   title: {
     type: String,
-  },
-  description: {
+    require: true
+},
+description: {
     type: String
-  },
-  img: {
+},
+img: {
 
-  },
-  video: {
+},
+video: {
 
-  },
-  date: {
+},
+dateCreated:{
     
-  }
+},
+date: {
+},
+feature: [],
+
 });
 
 mongoose.model('video', VideoSchema);

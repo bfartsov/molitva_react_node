@@ -31,7 +31,7 @@ export const removeVideo = (id)=> async dispach =>{
   }
 };
 
-export const saveVideo = (data)=> async dispach =>{
+export const saveVideo = (data, history)=> async dispach =>{
   console.log(data)
  
   let formData = new FormData();
@@ -39,8 +39,9 @@ export const saveVideo = (data)=> async dispach =>{
     formData.append(key, data[key]);
 };
 
-  const videos = await axios.post("http://localhost:8080/api/videos",formData );
-  console.log(videos)
+  const res = await axios.post("http://localhost:8080/api/videos",formData );
+  res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+  res.status ===200 && history.push('/videos')
 
 }
 

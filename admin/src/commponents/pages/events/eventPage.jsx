@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { getEvents, removeEvent } from "../../../redux/actions/events";
 import "../../../css/table-responsive.css";
 
-const  EventPage=({events, getEvents, loading,  history, removeEvent, location})=> {
+const EventPage = ({ events, getEvents, loading, history, removeEvent, location }) => {
   useEffect(() => {
     getEvents()
   }, []);
-  
+
   const handleDelete = id => {
     console.log(id)
     removeEvent(id)
@@ -24,10 +24,10 @@ const  EventPage=({events, getEvents, loading,  history, removeEvent, location})
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-                <i className="fa fa-angle-right"></i> Responsive Table
+                <Alert />
               </h4>
               <section id="unseen">
-              <table className="table table-bordered table-striped table-condensed">
+                <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
                       <th> Id</th>
@@ -38,12 +38,12 @@ const  EventPage=({events, getEvents, loading,  history, removeEvent, location})
                       <th> End</th>
                       <th> Region</th>
                       <th> City</th>
-                     
+
                       <th> Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {events.length>0 && !loading && events.map(event => {
+                    {events.length > 0 && !loading && events.map(event => {
                       return (
                         <tr key={event._id}>
                           <td> {event._id}</td>
@@ -67,7 +67,7 @@ const  EventPage=({events, getEvents, loading,  history, removeEvent, location})
                             </button>
                             <button
                               id={event._id}
-                              onClick={()=>handleDelete(event._id)}
+                              onClick={() => handleDelete(event._id)}
                               className="btn remove btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>
@@ -86,8 +86,8 @@ const  EventPage=({events, getEvents, loading,  history, removeEvent, location})
     </section>
   );
 }
-const mapStateToProps = state=>({
+const mapStateToProps = state => ({
   events: state.events.events,
   loading: state.events.loading
 });
-export default connect(mapStateToProps, {getEvents, removeEvent})(EventPage);
+export default connect(mapStateToProps, { getEvents, removeEvent })(EventPage);

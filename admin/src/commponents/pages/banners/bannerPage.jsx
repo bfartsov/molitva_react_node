@@ -4,14 +4,16 @@ import Alert from '../../alert'
 import { connect } from "react-redux";
 import { getBanners, removeBanner } from "../../../redux/actions/banners";
 
-const BannerPage = ({ banners, loading, getBanners , removeBanner, history}) => {
+const BannerPage = ({ banners, loading, getBanners, removeBanner, history }) => {
   useEffect(() => {
     getBanners();
-  }, []);
+
+  }, []);// eslint-disable-next-line react-hooks/exhaustive-deps
+
 
   const handleDelete = id => {
-   removeBanner(id)
-   
+    removeBanner(id)
+
   };
   return (
     <section id="main-content">
@@ -23,7 +25,7 @@ const BannerPage = ({ banners, loading, getBanners , removeBanner, history}) => 
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-              <Alert/>
+                <Alert />
               </h4>
               <section id="unseen">
                 <table className="table table-bordered table-striped table-condensed">
@@ -37,14 +39,14 @@ const BannerPage = ({ banners, loading, getBanners , removeBanner, history}) => 
                     </tr>
                   </thead>
                   <tbody>
-                    {banners.length>0 && !loading && banners.map(banner => {
+                    {banners.length > 0 && !loading && banners.map(banner => {
                       return (
                         <tr key={banner._id}>
                           <td> {banner._id}</td>
                           <td> {banner.title}</td>
                           <td> {banner.banner}</td>
                           <td> {banner.eventDate}</td>
-                         
+
                           <td>
                             <button
                               onClick={() => {
@@ -58,7 +60,7 @@ const BannerPage = ({ banners, loading, getBanners , removeBanner, history}) => 
                             </button>
                             <button
                               id={banner._id}
-                              onClick={()=>handleDelete(banner._id)}
+                              onClick={() => handleDelete(banner._id)}
                               className="btn btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>

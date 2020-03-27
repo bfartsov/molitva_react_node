@@ -139,13 +139,17 @@ router.post(
       const resizeImg = await resizeImage(req.file, 360, 174);
       const url = fullUrl(req);
       const img = path.join(url, resizeImg.options.fileOut);
-      const { title, description, video, date } = req.body;
+      const { title, description, video, dateCreated, feature } = req.body;
+      console.log(req.body)
+      let year = new Date(dateCreated).getFullYear();
       const newVideo = new Video({
         title,
         description,
         img,
         video,
-        date
+        feature,
+        dateCreated,
+        date: year
       });
       const saveVideo = await newVideo.save();
       return res.status(200).json(saveVideo);
@@ -191,20 +195,20 @@ router.put(
         });
       };
 
-      const dateCreated = req.body.date;
+      const { dateCreated} = req.body;
       let year = new Date(dateCreated).getFullYear();
-  
 
       const url = fullUrl(req);
       const resizeImg = await resizeImage(req.file, 360, 174);
       const img = resizeImg.options.fileOut.split("/");
-      console.log(img[2]);
       const cdn = path.join(url, resizeImg.options.fileOut);
       video.title = req.body.title;
       video.description = req.body.description;
       video.img = cdn;
       video.date = year;
+      video.dateCreated = req.body.dateCreated;
       video.video = req.body.video;
+      video.feature = req.body.feature
       const updatedVideo = await video.save();
       return res.status(200).json(updatedVideo);
     } catch (error) {

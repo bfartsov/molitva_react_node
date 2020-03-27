@@ -4,16 +4,18 @@ import { connect } from "react-redux";
 import { getFrontMenus } from "../../../redux/actions/menus";
 import "../../../css/table-responsive.css";
 
-const  MenuPage = ({getFrontMenus,menus, history, location, })=> {
+const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
   useEffect(() => {
     getFrontMenus()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
-  
+
   const handleDelete = (id) => {
     console.log(id)
-  
-};
-console.log(menus)
+
+  };
+  console.log(menus)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -24,15 +26,15 @@ console.log(menus)
           <div className="col-lg-12">
             <div className="content-panel">
               <h4>
-                <Alert/>
+                <Alert />
               </h4>
               <section id="unseen">
-              <table className="table table-bordered table-striped table-condensed">
+                <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
                       <th> Id</th>
                       <th> Name</th>
-                      
+
                       <th> Url</th>
                       <th> Status</th>
                       <th> Order</th>
@@ -40,7 +42,7 @@ console.log(menus)
                     </tr>
                   </thead>
                   <tbody>
-                    {menus &&  !menus.loading && menus.map(item => {
+                    {menus && !menus.loading && menus.map(item => {
                       return (
                         <tr key={item._id}>
                           <td> {item._id}</td>
@@ -48,7 +50,7 @@ console.log(menus)
                           <td> {item.url}</td>
                           <td> {item.status}</td>
                           <td> {item.order}</td>
-                         
+
                           <td>
                             <button
                               onClick={() => {
@@ -62,7 +64,7 @@ console.log(menus)
                             </button>
                             <button
                               id={item._id}
-                              onClick={()=>handleDelete(item._id)}
+                              onClick={() => handleDelete(item._id)}
                               className="btn remove btn-danger btn-xs"
                             >
                               <i className="fa fa-trash-o "></i>
@@ -81,8 +83,8 @@ console.log(menus)
     </section>
   );
 }
-const mapStateToProps = state=>({
+const mapStateToProps = state => ({
   menus: state.menus.menus
 });
 
-export default connect(mapStateToProps, {getFrontMenus})(MenuPage);
+export default connect(mapStateToProps, { getFrontMenus })(MenuPage);
