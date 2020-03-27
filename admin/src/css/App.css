@@ -12,7 +12,7 @@ Website: http://Alvarez.is/
 */
 
 /* Import fonts */
-@import url(http://fonts.googleapis.com/css?family=Ruda:400, 700, 900);
+@import url(http://fonts.googleapis.com/css?family=Ruda:400, );
 
 /* BASIC THEME CONFIGURATION */
 body {
@@ -3494,4 +3494,9 @@ ul.chat-available-user li a:hover {
 
 #copyrights a {
   color: #fff;
+}
+
+
+.btn{
+  margin: 0 0 20px 10px;
 }
