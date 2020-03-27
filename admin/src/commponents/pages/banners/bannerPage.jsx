@@ -27,7 +27,11 @@ const BannerPage = ({ banners, loading, getBanners, removeBanner, history }) => 
               <h4>
                 <Alert />
               </h4>
+              <button className="btn btn-theme" onClick={() => history.push('/banners/add')} >
+                  Add Banner
+                </button>
               <section id="unseen">
+               
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
@@ -44,7 +48,7 @@ const BannerPage = ({ banners, loading, getBanners, removeBanner, history }) => 
                         <tr key={banner._id}>
                           <td> {banner._id}</td>
                           <td> {banner.title}</td>
-                          <td> {banner.banner}</td>
+                          <td> {banner.img}</td>
                           <td> {banner.eventDate}</td>
 
                           <td>

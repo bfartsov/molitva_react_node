@@ -1,6 +1,7 @@
 import { GET_BANNERS, REMOVE_BANNER_SUCCESS } from "./types";
 import {setAlert} from './alert'
 
+
 import axios from "axios";
 
 export const getBanners = () => async dispach => {
@@ -31,5 +32,21 @@ export const removeBanner = id=> async dispach=>{
     console.log(error)
   }
 
+
+}
+
+export const saveBanner = (data, history)=> async dispach =>{
+  console.log(data)
+ 
+  let formData = new FormData();
+  for ( var key in data ) {
+    formData.append(key, data[key]);
+};
+
+  const res = await axios.post("http://localhost:8080/api/banners",formData );
+  console.log(res)
+  res.status ===200 && dispach(setAlert('Added Successculy', 'success'));
+  res.status ===200 && dispach(getBanners)
+  res.status ===200 && history.push('/banners')
 
 }

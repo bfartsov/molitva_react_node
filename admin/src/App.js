@@ -4,7 +4,6 @@ import Header from "./commponents/header/header";
 import Footer from "./commponents/footer/footer";
 
 import PrivateRoute from "./commponents/auth/privateRoute";
-//Redux
 import { connect } from "react-redux";
 
 import HomePage from "./commponents/pages/home/homePage";
@@ -14,6 +13,8 @@ import EditVIdeo from "./commponents/pages/videos/videoEdit";
 import AddVideo from "./commponents/pages/videos/videoAdd";
 
 import EditBanner from "./commponents/pages/banners/banerEdit";
+import addBaanner from "./commponents/pages/banners/addBanner";
+
 
 
 import BannerPage from "./commponents/pages/banners/bannerPage";
@@ -65,6 +66,8 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/videos/edit/:id" component={EditVIdeo} />
         <PrivateRoute exact path="/banners" component={BannerPage} />
         <PrivateRoute exact path="/banners/edit/:id" component={EditBanner} />
+        <PrivateRoute exact path="/banners/add" component={addBaanner} />
+
         <PrivateRoute exact path="/events" component={EventPage} />
         <PrivateRoute exact path="/events/edit/:id" component={EditEvent} />
         <PrivateRoute exact path="/news" component={NewsPage} />

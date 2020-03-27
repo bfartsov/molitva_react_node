@@ -27,13 +27,11 @@ router.get("/id/:id", getBanner);
 // @access Private
 router.post(
   "/",
-  [
-    auth,
-    check("title", "Please enter title").exists(),
-    check("img", "please add a banner").exists(),
-    upload
-  ],
+  auth,
+  upload,
+
   addBanner
+
 );
 
 // @route  PUT api/banners/:id
@@ -44,8 +42,8 @@ router.put(
   "/:id",
   [
     auth,
-    check("title", "Please enter title").exists(),
-    check("img", "please add a banner").exists(),
+    // check("title", "Please enter title").exists(),
+    // check("img", "please add a banner").exists(),
     upload
   ],
   editBanner

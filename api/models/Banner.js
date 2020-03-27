@@ -5,14 +5,17 @@ const BannerSchema = new Schema({
   title: {
     type: String,
     required: true
-  },
-  img: {
+},
+img: {
 
-  },
-  date: {
+},
+eventDate: {
+},
+date: {
     type: Date,
     default: Date.now
-  }
+}
+
 });
 
 mongoose.model('banner', BannerSchema);

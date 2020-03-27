@@ -117,24 +117,12 @@ router.get(
 
 router.post(
   "/",
-  // [
-  //   check("title", "Title is required").exists(),
-  //   check("description", "description is required").exists(),
-  //   check("img", "Image is required").exists(),
-  //   check("video", "Video URL is required").exists(),
-  //   check("date", "Date is required").exists()
-  // ],
+
   auth,
   upload,
   async (req, res) => {
-    console.log(req.body)
 
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   return res.status(422).json({
-    //     errors: errors.array()
-    //   });
-    // }
+    
     try {
       const resizeImg = await resizeImage(req.file, 360, 174);
       const url = fullUrl(req);

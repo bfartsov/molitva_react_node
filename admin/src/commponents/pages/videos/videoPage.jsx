@@ -32,9 +32,7 @@ const VideoPage = ({ getVideos, videos, history, location, removeVideo }) => {
 
                 <button className="btn btn-theme" onClick={() => history.push('/videos/add')} >
                   Add video
-                    </button>
-
-
+                </button>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
