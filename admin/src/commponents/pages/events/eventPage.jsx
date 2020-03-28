@@ -13,7 +13,6 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
     console.log(id)
     removeEvent(id)
   };
-  console.log(events)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -27,6 +26,10 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
                 <Alert />
               </h4>
               <section id="unseen">
+
+                <button className="btn btn-theme" onClick={() => history.push('/events/add')} >
+                  Add Event
+                </button>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>

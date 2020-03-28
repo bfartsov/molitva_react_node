@@ -34,9 +34,9 @@ router.post(
   "/",
   [
     auth,
-    check("title", "title is required").exists(),
-    check("date", "Date is required").exists(),
-    check("img", "Image is required").exists(),
+    // check("title", "title is required").exists(),
+    // check("date", "Date is required").exists(),
+    // check("img", "Image is required").exists(),
     upload
   ],
   addEvent
@@ -50,9 +50,9 @@ router.put(
   "/:id",
   [
     auth,
-    check("title", "title is required").exists(),
-    check("date", "Date is required").exists(),
-    check("img", "Image is required").exists(),
+    // check("title", "title is required").exists(),
+    // check("date", "Date is required").exists(),
+    // check("img", "Image is required").exists(),
     upload
   ],
   updateEvent

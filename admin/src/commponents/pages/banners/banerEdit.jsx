@@ -27,9 +27,12 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
     e.preventDefault();
     const url = `http://localhost:8080/api/banners/${match.params.id}`;
 
-    save(url, formData, history, '/banners');  };
+    save(url, formData, history, '/banners');
+  };
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleCancel = ()=> history.push('/banners');
+
   return (
     <section id="main-content">
       <section className="wrapper">

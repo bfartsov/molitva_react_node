@@ -32,10 +32,6 @@ const EventSchema = new Schema({
   },
   img: {
 
-  },
-  image: {
-    data: Buffer,
-    type: String
   }
 });
 

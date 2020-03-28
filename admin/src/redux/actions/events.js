@@ -31,6 +31,25 @@ export const removeEvent = id=> async dispach=>{
   }
 
 
+};
+
+export const saveEvent = (data, history)=> async dispach =>{
+  console.log(data)
+ 
+  let formData = new FormData();
+  for ( var key in data ) {
+    formData.append(key, data[key]);
+};
+try {
+  const res = await axios.post("http://localhost:8080/api/events",formData );
+  res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+  res.status ===200 && history.push('/events')
+} catch (error) {
+  console.log(error)
+}
+
+  
+
 }
 
 

@@ -21,6 +21,8 @@ import BannerPage from "./commponents/pages/banners/bannerPage";
 
 import EventPage from "./commponents/pages/events/eventPage";
 import EditEvent from "./commponents/pages/events/eventEdit";
+import AddEvent from "./commponents/pages/events/eventAdd";
+
 
 import NewsPage from "./commponents/pages/news/newsPage";
 import EditNews from "./commponents/pages/news/newsEdit";
@@ -36,7 +38,6 @@ import TimerPage from "./commponents/pages/timer/timerPage";
 
 
 
-import Edit from "./commponents/edit/editPage";
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -70,6 +71,8 @@ const App = ({ loadUser, isAuthenticated }) => {
 
         <PrivateRoute exact path="/events" component={EventPage} />
         <PrivateRoute exact path="/events/edit/:id" component={EditEvent} />
+        <PrivateRoute exact path="/events/add" component={AddEvent} />
+
         <PrivateRoute exact path="/news" component={NewsPage} />
         <PrivateRoute exact path="/news/edit/:id" component={EditNews} />
         <PrivateRoute exact path="/live" component={LivePage} />

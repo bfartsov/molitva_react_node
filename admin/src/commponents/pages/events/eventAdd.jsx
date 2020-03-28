@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { edit } from "../../../redux/actions/edit";
-import { save } from "../../../redux/actions/save";
+import {saveEvent} from '../../../redux/actions/events'
+
 
 import Buttons from "../../edit/button";
-const EditEvent = ({ match, edit, event, save, history}) => {
+const AddEvent = ({ match, saveEvent, history}) => {
   const [formData, setFormData] = useState({
       title: '',
     place: '',
@@ -16,32 +16,18 @@ const EditEvent = ({ match, edit, event, save, history}) => {
     description: '',
     img: ''
   });
-  useEffect(() => {
-    edit("events", match.params.id);
-    setFormData({
-      title: event.title ? event.title : '',
-      place: event.place ? event.pPlace : '',
-      date: event.date ? event.date : '',
-      startTime: event.startTime ? event.startTime : '',
-      endTime: event.endTime ? event.endTime : '',
-      reagion: event.region ? event.region : '',
-      city: event.city ? event.city : '',
-      description: event.description? event.description: '',
-      img: event.img ? event.img : ''
-    })
-  }, [event.loading]);
 
 
 
   const handnleSave = e => {
     e.preventDefault();
-    const url = `http://localhost:8080/api/events/${match.params.id}`;
-    save(url, formData, history, '/events');
+    console.log(formData)
+    saveEvent(formData, history)
+
   };
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleCancel = ()=> history.push('/events');
-
+  console.log(formData)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -54,7 +40,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
             <div className="form-panel">
               <h4 className="mb">
               </h4>
-              {event && !event.loading && (
+              
                 <form className="form-horizontal style-form">
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
@@ -64,7 +50,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="text"
-                        defaultValue={event.title}
+                        defaultValue={formData.title}
                         name="title"
                         className="form-control"
                       />
@@ -78,7 +64,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="text"
-                        defaultValue={event.place}
+                        defaultValue={formData.place}
                         name="place"
                         className="form-control"
                       />
@@ -92,7 +78,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="date"
-                        defaultValue={event.date}
+                        defaultValue={formData.date}
                         name="date"
                         className="form-control"
                       />
@@ -106,7 +92,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="time"
-                        defaultValue={event.startTime}
+                        defaultValue={formData.startTime}
                         name="startTime"
                         className="form-control"
                       />
@@ -120,7 +106,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="time"
-                        defaultValue={event.endTime}
+                        defaultValue={formData.endTime}
                         name="endTime"
                         className="form-control"
                       />
@@ -134,7 +120,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="text"
-                        defaultValue={event.region}
+                        defaultValue={formData.region}
                         name="region"
                         className="form-control"
                       />
@@ -148,7 +134,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="text"
-                        defaultValue={event.city}
+                        defaultValue={formData.city}
                         name="city"
                         className="form-control"
                       />
@@ -162,7 +148,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                       <input
                         onChange={e => onChange(e)}
                         type="text"
-                        defaultValue={event.desciption}
+                        defaultValue={formData.desciption}
                         name="description"
                         className="form-control"
                       />
@@ -183,9 +169,9 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                   </div>
 
 
-                  <Buttons handleCancel={handleCancel} handnleSave={handnleSave} />
+                  <Buttons handnleSave={e=>handnleSave(e)} />
                 </form>
-              )}
+            
             </div>
           </div>
         </div>
@@ -193,7 +179,5 @@ const EditEvent = ({ match, edit, event, save, history}) => {
     </section>
   );
 };
-const mapStateToProps = state => ({
-  event: state.edit
-});
-export default connect(mapStateToProps, { edit, save })(EditEvent);
+
+export default connect(null, {saveEvent})(AddEvent);
