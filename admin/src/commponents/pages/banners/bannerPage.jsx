@@ -35,7 +35,6 @@ const BannerPage = ({ banners, loading, getBanners, removeBanner, history }) => 
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
-                      <th> Id</th>
                       <th> Title</th>
                       <th> Image</th>
                       <th> Date</th>
@@ -46,7 +45,6 @@ const BannerPage = ({ banners, loading, getBanners, removeBanner, history }) => 
                     {banners.length > 0 && !loading && banners.map(banner => {
                       return (
                         <tr key={banner._id}>
-                          <td> {banner._id}</td>
                           <td> {banner.title}</td>
                           <td> {banner.img}</td>
                           <td> {banner.eventDate}</td>

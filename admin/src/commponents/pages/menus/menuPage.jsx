@@ -32,7 +32,6 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
-                      <th> Id</th>
                       <th> Name</th>
 
                       <th> Url</th>
@@ -45,7 +44,6 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
                     {menus && !menus.loading && menus.map(item => {
                       return (
                         <tr key={item._id}>
-                          <td> {item._id}</td>
                           <td> {item.name}</td>
                           <td> {item.url}</td>
                           <td> {item.status}</td>

@@ -36,10 +36,8 @@ const VideoPage = ({ getVideos, videos, history, location, removeVideo }) => {
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
-                      <th> Id</th>
                       <th> Title</th>
                       <th> Date</th>
-                      <th> Image</th>
                       <th> Video</th>
                       <th> Year</th>
                       <th> Feature</th>
@@ -50,13 +48,11 @@ const VideoPage = ({ getVideos, videos, history, location, removeVideo }) => {
                     {videos.length > 0 && videos.map(video => {
                       return (
                         <tr key={video._id}>
-                          <td> {video._id}</td>
                           <td> {video.title}</td>
                           <td> {video.dateCreated}</td>
-                          <td> {video.img}</td>
                           <td> {video.video}</td>
                           <td> {video.date}</td>
-                          <td> {video.feature.join(' ')}</td>
+                          <td> {video.feature}</td>
                           <td>
                             <button
                               onClick={() => {

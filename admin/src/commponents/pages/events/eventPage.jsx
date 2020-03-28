@@ -30,7 +30,6 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
-                      <th> Id</th>
                       <th> Title</th>
                       <th> Plce</th>
                       <th> Date</th>
@@ -46,7 +45,6 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
                     {events.length > 0 && !loading && events.map(event => {
                       return (
                         <tr key={event._id}>
-                          <td> {event._id}</td>
                           <td> {event.title}</td>
                           <td> {event.place}</td>
                           <td> {event.date}</td>
