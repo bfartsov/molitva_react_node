@@ -31,26 +31,20 @@ router.get("/", async (req, res) => {
 // @access Public
 
 router.post(
-  "/edit",
-  [
-    check("url", "Url is required").exists(),
-    check("type", "Type is required").exists()
-  ],
-  async (req, res) => {
+  "/",
+  
+  async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(422).json({
-          errors: errors.array()
-        });
-      }
+      console.log(req.body)
       const live = await Live.find();
       // if live does not exist create it
       if (live.length <= 0) {
-        const { url, type } = req.body;
+        const { url, type, player, text } = req.body;
         const newLive = new Live({
           url,
-          type
+          type,
+          player,
+          text
         });
         const savedLive = await newLive.save();
         return res.status(200).json(savedLive);
@@ -63,16 +57,14 @@ router.post(
         });
         live.url = req.body.url;
         live.type = req.body.type;
+        live.player = req.body.player;
+        live.text= req.body.text;
         const updatedLive = await live.save();
         return res.status(200).json(updatedLive);
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        error: {
-          msg: "Server Error"
-        }
-      });
+      next(error)
     }
   }
 );

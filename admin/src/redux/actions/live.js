@@ -1,5 +1,5 @@
-import { GET_LIVE } from "./types";
-import {setAlert} from './alert'
+import { GET_LIVE} from "./types";
+import { setAlert } from './alert'
 import axios from "axios";
 
 export const getLive = () => async dispach => {
@@ -16,17 +16,13 @@ export const getLive = () => async dispach => {
   }
 };
 
-// export const removeVideo = (id)=> async dispach =>{
-//   try {
-//     const video = await axios.delete(`http://localhost:8080/api/videos/${id}`)
-//     console.log(`http://localhost:8080/api/videos/${id}`)
-//     console.log(video.data)
-//     dispach({
-//       type:REMOVE_VIDEO_SUCCESS,
-//       payload: id
-//     })
-//     dispach(setAlert('Item deleted', 'success'))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+export const saveLive = (data, history)=> async dispach =>{
+ 
+
+  const res = await axios.post("http://localhost:8080/api/live",data );
+  dispach(getLive());
+  res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+
+  res.status ===200 && history.push('/live')
+
+}

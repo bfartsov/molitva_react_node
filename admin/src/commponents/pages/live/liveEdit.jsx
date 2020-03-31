@@ -3,10 +3,10 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
-import { save } from "../../../redux/actions/save";
+import { saveLive } from "../../../redux/actions/live";
 
 import Buttons from "../../edit/button";
-const EditLive = ({ match, edit, live, save }) => {
+const EditLive = ({ match, edit, live, history, saveLive }) => {
   const [formData, setFormData] = useState({
     url: '',
     type: '',
@@ -23,13 +23,13 @@ const EditLive = ({ match, edit, live, save }) => {
 
     })
   }, [live.loading]);
-  console.log(formData)
 
 
   const handnleSave = e => {
     e.preventDefault();
-    const url = `http://localhost:8080/api/events/${match.params.id}`;
-    //save(url, names);
+    saveLive(formData, history);
+
+
   };
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +38,7 @@ const EditLive = ({ match, edit, live, save }) => {
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Events
+          <i className="fa fa-angle-right"></i> Live
         </h3>
 
         <div className="row mt">
@@ -46,7 +46,6 @@ const EditLive = ({ match, edit, live, save }) => {
             <div className="form-panel">
               <h4 className="mb">
               </h4>
-              {!live.loading && (
                 <form className="form-horizontal style-form">
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
@@ -67,9 +66,9 @@ const EditLive = ({ match, edit, live, save }) => {
                       Type
                     </label>
                     <div className="col-sm-10">
-                      <select name='type' class="form-control" onChange={e => onChange(e)}>
-                        <option selected={live.type === 'Wowza' ? 'true' : 'false'}>Youtube</option>
-                        <option selected={live.type === 'Youtube' ? 'true' : 'false'}> Wowza</option>
+                      <select name='type' defaultValue={live.type} className="form-control" onChange={e => onChange(e)}>
+                        <option value='Youtube' >Youtube</option>
+                        <option value='Wowza'> Wowza</option>
                       </select>
                     </div>
                   </div>
@@ -78,17 +77,11 @@ const EditLive = ({ match, edit, live, save }) => {
                       Player
                     </label>
                     <div className="col-sm-10">
-                      <select name='player' class="form-control" onChange={e => onChange(e)}>
-                        <option selected={live.player === 'JWPplayer' ? 'true' : 'false'}>JWPlayer</option>
-                        <option selected={live.player === 'Wowza' ? 'true' : 'false'}>Wowza</option>
+                      <select name='player' defaultValue={live.player} className="form-control" onChange={e => onChange(e)}>
+                        <option value='JWPlayer'>JWPlayer</option>
+                        <option value='Wowza' >Wowza</option>
                       </select>
-                      {/* <input
-                        onChange={e => onChange(e)}
-                        type="text"
-                        defaultValue={live.player}
-                        name="player"
-                        className="form-control"
-                      /> */}
+                     
                     </div>
                   </div>
                   <div className="form-group">
@@ -102,7 +95,6 @@ const EditLive = ({ match, edit, live, save }) => {
                         data={live.text}
                         onInit={editor => {
                           // You can store the "editor" and use when it is needed.
-                          console.log('Editor is ready to use!', editor);
                         }}
                         onChange={(event, editor) => {
                           const text = editor.getData();
@@ -128,7 +120,7 @@ const EditLive = ({ match, edit, live, save }) => {
 
                   <Buttons handnleSave={handnleSave} />
                 </form>
-              )}
+           
             </div>
           </div>
         </div>
@@ -139,4 +131,4 @@ const EditLive = ({ match, edit, live, save }) => {
 const mapStateToProps = state => ({
   live: state.edit
 });
-export default connect(mapStateToProps, { edit, save })(EditLive);
+export default connect(mapStateToProps, { edit, saveLive })(EditLive);

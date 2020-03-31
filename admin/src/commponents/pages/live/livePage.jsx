@@ -7,9 +7,6 @@ const LivePage = ({ getLive, loading, live, history, location }) => {
   useEffect(() => {
     getLive()
   }, []);
-  const handleDelete = e => {
-
-  };
 
   return (
     <section id="main-content">
@@ -23,7 +20,7 @@ const LivePage = ({ getLive, loading, live, history, location }) => {
               <h4>
               </h4>
               <section id="unseen">
-                <table className="table table-bordered table-striped table-condensed">
+                {!loading && live ? <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
                       <th> Id</th>
@@ -54,19 +51,15 @@ const LivePage = ({ getLive, loading, live, history, location }) => {
                             >
                               <i className="fa fa-pencil"></i>
                             </button>
-                            <button
-                              id={live._id}
-                              onClick={() => handleDelete(live._id)}
-                              className="btn remove btn-danger btn-xs"
-                            >
-                              <i className="fa fa-trash-o "></i>
-                            </button>
+                           
                           </td>
                         </tr>
 
                       )}
                   </tbody>
-                </table>
+                </table> : <button className="btn btn-theme" onClick={() => history.push('/live/edit/add')} >
+                    Add Live
+                </button>}
               </section>
             </div>
           </div>

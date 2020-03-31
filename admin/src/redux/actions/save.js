@@ -4,7 +4,7 @@ import { setAlert } from "./alert";
 import axios from "axios";
 import { removeNews } from "./news";
 
-export const save = (url, data, history, path) => async dispach => {
+export const save = (url, data, history, path, ) => async dispach => {
   try {
     let formData = new FormData();
     for ( var key in data ) {
