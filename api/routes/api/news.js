@@ -16,7 +16,7 @@ const { check, validationResult } = require("express-validator");
 router.get(
   "/",
 
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const news = await News.find();
       if (news.length <= 0) {
@@ -26,14 +26,7 @@ router.get(
       }
       res.status(200).json(news);
     } catch (error) {
-      console.log(error);
-      res.status(500).json({
-        error: [
-          {
-            msg: "Server error"
-          }
-        ]
-      });
+      next(error)
     }
   }
 );
@@ -44,7 +37,7 @@ router.get(
 router.get(
   "/limit/:number",
 
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const news = await News.find().limit(+req.params.number);
       if (news.length === 0) {
@@ -60,7 +53,7 @@ router.get(
       res.status(200).json(news);
     } catch (error) {
       console.log(error.message);
-      res.json(error.message);
+      next(error)
     }
   }
 );
@@ -74,7 +67,7 @@ router.get(
   check("id", "Invalid Id")
     .isMongoId()
     .trim(),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -95,8 +88,7 @@ router.get(
       return res.status(200).json(singleNews);
     } catch (error) {
       console.log(error);
-
-      res.json(error);
+      next(error)
     }
   }
 );
@@ -107,7 +99,7 @@ router.get(
 router.get(
   "/:link",
 
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const singleNews = await News.findOne({ link: req.params.link });
       if (!singleNews) {
@@ -123,7 +115,7 @@ router.get(
     } catch (error) {
       console.log(error);
 
-      res.json(error);
+      next(error)
     }
   }
 );
@@ -132,12 +124,7 @@ router.get(
 // @access Private
 router.post(
   "/",
-  [
-    check("title", "Title is required").exists(),
-    check("text", "Text is required").exists(),
-    check("link", "Link is required").exists(),
-    check("img", "Img is required").exists()
-  ],
+  
   upload,
   auth,
   async (req, res) => {
@@ -154,7 +141,7 @@ router.post(
       const img = path.join(url, resizedImg.options.fileOut);
       const { title, text, link } = req.body;
       const newNews = new News({
-        title,
+        title, 
         text,
         link,
         img
@@ -163,6 +150,7 @@ router.post(
       return res.status(200).json(saveNews);
     } catch (error) {
       console.log(error);
+      next(error)
     }
   }
 );
@@ -183,7 +171,7 @@ router.put(
   ],
   upload,
   auth,
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
@@ -214,7 +202,8 @@ router.put(
       return res.status(200).json(updatedNews);
     } catch (error) {
       console.log(error);
-      res.json(error.message);
+      next(error)
+     
     }
   }
 );
@@ -228,7 +217,7 @@ router.delete(
     .isMongoId()
     .trim(),
   auth,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -251,9 +240,7 @@ router.delete(
         msg: "Item deleted"
       });
     } catch (errors) {
-      return res.status(400).json({
-        errors: errors
-      });
+      next(error)
     }
   }
 );

@@ -28,6 +28,9 @@ const NewsPage = ({ news, history, location, getNews, removeNews }) => {
                 <Alert />
               </h4>
               <section id="unseen">
+              <button className="btn btn-theme" onClick={() => history.push('/news/add')} >
+                  Add News
+                </button>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>

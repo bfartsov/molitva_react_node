@@ -1,7 +1,8 @@
-import { SAVE} from "./types";
+import { SAVE, REMOVE_NEWS_SUCCESS} from "./types";
 import { setAlert } from "./alert";
 
 import axios from "axios";
+import { removeNews } from "./news";
 
 export const save = (url, data, history, path) => async dispach => {
   try {
@@ -14,6 +15,7 @@ export const save = (url, data, history, path) => async dispach => {
       type: SAVE,
       payload: res.data
     });
+    console.log(res)
     res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
     res.status ===200 && history.push(path)
   } catch (error) {

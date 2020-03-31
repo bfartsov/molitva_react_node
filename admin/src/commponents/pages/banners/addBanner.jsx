@@ -18,7 +18,7 @@ const AddBanner = ({ history, saveBanner}) => {
 
   const handnleSave = e => {
     e.preventDefault();
-    saveBanner(formData, history)
+    saveBanner(formData, history);
     
   };
 

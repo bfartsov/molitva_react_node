@@ -217,7 +217,7 @@ router.delete(
     .isMongoId()
     .trim(),
   auth,
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -239,10 +239,8 @@ router.delete(
       return res.status(200).json({
         msg: "Item deleted"
       });
-    } catch (errors) {
-      return res.status(400).json({
-        errors: errors
-      });
+    } catch (error) {
+      next(error)
     }
   }
 );

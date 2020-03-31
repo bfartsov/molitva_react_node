@@ -6,7 +6,7 @@ const { check, validationResult } = require("express-validator");
 
 // @route  GET api/nationalprayers
 // @access Public
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const nationalPrayer = await NationalPrayer.find();
     console.log(nationalPrayer);
@@ -19,12 +19,13 @@ router.get("/", async (req, res) => {
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);
+    next(error)
   }
 });
 
 // @route  GET api/nationalprayers/:year
 // @access Public
-router.get("/:year", async (req, res) => {
+router.get("/:year", async (req, res, next) => {
   try {
     const nationalPrayer = await NationalPrayer.findOne({
       year: +req.params.year
@@ -39,6 +40,7 @@ router.get("/:year", async (req, res) => {
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);
+    next(error)
   }
 });
 module.exports = router;

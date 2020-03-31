@@ -26,6 +26,8 @@ import AddEvent from "./commponents/pages/events/eventAdd";
 
 import NewsPage from "./commponents/pages/news/newsPage";
 import EditNews from "./commponents/pages/news/newsEdit";
+import AddNews from "./commponents/pages/news/newsAdd";
+
 
 import LivePage from "./commponents/pages/live/livePage";
 import EditLIve from "./commponents/pages/live/liveEdit";
@@ -75,6 +77,8 @@ const App = ({ loadUser, isAuthenticated }) => {
 
         <PrivateRoute exact path="/news" component={NewsPage} />
         <PrivateRoute exact path="/news/edit/:id" component={EditNews} />
+        <PrivateRoute exact path="/news/add" component={AddNews} />
+
         <PrivateRoute exact path="/live" component={LivePage} />
         <PrivateRoute exact path="/live/edit/:id" component={EditLIve} />
         <PrivateRoute exact path="/menus" component={MenuPage} />

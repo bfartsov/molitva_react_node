@@ -7,7 +7,7 @@ const auth = require("../../middleware/auth");
 
 
 
-router.post('/edit',  async (req, res)=>{
+router.post('/edit',  async (req, res, next)=>{
     try {
         const timer = await Timer.findOne({name: 'timer'});
         
@@ -50,6 +50,7 @@ router.get('/',async(req, res)=>{
         res.status(200).json(timer);
     } catch (error) {
         console.log(error);
+        next(error)
     }
     
 }

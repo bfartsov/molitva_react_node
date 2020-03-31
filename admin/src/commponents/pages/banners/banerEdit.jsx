@@ -103,7 +103,7 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
                     </div>
                   </div>
 
-                  <Buttons handnleSave={handnleSave} />
+                  <Buttons handleCancel={handleCancel} handnleSave={handnleSave} />
                 </form>
               )}
             </div>

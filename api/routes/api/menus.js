@@ -6,7 +6,7 @@ const { check, validationResult } = require("express-validator");
 
 // @route  GET api/menus
 // @access Public
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const menus = await Menus.find();
     if (menus.length <= 0) {
@@ -19,7 +19,9 @@ router.get("/", async (req, res) => {
     });
 
     res.status(200).json(sortedMenus);
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 });
 
 
@@ -32,7 +34,9 @@ router.get("/id/:id", async (req, res) => {
       });
     }
     res.status(200).json(menu);
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 });
 
 router.post('/',  async(req, res, next)=>{

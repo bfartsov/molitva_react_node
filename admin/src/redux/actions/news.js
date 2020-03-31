@@ -28,4 +28,21 @@ export const removeNews = (id)=> async dispach =>{
   } catch (error) {
     console.log(error)
   }
+};
+
+export const saveNews = (data, history)=> async dispach =>{
+  console.log(data)
+ 
+  let formData = new FormData();
+  for ( var key in data ) {
+    formData.append(key, data[key]);
+};
+
+  const res = await axios.post("http://localhost:8080/api/news",formData );
+
+  res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+  res.status ===200 && dispach(getNews());
+
+  res.status ===200 && history.push('/news')
+
 }

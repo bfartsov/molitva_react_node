@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { connect } from "react-redux";
-import { edit } from "../../../redux/actions/edit";
-import { save } from "../../../redux/actions/save";
+import {saveNews} from '../../../redux/actions/news'
+import Alert from '../../alert'
+
 
 
 import Buttons from "../../edit/button";
-const EditNews = ({ match, edit, news, save, history }) => {
+const AddNews = ({  news, saveNews, history }) => {
   const [formData, setFormData] = useState({
     title: '',
     text: '',
@@ -16,23 +17,13 @@ const EditNews = ({ match, edit, news, save, history }) => {
     date: ''
   });
 
-  useEffect(() => {
-    edit("news", match.params.id);
-    setFormData({
-      title: news.loading || news.title ? news.title : '',
-      text: news.loading || news.text ? news.text : '',
-      img: news.loading || news.img ? news.img : '',
-      link: news.loading || news.link ? news.link : '',
-      date: news.loading || news.date ? news.date : ''
-    })
-
-  }, [news.loading]);
-  console.log(formData)
-
+  
   const handnleSave = e => {
     e.preventDefault();
-    const url = `http://localhost:8080/api/news/${match.params.id}`;
-    save(url, formData, history, '/news');
+    saveNews(formData, history);
+
+
+  
   };
   const handleCancel = ()=> history.push('/news');
 
@@ -48,8 +39,9 @@ const EditNews = ({ match, edit, news, save, history }) => {
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
+                <Alert/>
               </h4>
-              {!news.loading && news && (
+             
                 <form className="form-horizontal style-form">
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
@@ -58,7 +50,7 @@ const EditNews = ({ match, edit, news, save, history }) => {
                     <div className="col-sm-10">
                       <input
                         type="text"
-                        defaultValue={news.title}
+                        defaultValue={formData.title}
                         name="title"
                         className="form-control"
                         onChange={e => onChange(e)}
@@ -74,10 +66,9 @@ const EditNews = ({ match, edit, news, save, history }) => {
                       <CKEditor
                         name='text'
                         editor={ClassicEditor}
-                        data={news.text}
+                        data={formData.text}
                         onInit={editor => {
                           // You can store the "editor" and use when it is needed.
-                          console.log('Editor is ready to use!', editor);
                         }}
                         onChange={(event, editor) => {
                           const text = editor.getData();
@@ -104,7 +95,7 @@ const EditNews = ({ match, edit, news, save, history }) => {
                         onChange={e => onChange(e)}
                         type="text"
                         name="link"
-                        defaultValue={news.link}
+                        defaultValue={formData.link}
                         className="form-control"
                       />
                     </div>
@@ -128,7 +119,7 @@ const EditNews = ({ match, edit, news, save, history }) => {
 
                   <Buttons handleCancel={handleCancel} handnleSave={handnleSave} />
                 </form>
-              )}
+           
             </div>
           </div>
         </div>
@@ -137,7 +128,5 @@ const EditNews = ({ match, edit, news, save, history }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  news: state.edit
-});
-export default connect(mapStateToProps, { edit, save })(EditNews);
+
+export default connect(null, { saveNews})(AddNews);

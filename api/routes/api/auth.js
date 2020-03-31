@@ -24,7 +24,7 @@ router.post(
     check("password", "Please add password").exists()
   ],
 
-  async (req, res) => {
+  async (req, res, next) => {
     const { name, username, email, password, password2 } = req.body;
 
     try {
@@ -82,7 +82,7 @@ router.post(
       );
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      next(error)
     }
   }
 );
@@ -98,7 +98,7 @@ router.post(
       .exists(),
     check("password", "Please enter a password").exists()
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty) {
@@ -153,9 +153,7 @@ router.post(
       );
     } catch (error) {
       console.log(error);
-      res.status(400).json({
-        errors: [{ msg: error }]
-      });
+     next(error)
     }
   }
 );
@@ -166,7 +164,7 @@ router.post(
 router.get(
   "/login",
 
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       if (req.headers && req.headers["x-auth-token"]) {
         // const usertoken = req.headers.authorization;
@@ -187,9 +185,7 @@ router.get(
       }
     } catch (error) {
       console.log(error);
-      res.status(400).json({
-        errors: [{ msg: error.message }]
-      });
+      next(error)
     }
   }
 );
