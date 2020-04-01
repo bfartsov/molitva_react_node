@@ -26,7 +26,7 @@ export const removeBanner = id=> async dispach=>{
       type: REMOVE_BANNER_SUCCESS,
       payload: id
     });
-    dispach(setAlert('Item deleted', 'success'))
+    dispach(setAlert('Successfully removed', 'success'))
 
   } catch (error) {
     console.log(error)
@@ -45,7 +45,7 @@ export const saveBanner = (data, history)=> async dispach =>{
 
   const res = await axios.post("http://localhost:8080/api/banners",formData );
   console.log(res)
-  res.status ===200 && dispach(setAlert('Added Successculy', 'success'));
+  res.status ===200 && dispach(setAlert('Added Successfully', 'success'));
   res.status ===200 && dispach(getBanners)
   res.status ===200 && history.push('/banners')
 

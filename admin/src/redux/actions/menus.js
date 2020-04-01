@@ -30,3 +30,32 @@ export const getFrontMenus = () => async dispach => {
 //     console.log(error)
 //   }
 // }
+
+export const addMenu = (data, history)=> async dispach =>{
+  console.log(data)
+ 
+  const res = await axios.post("http://localhost:8080/api/menus",data );
+
+  res.status ===200 && dispach(setAlert('Updated Successfully', 'success'));
+  res.status ===200 && dispach(getFrontMenus());
+
+  res.status ===200 && history.push('/menus')
+
+};
+export const editMenu = (data, history, id, url)=> async dispach =>{
+ 
+  try {
+    console.log(data)
+ 
+    const res = await axios.put(`http://localhost:8080/api/menus/${id}`,data );
+    console.log(res)
+    res.status ===200 && dispach(setAlert('Updated Successfully', 'success'));
+    res.status ===200 && dispach(getFrontMenus());
+  
+    res.status ===200 && history.push(url);
+  } catch (error) {
+    console.log(error)
+  }
+
+};
+

@@ -40,9 +40,9 @@ export const saveNews = (data, history)=> async dispach =>{
 
   const res = await axios.post("http://localhost:8080/api/news",formData );
 
-  res.status ===200 && dispach(setAlert('Updated Successculy', 'success'));
+  res.status ===200 && dispach(setAlert('Updated Successfully', 'success'));
   res.status ===200 && dispach(getNews());
 
   res.status ===200 && history.push('/news')
 
-}
+};

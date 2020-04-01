@@ -85,12 +85,12 @@ router.post('/',  async(req, res, next)=>{
   }
 });
 
-router.post('/edit/:id', async(req, res, next)=>{
+router.put('/:id', async(req, res, next)=>{
   try {
+    console.log(req.body)
       const menuItem  = await Menus.findById(req.params.id);
-      let status = '';
-      const {name, url, order, checkActive} = req.body;
-      checkActive ? status = 'Enabled': status = 'Disabled'; 
+      console.log(menuItem)
+      const {name, url, order, status} = req.body;
       if(!menuItem){
 
           const mainItem = await Menus.findOne({'subMenu._id': req.params.id});
@@ -105,14 +105,17 @@ router.post('/edit/:id', async(req, res, next)=>{
           item.status = status;
           item.order = order;
           mainItem.subMenu.splice(itemIndex,1,item);
-          await mainItem.save();
+          const saveIitem = await mainItem.save();
+          return res.status(200).json(saveIitem)
           
       }
       menuItem.name = name;
       menuItem.url = url;
       menuItem.status = status;
       menuItem.order = order; 
-      await menuItem.save();   
+      const save = await menuItem.save();   
+      return res.status(200).json(save)
+
      
   } catch (error) {
       console.log(error);

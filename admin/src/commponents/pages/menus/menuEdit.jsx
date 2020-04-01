@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
+import Alert from '../../alert'
+
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
-import { save } from "../../../redux/actions/save";
+import { editMenu } from "../../../redux/actions/menus";
 
 import Buttons from "../../edit/button";
-const EditMenu = ({ match, edit, menu, save, history, location }) => {
+const EditMenu = ({ match, edit, menu, editMenu, history, location }) => {
   const [formData, setFormData] = useState({
     name: '',
     url: '',
     status: '',
     order: '',
-    subMenu: '',
+    subMenu: [],
     
   });
   useEffect(() => {
     edit("menus", match.params.id);
-    console.log(match.params)
     setFormData({
       name: menu.name ? menu.name : '',
       url: menu.url ? menu.url : '',
       status: menu.status ? menu.status : '',
       order: menu.order ? menu.order : '',
-      subMenu: menu.subMenu ? menu.subMenu : '',
+      subMenu: menu.subMenu ? menu.subMenu : [],
      
     })
   }, [menu.loading]);
@@ -32,8 +33,10 @@ const handleDelete = ()=>{
 
   const handnleSave = e => {
     e.preventDefault();
-    const url = `http://localhost:8080/api/events/${match.params.id}`;
-    //save(url, names);
+    const url = `http://localhost:8080/api/menus/${match.params.id}`;
+
+    console.log(formData)
+    editMenu(formData, history, match.params.id, '/menus');
   };
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,14 +44,14 @@ const handleDelete = ()=>{
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> Form Components
+          <i className="fa fa-angle-right"></i> Menus
         </h3>
 
         <div className="row mt">
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
-                <i className="fa fa-angle-right"></i> Form Elements
+                <Alert/>
               </h4>
               {menu && (
                 <form className="form-horizontal style-form">
@@ -60,7 +63,7 @@ const handleDelete = ()=>{
                       <input
                         onChange={onChange}
                         type="text"
-                        value={menu.name}
+                        defaultValue={menu.name}
                         // defaultValue={menu.title}
                         name="name"
                         className="form-control"
@@ -76,7 +79,7 @@ const handleDelete = ()=>{
                         onChange={e => onChange(e)}
                         type="text"
                         name="url"
-                        value={menu.url}
+                        defaultValue={menu.url}
                         className="form-control"
                       />
                     </div>
@@ -86,7 +89,7 @@ const handleDelete = ()=>{
                       Status
                     </label>
                     <div className="col-sm-10">
-                    <select name='status' class="form-control" onChange={e => onChange(e)}>
+                    <select name='status' defaultValue={menu.status} className="form-control" onChange={e => onChange(e)}>
                         <option >Enable</option>
                         <option >Disable</option>
                       </select>
@@ -168,4 +171,4 @@ const handleDelete = ()=>{
 const mapStateToProps = state => ({
   menu: state.edit
 });
-export default connect(mapStateToProps, { edit, save })(EditMenu);
+export default connect(mapStateToProps, { edit, editMenu })(EditMenu);

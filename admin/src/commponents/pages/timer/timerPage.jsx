@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import moment from 'moment'
 import Alert from '../../alert'
 import { connect } from "react-redux";
-import { getTimer } from "../../../redux/actions/timer";
+import { getTimer, saveTimer } from "../../../redux/actions/timer";
 
 import { } from "../../../redux/actions/news";
 import "../../../css/table-responsive.css";
 import Buttons from "../../edit/button";
 
 
-const NewsPage = ({ getTimer, timer, loading }) => {
+const NewsPage = ({ getTimer,saveTimer, timer, loading, history }) => {
   const [formData, setFormData] = useState({
     date: '',
     time: ''
@@ -17,21 +17,24 @@ const NewsPage = ({ getTimer, timer, loading }) => {
   useEffect(() => {
     getTimer()
     setFormData({
-      date: timer.date ? moment().format(timer.date) : '',
+      date: timer.date ? timer.date : '',
       time: timer.time ? timer.time : '',
     })
 
   }, [loading]);
-  console.log(formData)
-console.log(moment().format(timer.date))
-  const handnleSave = () => { }
+  const handnleSave = e => { 
+    e.preventDefault();
+    saveTimer(formData, history);
+  };
+const handleCancel = ()=>{
 
+}
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
   return (
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> news
+          <i className="fa fa-angle-right"></i> Timer
         </h3>
         <div className="row mt">
           <div className="col-lg-12">
@@ -44,18 +47,18 @@ console.log(moment().format(timer.date))
                   <div className="form-group">
                     <label className="control-label col-md-3">Date</label>
                     <div className="col-md-3 col-xs-11">
-                      <input onChange={e => onChange(e)} className="form-control form-control-inline input-medium default-date-picker"  type="date" name="date" value={formData.date} />
+                      <input onChange={e => onChange(e)} className="form-control form-control-inline input-medium default-date-picker"  type="date" name="date" defaultValue={timer.date} />
                       <span className="help-block">Select date</span>
                     </div>
                   </div>
                   <div className="form-group">
                     <label className="control-label col-md-3">Time</label>
                     <div className="col-md-3 col-xs-11">
-                      <input onChange={e => onChange(e)} className="form-control form-control-inline input-medium default-date-picker"  name="time" type="time" defaultValue={formData.time}/>
+                      <input onChange={e => onChange(e)} className="form-control form-control-inline input-medium default-date-picker"  name="time" type="time" defaultValue={timer.time}/>
                       <span className="help-block">Select time</span>
                     </div>
                   </div>
-                  <Buttons handnleSave={handnleSave} />
+                  <Buttons  handleCancel={handleCancel} handnleSave={handnleSave} />
 
                 </form>}
 
@@ -72,4 +75,4 @@ const mapStateToProps = state => ({
   loading: state.timer.loading
 });
 
-export default connect(mapStateToProps, { getTimer })(NewsPage);
+export default connect(mapStateToProps, { getTimer, saveTimer })(NewsPage);

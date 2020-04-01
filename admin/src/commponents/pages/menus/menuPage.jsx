@@ -20,7 +20,7 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
     <section id="main-content">
       <section className="wrapper">
         <h3>
-          <i className="fa fa-angle-right"></i> news
+          <i className="fa fa-angle-right"></i> Menus
         </h3>
         <div className="row mt">
           <div className="col-lg-12">
@@ -29,6 +29,9 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
                 <Alert />
               </h4>
               <section id="unseen">
+              <button className="btn btn-theme" onClick={() => history.push('/menus/add')} >
+                  Add Menu
+                </button>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>

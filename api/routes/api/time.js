@@ -7,7 +7,7 @@ const auth = require("../../middleware/auth");
 
 
 
-router.post('/edit',  async (req, res, next)=>{
+router.post('/', auth, async (req, res, next)=>{
     try {
         const timer = await Timer.findOne({name: 'timer'});
         
