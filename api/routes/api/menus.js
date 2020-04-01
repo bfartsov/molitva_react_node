@@ -44,7 +44,7 @@ router.post('/',  async(req, res, next)=>{
       // const menu = await Menu.find();
     
       const errors= [];
-      const {name, url, parentElement, checkActive, order} = req.body;
+      const {name, url, parentElement, status, order} = req.body;
 
       if(!url){
           errors.push({text:'url is required'});
@@ -60,8 +60,6 @@ router.post('/',  async(req, res, next)=>{
           msg: errors
         });ß
       }
-      let status = '';
-      checkActive ? status = 'Enabled': status = 'Disabled'; 
       if(parentElement === 'topLevel'){
           const newMenuItem = {
               name,url, status, order
@@ -70,7 +68,7 @@ router.post('/',  async(req, res, next)=>{
         
           await newItem.save();
           return res.status(200).json(newItem);
-      }
+      };
       const topMenuElement = await Menus.findOne({
           name: parentElement
       });

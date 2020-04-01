@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
 import { editMenu } from "../../../redux/actions/menus";
-import Alert from '../../alert'
+import Alert from '../../alert';
 
 
 import Buttons from "../../edit/button";
@@ -32,7 +32,7 @@ const SubMenuedit = ({ match, edit, menu, editMenu, history, location }) => {
 
   const handleDelete = () => {
 
-  }
+  };
 
 
   const handnleSave = e => {

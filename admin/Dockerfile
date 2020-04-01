@@ -3,7 +3,7 @@ RUN mkdir  /home/node/app
 WORKDIR /home/node/app
 ENV PATH  /home/node/app/node_modules/.bin:$PATH
 COPY package.json ./
-RUN npm install --silent
+RUN npm install 
 COPY . .
 EXPOSE 2000
 CMD ["npm",  "start"]
