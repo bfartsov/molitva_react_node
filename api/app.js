@@ -4,7 +4,7 @@ const conectedDB = require("./startup/db");
 
 const app = express();
 conectedDB();
-require('./startup/logging');
+require('./startup/logging')();
 require('./startup/routes')(app);
 
 const PORT = process.env.PORT || 8080;
