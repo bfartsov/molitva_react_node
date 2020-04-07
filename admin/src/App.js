@@ -15,30 +15,26 @@ import AddVideo from "./commponents/pages/videos/videoAdd";
 import EditBanner from "./commponents/pages/banners/banerEdit";
 import addBaanner from "./commponents/pages/banners/addBanner";
 
-
-
 import BannerPage from "./commponents/pages/banners/bannerPage";
 
 import EventPage from "./commponents/pages/events/eventPage";
 import EditEvent from "./commponents/pages/events/eventEdit";
 import AddEvent from "./commponents/pages/events/eventAdd";
 
-
 import NewsPage from "./commponents/pages/news/newsPage";
 import EditNews from "./commponents/pages/news/newsEdit";
 import AddNews from "./commponents/pages/news/newsAdd";
-
 
 import LivePage from "./commponents/pages/live/livePage";
 import EditLIve from "./commponents/pages/live/liveEdit";
 
 import MenuPage from "./commponents/pages/menus/menuPage";
 import EditMenu from "./commponents/pages/menus/menuEdit";
+import AddMenu from "./commponents/pages/menus/menuAdd";
+
 import SubMenuedit from "./commponents/pages/menus/subMenuEdit";
 
 import TimerPage from "./commponents/pages/timer/timerPage";
-
-
 
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
@@ -62,7 +58,7 @@ const App = ({ loadUser, isAuthenticated }) => {
     <Fragment>
       {isAuthenticated && <Header />}
       <Switch>
-        <Route exact path={"/login"} component={LoginPage} /> 
+        <Route exact path={"/login"} component={LoginPage} />
         <PrivateRoute exact path="/" component={HomePage} />
         <PrivateRoute exact path="/videos" component={VideoPage} />
         <PrivateRoute exact path="/videos/add" component={AddVideo} />
@@ -83,15 +79,20 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/live/edit/:id" component={EditLIve} />
         <PrivateRoute exact path="/menus" component={MenuPage} />
         <PrivateRoute exact path="/menus/edit/:id" component={EditMenu} />
-        <PrivateRoute exact path="/menus/edit/:id/subMenu/:subMenu" component={SubMenuedit} />
-        <PrivateRoute exact path="/timer" component={TimerPage} />
+        <PrivateRoute exact path="/menus/add/" component={AddMenu} />
 
+        <PrivateRoute
+          exact
+          path="/menus/edit/:id/subMenu/:subMenu"
+          component={SubMenuedit}
+        />
+        <PrivateRoute exact path="/timer" component={TimerPage} />
       </Switch>
       <Footer />
     </Fragment>
   );
 };
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps, { loadUser })(App);

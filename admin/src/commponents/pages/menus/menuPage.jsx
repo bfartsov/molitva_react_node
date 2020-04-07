@@ -1,21 +1,18 @@
 import React, { useEffect } from "react";
-import Alert from '../../alert'
+import Alert from "../../alert";
 import { connect } from "react-redux";
-import { getFrontMenus } from "../../../redux/actions/menus";
+import { getFrontMenus, removeMenu } from "../../../redux/actions/menus";
 import "../../../css/table-responsive.css";
+import { removeBanner } from "../../../redux/actions/banners";
 
-const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
+const MenuPage = ({ getFrontMenus, menus, history, location, removeMenu }) => {
   useEffect(() => {
-    getFrontMenus()
+    getFrontMenus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
   }, []);
 
-  const handleDelete = (id) => {
-    console.log(id)
+  const handleDelete = (id) => removeMenu(id, history);
 
-  };
-  console.log(menus)
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -29,7 +26,10 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
                 <Alert />
               </h4>
               <section id="unseen">
-              <button className="btn btn-theme" onClick={() => history.push('/menus/add')} >
+                <button
+                  className="btn btn-theme"
+                  onClick={() => history.push("/menus/add")}
+                >
                   Add Menu
                 </button>
                 <table className="table table-bordered table-striped table-condensed">
@@ -44,36 +44,38 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {menus && !menus.loading && menus.map(item => {
-                      return (
-                        <tr key={item._id}>
-                          <td> {item.name}</td>
-                          <td> {item.url}</td>
-                          <td> {item.status}</td>
-                          <td> {item.order}</td>
+                    {menus &&
+                      !menus.loading &&
+                      menus.map((item) => {
+                        return (
+                          <tr key={item._id}>
+                            <td> {item.name}</td>
+                            <td> {item.url}</td>
+                            <td> {item.status}</td>
+                            <td> {item.order}</td>
 
-                          <td>
-                            <button
-                              onClick={() => {
-                                history.push(
-                                  `${location.pathname}/edit/${item._id}`
-                                );
-                              }}
-                              className="btn btn-primary btn-xs"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </button>
-                            <button
-                              id={item._id}
-                              onClick={() => handleDelete(item._id)}
-                              className="btn remove btn-danger btn-xs"
-                            >
-                              <i className="fa fa-trash-o "></i>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                            <td>
+                              <button
+                                onClick={() => {
+                                  history.push(
+                                    `${location.pathname}/edit/${item._id}`
+                                  );
+                                }}
+                                className="btn btn-primary btn-xs"
+                              >
+                                <i className="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                id={item._id}
+                                onClick={() => handleDelete(item._id)}
+                                className="btn remove btn-danger btn-xs"
+                              >
+                                <i className="fa fa-trash-o "></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </section>
@@ -83,9 +85,11 @@ const MenuPage = ({ getFrontMenus, menus, history, location, }) => {
       </section>
     </section>
   );
-}
-const mapStateToProps = state => ({
-  menus: state.menus.menus
+};
+const mapStateToProps = (state) => ({
+  menus: state.menus.menus,
 });
 
-export default connect(mapStateToProps, { getFrontMenus })(MenuPage);
+export default connect(mapStateToProps, { getFrontMenus, removeMenu })(
+  MenuPage
+);

@@ -1,11 +1,11 @@
-import { GET_MENUS_FRONT} from "../actions/types";
+import { GET_MENUS_FRONT, REMOVE_MENU_SUCCESS } from "../actions/types";
 
 const initialState = {
   menus: [],
-  loading: true
+  loading: true,
 };
 
-export default function(state = initialState, actions) {
+export default function (state = initialState, actions) {
   const { type, payload } = actions;
   switch (type) {
     case GET_MENUS_FRONT:
@@ -13,14 +13,14 @@ export default function(state = initialState, actions) {
         ...state,
         menus: payload.menus,
 
-        loading: false
+        loading: false,
       };
-    // case REMOVE_VIDEO_SUCCESS:
-    //   return{
-    //     ...state,
-    //     videos: state.videos.filter(video=>video._id!==payload),
-    //     loading: false
-    //   } 
+    case REMOVE_MENU_SUCCESS:
+      return {
+        ...state,
+        menus: state.menus.filter((item) => item._id !== payload),
+        loading: false,
+      };
     default:
       return state;
   }

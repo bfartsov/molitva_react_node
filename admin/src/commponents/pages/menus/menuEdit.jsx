@@ -1,45 +1,48 @@
 import React, { useState, useEffect } from "react";
-import Alert from '../../alert'
+import Alert from "../../alert";
 
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
-import { editMenu } from "../../../redux/actions/menus";
+import { editMenu, removeMenu } from "../../../redux/actions/menus";
 
 import Buttons from "../../edit/button";
-const EditMenu = ({ match, edit, menu, editMenu, history, location }) => {
+const EditMenu = ({
+  match,
+  edit,
+  menu,
+  editMenu,
+  history,
+  location,
+  removeMenu,
+}) => {
   const [formData, setFormData] = useState({
-    name: '',
-    url: '',
-    status: '',
-    order: '',
+    name: "",
+    url: "",
+    status: "",
+    order: "",
     subMenu: [],
-    
   });
   useEffect(() => {
     edit("menus", match.params.id);
     setFormData({
-      name: menu.name ? menu.name : '',
-      url: menu.url ? menu.url : '',
-      status: menu.status ? menu.status : '',
-      order: menu.order ? menu.order : '',
+      name: menu.name ? menu.name : "",
+      url: menu.url ? menu.url : "",
+      status: menu.status ? menu.status : "",
+      order: menu.order ? menu.order : "",
       subMenu: menu.subMenu ? menu.subMenu : [],
-     
-    })
+    });
   }, [menu.loading]);
-const handleDelete = ()=>{
+  const handleDelete = (id) => removeMenu(id, history);
 
-}
-
-
-  const handnleSave = e => {
+  const handnleSave = (e) => {
     e.preventDefault();
     const url = `http://localhost:8080/api/menus/${match.params.id}`;
 
-    console.log(formData)
-    editMenu(formData, history, match.params.id, '/menus');
+    editMenu(formData, history, match.params.id, "/menus");
   };
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -51,7 +54,7 @@ const handleDelete = ()=>{
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
-                <Alert/>
+                <Alert />
               </h4>
               {menu && (
                 <form className="form-horizontal style-form">
@@ -76,7 +79,7 @@ const handleDelete = ()=>{
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
                         name="url"
                         defaultValue={menu.url}
@@ -89,9 +92,14 @@ const handleDelete = ()=>{
                       Status
                     </label>
                     <div className="col-sm-10">
-                    <select name='status' defaultValue={menu.status} className="form-control" onChange={e => onChange(e)}>
-                        <option >Enable</option>
-                        <option >Disable</option>
+                      <select
+                        name="status"
+                        defaultValue={menu.status}
+                        className="form-control"
+                        onChange={(e) => onChange(e)}
+                      >
+                        <option>Enable</option>
+                        <option>Disable</option>
                       </select>
                     </div>
                   </div>
@@ -101,7 +109,7 @@ const handleDelete = ()=>{
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="number"
                         name="order"
                         className="default"
@@ -109,58 +117,60 @@ const handleDelete = ()=>{
                       />
                     </div>
                   </div>
-                
+
                   <Buttons handnleSave={handnleSave} />
                 </form>
               )}
-              {menu.subMenu &&  menu.subMenu.length > 0 &&  <section id="unseen">
-               <table className="table table-bordered table-striped table-condensed">
-                  <thead>
-                    <tr>
-                      <th> Id</th>
-                      <th> Name</th>
-                      
-                      <th> Url</th>
-                      <th> Status</th>
-                      <th> Order</th>
-                      <th> Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {menu.subMenu.map(item => {
-                      return (
-                        <tr key={item._id}>
-                          <td> {item._id}</td>
-                          <td> {item.name}</td>
-                          <td> {item.url}</td>
-                          <td> {item.status}</td>
-                          <td> {item.order}</td>
-                         
-                          <td>
-                            <button
-                              onClick={() => {
-                                history.push(
-                                  `${location.pathname}/subMenu/${item._id}`
-                                );
-                              }}
-                              className="btn btn-primary btn-xs"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </button>
-                            <button
-                              id={item._id}
-                              onClick={()=>handleDelete(item._id)}
-                              className="btn remove btn-danger btn-xs"
-                            >
-                              <i className="fa fa-trash-o "></i>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </section>}
+              {menu.subMenu && menu.subMenu.length > 0 && (
+                <section id="unseen">
+                  <table className="table table-bordered table-striped table-condensed">
+                    <thead>
+                      <tr>
+                        <th> Id</th>
+                        <th> Name</th>
+
+                        <th> Url</th>
+                        <th> Status</th>
+                        <th> Order</th>
+                        <th> Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {menu.subMenu.map((item) => {
+                        return (
+                          <tr key={item._id}>
+                            <td> {item._id}</td>
+                            <td> {item.name}</td>
+                            <td> {item.url}</td>
+                            <td> {item.status}</td>
+                            <td> {item.order}</td>
+
+                            <td>
+                              <button
+                                onClick={() => {
+                                  history.push(
+                                    `${location.pathname}/subMenu/${item._id}`
+                                  );
+                                }}
+                                className="btn btn-primary btn-xs"
+                              >
+                                <i className="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                id={item._id}
+                                onClick={() => handleDelete(item._id)}
+                                className="btn remove btn-danger btn-xs"
+                              >
+                                <i className="fa fa-trash-o "></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </section>
+              )}
             </div>
           </div>
         </div>
@@ -168,7 +178,9 @@ const handleDelete = ()=>{
     </section>
   );
 };
-const mapStateToProps = state => ({
-  menu: state.edit
+const mapStateToProps = (state) => ({
+  menu: state.edit,
 });
-export default connect(mapStateToProps, { edit, editMenu })(EditMenu);
+export default connect(mapStateToProps, { edit, editMenu, removeMenu })(
+  EditMenu
+);

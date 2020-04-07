@@ -2,3 +2,6 @@ data
 api/node_modules
 web/node_modules
 admin/node_modules
+api/uncaughtExceptions.log
+api/exceptions.log
+api/exceptions.log
