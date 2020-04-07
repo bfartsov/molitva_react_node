@@ -8,19 +8,26 @@ import { edit } from "../../../redux/actions/edit";
 import { save } from "../../../redux/actions/save";
 
 import Buttons from "../../edit/button";
-const EditVIdeo = ({ match, edit, prayer, save, loading, history }) => {
+const EditPrayer = ({ match, edit, prayer, save, loading, history }) => {
   const [formData, setFormData] = useState({
     title: "",
-    img: "",
     video: "",
     img: "",
     text: "",
+    year: null,
   });
 
   useEffect(() => {
     edit("nationalprayers", match.params.id);
-    setFormData({});
+    setFormData({
+      title: prayer.title ? prayer.title : "",
+      img: prayer.img ? prayer.img : "",
+      video: prayer.video ? prayer.video : "",
+      text: prayer.text ? prayer.text : "",
+      year: prayer.year ? prayer.year : null,
+    });
   }, [loading]);
+  console.log(formData);
 
   const handnleSave = (e) => {
     e.preventDefault();
@@ -163,6 +170,6 @@ const EditVIdeo = ({ match, edit, prayer, save, loading, history }) => {
 };
 const mapStateToProps = (state) => ({
   prayer: state.edit,
-  loading: state.save.loading,
+  loading: state.edit.loading,
 });
-export default connect(mapStateToProps, { edit, save })(EditVIdeo);
+export default connect(mapStateToProps, { edit, save })(EditPrayer);
