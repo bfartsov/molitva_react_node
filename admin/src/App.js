@@ -36,6 +36,9 @@ import SubMenuedit from "./commponents/pages/menus/subMenuEdit";
 
 import TimerPage from "./commponents/pages/timer/timerPage";
 
+import PrayersPage from "./commponents/pages/nationalPrayer/prayersPage";
+import EditPrayer from "./commponents/pages/nationalPrayer/prayerEdit";
+
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
 
@@ -80,6 +83,9 @@ const App = ({ loadUser, isAuthenticated }) => {
         <PrivateRoute exact path="/menus" component={MenuPage} />
         <PrivateRoute exact path="/menus/edit/:id" component={EditMenu} />
         <PrivateRoute exact path="/menus/add/" component={AddMenu} />
+
+        <PrivateRoute exact path="/prayers" component={PrayersPage} />
+        <PrivateRoute exact path="/prayers/edit/:id" component={EditPrayer} />
 
         <PrivateRoute
           exact

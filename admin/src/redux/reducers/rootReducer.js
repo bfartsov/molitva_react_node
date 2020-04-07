@@ -8,8 +8,9 @@ import edit from "./edit";
 import save from "./save";
 import news from "./news";
 import live from "./live";
-import menus from "./menus"
-import timer from "./timer"
+import menus from "./menus";
+import timer from "./timer";
+import prayers from "./prayers";
 export default combineReducers({
   alert,
   auth,
@@ -21,5 +22,6 @@ export default combineReducers({
   news,
   live,
   menus,
-  timer
+  timer,
+  prayers,
 });

@@ -13,6 +13,7 @@ export const GET_EVENTS = "GET_EVENTS";
 export const GET_NEWS = "GET_NEWS";
 export const GET_LIVE = "GET_LIVE";
 export const GET_TIMER = "GET_TIMER";
+export const GET_PRAYERS = "GET_PRAYERS";
 export const GET_MENUS_FRONT = "GET_MENUS_FRONT";
 export const EDIT = "EDIT";
 export const SAVE = "SAVE";

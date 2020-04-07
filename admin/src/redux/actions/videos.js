@@ -1,49 +1,44 @@
 import { GET_VIDEOS, REMOVE_VIDEO_SUCCESS } from "./types";
-import {setAlert} from './alert'
+import { setAlert } from "./alert";
 import axios from "axios";
 
-export const getVideos = () => async dispach => {
+export const getVideos = () => async (dispach) => {
   try {
     const videos = await axios.get("http://localhost:8080/api/videos");
 
     dispach({
       type: GET_VIDEOS,
-      payload: { videos: videos.data }
+      payload: { videos: videos.data },
     });
-
   } catch (error) {
     console.log(error);
   }
 };
 
-export const removeVideo = (id)=> async dispach =>{
+export const removeVideo = (id) => async (dispach) => {
   try {
-    const video = await axios.delete(`http://localhost:8080/api/videos/${id}`)
-    console.log(`http://localhost:8080/api/videos/${id}`)
-    console.log(video.data)
+    const video = await axios.delete(`http://localhost:8080/api/videos/${id}`);
+    console.log(`http://localhost:8080/api/videos/${id}`);
+    console.log(video.data);
     dispach({
-      type:REMOVE_VIDEO_SUCCESS,
-      payload: id
-    })
-    dispach(setAlert('Item deleted', 'success'))
+      type: REMOVE_VIDEO_SUCCESS,
+      payload: id,
+    });
+    dispach(setAlert("Item deleted", "success"));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-export const saveVideo = (data, history)=> async dispach =>{
-  console.log(data)
- 
+export const saveVideo = (data, history) => async (dispach) => {
+  console.log(data);
+
   let formData = new FormData();
-  for ( var key in data ) {
+  for (var key in data) {
     formData.append(key, data[key]);
+  }
+
+  const res = await axios.post("http://localhost:8080/api/videos", formData);
+  res.status === 200 && dispach(setAlert("Updated Successfully", "success"));
+  res.status === 200 && history.push("/videos");
 };
-
-  const res = await axios.post("http://localhost:8080/api/videos",formData );
-  res.status ===200 && dispach(setAlert('Updated Successfully', 'success'));
-  res.status ===200 && history.push('/videos')
-
-}
-
-
-

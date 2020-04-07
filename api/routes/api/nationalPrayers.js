@@ -13,13 +13,13 @@ router.get("/", async (req, res, next) => {
 
     if (nationalPrayer.length <= 0) {
       return res.status(400).json({
-        msg: "No prayers"
+        msg: "No prayers",
       });
     }
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -28,19 +28,38 @@ router.get("/", async (req, res, next) => {
 router.get("/:year", async (req, res, next) => {
   try {
     const nationalPrayer = await NationalPrayer.findOne({
-      year: +req.params.year
+      year: +req.params.year,
     });
     console.log(nationalPrayer);
 
     if (!nationalPrayer) {
       return res.status(400).json({
-        msg: "No prayers"
+        msg: "No prayers",
       });
     }
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
+
+// @route  GET api/nationalprayers/id/:id
+// @access Public
+router.get("/id/:id", async (req, res, next) => {
+  try {
+    const nationalPrayer = await NationalPrayer.findById(req.params.id);
+
+    if (!nationalPrayer) {
+      return res.status(400).json({
+        msg: "No prayers",
+      });
+    }
+    res.status(200).json(nationalPrayer);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 module.exports = router;
