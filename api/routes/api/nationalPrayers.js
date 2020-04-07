@@ -6,6 +6,7 @@ const upload = require("../../helpers/upload");
 const resizeImage = require("../../helpers/resize");
 const fullUrl = require("../../helpers/fullUrl");
 const { check, validationResult } = require("express-validator");
+const auth = require("../../middleware/auth");
 
 // @route  GET api/nationalprayers
 // @access Public
@@ -16,7 +17,11 @@ router.get("/", async (req, res, next) => {
 
     if (nationalPrayer.length <= 0) {
       return res.status(400).json({
-        msg: "No prayers",
+        errors: [
+          {
+            msg: "Prayer not found",
+          },
+        ],
       });
     }
     res.status(200).json(nationalPrayer);
@@ -37,7 +42,11 @@ router.get("/:year", async (req, res, next) => {
 
     if (!nationalPrayer) {
       return res.status(400).json({
-        msg: "No prayers",
+        errors: [
+          {
+            msg: "Prayer not found",
+          },
+        ],
       });
     }
     res.status(200).json(nationalPrayer);
@@ -55,7 +64,11 @@ router.get("/id/:id", async (req, res, next) => {
 
     if (!nationalPrayer) {
       return res.status(400).json({
-        msg: "No prayers",
+        errors: [
+          {
+            msg: "Prayer not found",
+          },
+        ],
       });
     }
     res.status(200).json(nationalPrayer);
@@ -65,13 +78,17 @@ router.get("/id/:id", async (req, res, next) => {
   }
 });
 
-router.put("/:id", upload, async (req, res, next) => {
+router.put("/:id", upload, auth, async (req, res, next) => {
   try {
     console.log(req.body);
     const prayer = await NationalPrayer.findById(req.params.id);
     if (!prayer) {
       return res.status(400).json({
-        msg: "No prayers",
+        errors: [
+          {
+            msg: "Prayer not found",
+          },
+        ],
       });
     }
     if (req.file) {
