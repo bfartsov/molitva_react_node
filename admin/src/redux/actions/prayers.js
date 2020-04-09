@@ -16,3 +16,37 @@ export const getPrayers = () => async (dispatch) => {
     console.log(error.response);
   }
 };
+
+export const savePrayer = (data, history) => async (dispach) => {
+  console.log(data);
+
+  let formData = new FormData();
+  for (var key in data) {
+    formData.append(key, data[key]);
+  }
+
+  const res = await axios.post(
+    "http://localhost:8080/api/nationalprayers",
+    formData
+  );
+  console.log(res);
+  res.status === 200 && dispach(setAlert("Updated Successfully", "success"));
+  res.status === 200 && dispach(getPrayers());
+
+  res.status === 200 && history.push("/prayers");
+};
+
+// export const removePrayer = (id) => async (dispach) => {
+//   try {
+//     const video = await axios.delete(`http://localhost:8080/api/pray/${id}`);
+//     console.log(`http://localhost:8080/api/videos/${id}`);
+//     console.log(video.data);
+//     dispach({
+//       type: REMOVE_VIDEO_SUCCESS,
+//       payload: id,
+//     });
+//     dispach(setAlert("Item deleted", "success"));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

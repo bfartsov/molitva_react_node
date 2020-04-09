@@ -38,6 +38,7 @@ import TimerPage from "./commponents/pages/timer/timerPage";
 
 import PrayersPage from "./commponents/pages/nationalPrayer/prayersPage";
 import EditPrayer from "./commponents/pages/nationalPrayer/prayerEdit";
+import AddPrayer from "./commponents/pages/nationalPrayer/prayerAdd";
 
 import { loadUser } from "./redux/actions/auth";
 import setAuthToken from "./utils/setAuthToken";
@@ -86,6 +87,7 @@ const App = ({ loadUser, isAuthenticated }) => {
 
         <PrivateRoute exact path="/prayers" component={PrayersPage} />
         <PrivateRoute exact path="/prayers/edit/:id" component={EditPrayer} />
+        <PrivateRoute exact path="/prayers/add/" component={AddPrayer} />
 
         <PrivateRoute
           exact
