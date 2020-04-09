@@ -142,4 +142,16 @@ router.put("/:id", upload, auth, async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    await NationalPrayer.findByIdAndDelete(req.param.id);
+    return res.status(200).json({
+      msg: "Item deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 module.exports = router;

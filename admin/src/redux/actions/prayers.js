@@ -1,4 +1,4 @@
-import { GET_PRAYERS } from "./types";
+import { GET_PRAYERS, REMOVE_PRAYER_SUCCESS } from "./types";
 import { setAlert } from "./alert";
 import axios from "axios";
 
@@ -36,17 +36,18 @@ export const savePrayer = (data, history) => async (dispach) => {
   res.status === 200 && history.push("/prayers");
 };
 
-// export const removePrayer = (id) => async (dispach) => {
-//   try {
-//     const video = await axios.delete(`http://localhost:8080/api/pray/${id}`);
-//     console.log(`http://localhost:8080/api/videos/${id}`);
-//     console.log(video.data);
-//     dispach({
-//       type: REMOVE_VIDEO_SUCCESS,
-//       payload: id,
-//     });
-//     dispach(setAlert("Item deleted", "success"));
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const removePrayer = (id) => async (dispach) => {
+  try {
+    const res = await axios.delete(
+      `http://localhost:8080/api/nationalprayers/${id}`
+    );
+
+    dispach({
+      type: REMOVE_PRAYER_SUCCESS,
+      payload: id,
+    });
+    dispach(setAlert("Item deleted", "success"));
+  } catch (error) {
+    console.log(error);
+  }
+};

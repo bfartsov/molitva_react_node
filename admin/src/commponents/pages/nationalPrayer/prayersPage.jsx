@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
 import Alert from "../../alert";
 import { connect } from "react-redux";
-import { getPrayers } from "../../../redux/actions/prayers";
+import { getPrayers, removePrayer } from "../../../redux/actions/prayers";
 
 import "../../../css/table-responsive.css";
 
-const PrayersPage = ({ getPrayers, prayers, loading, history, location }) => {
+const PrayersPage = ({
+  getPrayers,
+  prayers,
+  removePrayer,
+  history,
+  location,
+}) => {
   useEffect(() => {
     getPrayers();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleDelete = (id) => {};
+  const handleDelete = (id) => removePrayer(id);
 
   return (
     <section id="main-content">
@@ -84,4 +90,6 @@ const mapStateToProps = (state) => ({
   prayers: state.prayers.prayers,
   loading: state.prayers.loading,
 });
-export default connect(mapStateToProps, { getPrayers })(PrayersPage);
+export default connect(mapStateToProps, { getPrayers, removePrayer })(
+  PrayersPage
+);

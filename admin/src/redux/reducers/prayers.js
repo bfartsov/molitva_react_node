@@ -1,4 +1,4 @@
-import { GET_PRAYERS } from "../actions/types";
+import { GET_PRAYERS, REMOVE_PRAYER_SUCCESS } from "../actions/types";
 
 const initialState = {
   prayers: [],
@@ -15,6 +15,13 @@ export default function (state = initialState, action) {
         prayers: payload,
         loading: false,
       };
+    case REMOVE_PRAYER_SUCCESS:
+      return {
+        ...state,
+        prayers: state.prayers.filter((item) => item._id !== payload),
+        loading: false,
+      };
+
     default:
       return state;
   }
