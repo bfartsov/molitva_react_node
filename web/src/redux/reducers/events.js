@@ -1,17 +1,17 @@
-import { GET_BANNERS } from "../actions/types";
+import { GET_EVENTS } from "../actions/types";
 
 const initialState = {
-  banners: [],
+  events: [],
   loading: true,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case GET_BANNERS:
+    case GET_EVENTS:
       return {
         ...state,
-        banners: payload,
+        events: payload,
         loading: false,
       };
     default:

@@ -1,5 +1,4 @@
 import React from "react";
-import img from "../../images/0233622001395215466_20118_600x458.jpg";
 import Event from "../events/event";
 const LatestEvents = ({ events }) => {
   return (
@@ -8,11 +7,11 @@ const LatestEvents = ({ events }) => {
         <h3>Събития</h3>
         <div className="row">
           {events.length > 0 &&
-            events.map(event => {
+            events.map((event) => {
               return (
                 <div className="col-md-3 col-sm-6" key={event._id}>
                   <Event
-                    img={img}
+                    img={event.img}
                     title={event.title}
                     startTime={event.startTime}
                     endTime={event.endTime}

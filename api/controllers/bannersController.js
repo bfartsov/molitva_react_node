@@ -14,9 +14,9 @@ const getBanners = async (req, res, next) => {
       return res.status(400).json({
         errors: [
           {
-            msg: "No banners"
-          }
-        ]
+            msg: "No banners",
+          },
+        ],
       });
     }
     res.status(200).json(banners);
@@ -32,9 +32,9 @@ const getBanner = async (req, res, next) => {
       return res.status(400).json({
         errors: [
           {
-            msg: "Banner does not exist"
-          }
-        ]
+            msg: "Banner does not exist",
+          },
+        ],
       });
     }
     res.status(200).json(banner);
@@ -46,31 +46,28 @@ const getBanner = async (req, res, next) => {
 
 // add Banners
 const addBanner = async (req, res, next) => {
-
-  console.log(req.file)
-  console.log(req.body)
   try {
     const url = fullUrl(req);
     const resizedImage = await resizeImg(req.file, 1800, 550);
-    const banner = path.join(url, resizedImage.options.fileOut);
-    console.log(banner)
+    const banner = `${url}/${resizedImage.options.fileOut}`;
+
     const newBanner = new Banner({
       title: req.body.title,
       img: banner,
-      eventDate: req.body.eventDate
+      eventDate: req.body.eventDate,
     });
-    console.log(newBanner)
+    console.log(newBanner);
     const saveBanner = await newBanner.save();
-    console.log(saveBanner)
+    console.log(saveBanner);
     res.status(200).json(saveBanner);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(400).json({
       errors: [
         {
-          msg: error.message
-        }
-      ]
+          msg: error.message,
+        },
+      ],
     });
   }
 };
@@ -80,26 +77,18 @@ const editBanner = async (req, res, next) => {
   try {
     const url = fullUrl(req);
 
-    // const errors = validationResult(req);
-
-    // if (!errors.isEmpty()) {
-    //   return res.status(422).json({
-    //     errors: errors.array()
-    //   });
-    // }
     const resizedImage = await resizeImg(req.file, 1800, 550);
-    const bannerImg = path.join(url, resizedImage.options.fileOut);
+    const bannerImg = `${url}/${resizedImage.options.fileOut}`;
     const banner = await Banner.findById(req.params.id);
     if (!banner) {
       res.status(400).json({
         errors: [
           {
-            msg: 'No banner found'
-          }
-        ]
+            msg: "No banner found",
+          },
+        ],
       });
-
-    };
+    }
     banner.title = req.body.title;
     banner.img = bannerImg;
     banner.eventDate = req.body.eventDate;
@@ -117,7 +106,7 @@ const deleteBanner = async (req, res, next) => {
     const banner = await Banner.findById(req.params.id);
     await banner.remove();
     res.status(200).json({
-      msg: "Item deleted"
+      msg: "Item deleted",
     });
   } catch (error) {
     console.log(error);
@@ -130,5 +119,5 @@ module.exports = {
   getBanner,
   addBanner,
   editBanner,
-  deleteBanner
+  deleteBanner,
 };

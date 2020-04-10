@@ -13,9 +13,9 @@ const getEvents = async (req, res, next) => {
       return res.status(400).json({
         error: [
           {
-            msg: "Event not found"
-          }
-        ]
+            msg: "Event not found",
+          },
+        ],
       });
     }
     res.status(200).json(events);
@@ -32,9 +32,9 @@ const getEventsNumber = async (req, res, next) => {
       return res.status(400).json({
         error: [
           {
-            msg: "Event not found"
-          }
-        ]
+            msg: "Event not found",
+          },
+        ],
       });
     }
 
@@ -53,9 +53,9 @@ const getEvent = async (req, res, next) => {
       return res.status(400).json({
         error: [
           {
-            msg: "Event not found"
-          }
-        ]
+            msg: "Event not found",
+          },
+        ],
       });
     }
     res.status(200).json(event);
@@ -71,7 +71,7 @@ const addEvent = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
 
@@ -83,11 +83,12 @@ const addEvent = async (req, res, next) => {
       endTime,
       region,
       city,
-      description
+      description,
     } = req.body;
     const url = fullUrl(req);
     const resizedImage = await resizeImg(req.file, 263, 320);
-    const eventImg = path.join(url, resizedImage.options.fileOut);
+    const eventImg = `${url}/${resizedImage.options.fileOut}`;
+
     const newEvent = {
       title,
       date,
@@ -97,7 +98,7 @@ const addEvent = async (req, res, next) => {
       endTime,
       region,
       city,
-      description
+      description,
     };
     const event = new Events(newEvent);
     const saveEvent = await event.save();
@@ -114,11 +115,12 @@ const updateEvent = async (req, res, next) => {
 
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
     const resizedImage = await resizeImg(req.file, 263, 320);
-    const eventImg = path.join(url, resizedImage.options.fileOut);
+    const eventImg = `${url}/${resizedImage.options.fileOut}`;
+
     const {
       title,
       date,
@@ -127,16 +129,16 @@ const updateEvent = async (req, res, next) => {
       endTime,
       region,
       city,
-      description
+      description,
     } = req.body;
     const event = await Events.findById(req.params.id);
     if (!event) {
       return res.status(404).json({
         errors: [
           {
-            msg: "Event not found"
-          }
-        ]
+            msg: "Event not found",
+          },
+        ],
       });
     }
     event.title = title;
@@ -152,7 +154,7 @@ const updateEvent = async (req, res, next) => {
     return res.status(200).json(updatedEvent);
   } catch (error) {
     return res.status(400).json({
-      errors: error.array()
+      errors: error.array(),
     });
   }
 };
@@ -162,7 +164,7 @@ const deleteEvent = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
     const event = await Events.findById(req.params.id);
@@ -170,16 +172,16 @@ const deleteEvent = async (req, res, next) => {
       return res.status(404).json({
         errors: [
           {
-            msg: "Event not found"
-          }
-        ]
+            msg: "Event not found",
+          },
+        ],
       });
     }
     const deleteEvent = await event.deleteOne();
     return res.status(200).json(deleteEvent);
   } catch (errors) {
     return res.status(400).json({
-      errors: errors
+      errors: errors,
     });
   }
 };
@@ -189,5 +191,5 @@ module.exports = {
   addEvent,
   updateEvent,
   deleteEvent,
-  getEventsNumber
+  getEventsNumber,
 };
