@@ -14,7 +14,6 @@ const auth = require("../../middleware/auth");
 router.get("/", async (req, res, next) => {
   try {
     const nationalPrayer = await NationalPrayer.find();
-    console.log(nationalPrayer);
 
     if (nationalPrayer.length <= 0) {
       return res.status(400).json({
@@ -144,7 +143,7 @@ router.put("/:id", upload, auth, async (req, res, next) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await NationalPrayer.findByIdAndDelete(req.param.id);
+    await NationalPrayer.findByIdAndDelete(req.params.id);
     return res.status(200).json({
       msg: "Item deleted",
     });

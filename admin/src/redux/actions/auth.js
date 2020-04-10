@@ -8,11 +8,11 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  LOGOUT
+  LOGOUT,
 } from "./types";
 
 //LOAD user
-export const loadUser = () => async dispach => {
+export const loadUser = () => async (dispach) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -20,32 +20,32 @@ export const loadUser = () => async dispach => {
     const res = await axios.get("http://localhost:8080/api/auth/login");
     dispach({
       type: USER_LOADED,
-      payload: res.data
+      payload: res.data,
     });
   } catch (error) {
     dispach({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 };
 
-export const register = (name, email, password) => async dispach => {
+export const register = (name, email, password) => async (dispach) => {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   const body = JSON.stringify({ name, email, password });
   try {
-    const res = await axios("/appi/", body, config);
+    const res = await axios("http://localhost:8080/api/register", body, config);
     dispach({
       type: REGSTER_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach(error => {
+      errors.forEach((error) => {
         dispach(setAlert(error.msg));
       });
     }
@@ -53,32 +53,30 @@ export const register = (name, email, password) => async dispach => {
   }
 };
 
-export const login = (email, password) => async dispach => {
+export const login = (email, password) => async (dispach) => {
   const body = JSON.stringify({ email, password });
   try {
     const response = await fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       body: body,
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     });
     const token = await response.json();
-    console.log(token);
     if (token.error) {
-      console.log(token.error);
       dispach(setAlert("Invalid credential", "danger"));
       return dispach({ type: LOGIN_FAIL });
     }
     dispach({
       type: LOGIN_SUCCESS,
-      payload: token
+      payload: token,
     });
     dispach(loadUser());
   } catch (err) {
     console.log(err);
     if (err) {
-      err.forEach(error => {
+      err.forEach((error) => {
         setAlert("Invalid credential", "danger");
       });
     }
@@ -86,8 +84,8 @@ export const login = (email, password) => async dispach => {
   }
 };
 
-export const logout = () => dispach => {
+export const logout = () => (dispach) => {
   dispach({
-    type: LOGOUT
+    type: LOGOUT,
   });
 };
