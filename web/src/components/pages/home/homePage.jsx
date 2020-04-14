@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import Banners from "../../banners/banner";
 import Main from "../../main/main";
 import { getBanners } from "../../../redux/actions/banners";

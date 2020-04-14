@@ -21,12 +21,16 @@ router.get(
       const news = await News.find();
       if (news.length <= 0) {
         return res.status(400).json({
-          msg: "No information found"
+          error: [
+            {
+              msg: "News not found",
+            },
+          ],
         });
       }
       res.status(200).json(news);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 );
@@ -40,20 +44,20 @@ router.get(
   async (req, res, next) => {
     try {
       const news = await News.find().limit(+req.params.number);
-      if (news.length === 0) {
+      if (news.length <= 0) {
         return res.status(400).json({
           error: [
             {
-              msg: "News not found"
-            }
-          ]
+              msg: "News not found",
+            },
+          ],
         });
       }
 
       res.status(200).json(news);
     } catch (error) {
       console.log(error.message);
-      next(error)
+      next(error);
     }
   }
 );
@@ -64,15 +68,13 @@ router.get(
 
 router.get(
   "/id/:id",
-  check("id", "Invalid Id")
-    .isMongoId()
-    .trim(),
+  check("id", "Invalid Id").isMongoId().trim(),
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(422).json({
-          errors: errors.array()
+          errors: errors.array(),
         });
       }
       const singleNews = await News.findById(req.params.id);
@@ -80,15 +82,15 @@ router.get(
         return res.status(400).json({
           errors: [
             {
-              msg: "News not found"
-            }
-          ]
+              msg: "News not found",
+            },
+          ],
         });
       }
       return res.status(200).json(singleNews);
     } catch (error) {
       console.log(error);
-      next(error)
+      next(error);
     }
   }
 );
@@ -106,16 +108,16 @@ router.get(
         return res.status(400).json({
           errors: [
             {
-              msg: "News not found"
-            }
-          ]
+              msg: "News not found",
+            },
+          ],
         });
       }
       return res.status(200).json(singleNews);
     } catch (error) {
       console.log(error);
 
-      next(error)
+      next(error);
     }
   }
 );
@@ -124,33 +126,34 @@ router.get(
 // @access Private
 router.post(
   "/",
-  
+
   upload,
   auth,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
 
     try {
       const resizedImg = await resizeImage(req.file, 248, 262);
       const url = fullUrl(req);
-      const img = path.join(url, resizedImg.options.fileOut);
+      const img = `${url}/${resizedImg.options.fileOut}`;
+
       const { title, text, link } = req.body;
       const newNews = new News({
-        title, 
+        title,
         text,
         link,
-        img
+        img,
       });
       const saveNews = await newNews.save();
       return res.status(200).json(saveNews);
     } catch (error) {
       console.log(error);
-      next(error)
+      next(error);
     }
   }
 );
@@ -165,9 +168,7 @@ router.put(
     // check('text', 'Text is required').exists(),
     // check('link', 'Link is required').exists(),
     // check('img', 'Link is required').exists(),
-    check("id", "Invalid Id")
-      .isMongoId()
-      .trim()
+    check("id", "Invalid Id").isMongoId().trim(),
   ],
   upload,
   auth,
@@ -175,23 +176,23 @@ router.put(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
 
     try {
       const resizedImg = await resizeImage(req.file, 248, 262);
       const url = fullUrl(req);
-      const img = path.join(url, resizedImg.options.fileOut);
+      const img = `${url}/${resizedImg.options.fileOut}`;
       const { title, text, link } = req.body;
       const singleNews = await News.findById(req.params.id);
       if (!singleNews) {
         return res.status(400).json({
           errors: [
             {
-              msg: "News not found"
-            }
-          ]
+              msg: "News not found",
+            },
+          ],
         });
       }
       singleNews.title = title;
@@ -202,8 +203,7 @@ router.put(
       return res.status(200).json(updatedNews);
     } catch (error) {
       console.log(error);
-      next(error)
-     
+      next(error);
     }
   }
 );
@@ -213,16 +213,14 @@ router.put(
 
 router.delete(
   "/:id",
-  check("id", "Invalid Id")
-    .isMongoId()
-    .trim(),
+  check("id", "Invalid Id").isMongoId().trim(),
   auth,
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(422).json({
-          errors: errors.array()
+          errors: errors.array(),
         });
       }
       const singleNews = await News.findById(req.params.id);
@@ -230,17 +228,17 @@ router.delete(
         return res.status(404).json({
           errors: [
             {
-              msg: "News not found"
-            }
-          ]
+              msg: "News not found",
+            },
+          ],
         });
       }
       await singleNews.deleteOne();
       return res.status(200).json({
-        msg: "Item deleted"
+        msg: "Item deleted",
       });
     } catch (errors) {
-      next(error)
+      next(error);
     }
   }
 );

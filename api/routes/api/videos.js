@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
     const videos = await Video.find();
     if (videos.length === 0) {
       return res.status(200).json({
-        msg: "No Videos"
+        msg: "No Videos",
       });
     }
 
@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: error
+      error: error,
     });
   }
 });
@@ -37,9 +37,13 @@ router.get("/", async (req, res) => {
 router.get("/:feature", async (req, res) => {
   try {
     const videos = await Video.find({ feature: { $in: [req.params.feature] } });
-    if (videos.length === 0) {
-      return res.status(200).json({
-        msg: "No Videos"
+    if (videos.length <= 0) {
+      return res.status(400).json({
+        error: [
+          {
+            msg: "Videos not found",
+          },
+        ],
       });
     }
 
@@ -47,7 +51,7 @@ router.get("/:feature", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      error: error
+      error: error,
     });
   }
 });
@@ -65,9 +69,9 @@ router.get(
         return res.status(400).json({
           error: [
             {
-              msg: "Videos not found"
-            }
-          ]
+              msg: "Videos not found",
+            },
+          ],
         });
       }
 
@@ -84,21 +88,19 @@ router.get(
 
 router.get(
   "/id/:id",
-  check("id", "Invalid Id")
-    .isMongoId()
-    .trim(),
+  check("id", "Invalid Id").isMongoId().trim(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({
-        errors: errors.array()
+        errors: errors.array(),
       });
     }
     try {
       const video = await Video.findById(req.params.id);
       if (!video) {
         return res.status(200).json({
-          msg: "Video not found"
+          msg: "Video not found",
         });
       }
 
@@ -106,7 +108,7 @@ router.get(
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: error
+        error: error,
       });
     }
   }
@@ -121,14 +123,12 @@ router.post(
   auth,
   upload,
   async (req, res) => {
-
-    
     try {
       const resizeImg = await resizeImage(req.file, 360, 174);
       const url = fullUrl(req);
-      const img = path.join(url, resizeImg.options.fileOut);
+      const img = `${url}/${resizeImg.options.fileOut}`;
+
       const { title, description, video, dateCreated, feature } = req.body;
-      console.log(req.body)
       let year = new Date(dateCreated).getFullYear();
       const newVideo = new Video({
         title,
@@ -137,14 +137,14 @@ router.post(
         video,
         feature,
         dateCreated,
-        date: year
+        date: year,
       });
       const saveVideo = await newVideo.save();
       return res.status(200).json(saveVideo);
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        error: error
+        error: error,
       });
     }
   }
@@ -163,7 +163,7 @@ router.put(
   // ],
   upload,
   auth,
-  async (req, res) => {
+  async (req, res, next) => {
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
     //   return res.status(422).json({
@@ -177,33 +177,31 @@ router.put(
         return res.status(400).json({
           errors: [
             {
-              msg: "Video not found"
-            }
-          ]
+              msg: "Video not found",
+            },
+          ],
         });
-      };
+      }
 
-      const { dateCreated} = req.body;
+      const { dateCreated } = req.body;
       let year = new Date(dateCreated).getFullYear();
 
       const url = fullUrl(req);
       const resizeImg = await resizeImage(req.file, 360, 174);
-      const img = resizeImg.options.fileOut.split("/");
-      const cdn = path.join(url, resizeImg.options.fileOut);
+      const img = `${url}/${resizeImg.options.fileOut}`;
+
       video.title = req.body.title;
       video.description = req.body.description;
-      video.img = cdn;
+      video.img = img;
       video.date = year;
       video.dateCreated = req.body.dateCreated;
       video.video = req.body.video;
-      video.feature = req.body.feature
+      video.feature = req.body.feature;
       const updatedVideo = await video.save();
       return res.status(200).json(updatedVideo);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        error: error
-      });
+      next(error);
     }
   }
 );
@@ -213,16 +211,14 @@ router.put(
 
 router.delete(
   "/:id",
-  check("id", "Invalid Id")
-    .isMongoId()
-    .trim(),
+  check("id", "Invalid Id").isMongoId().trim(),
   auth,
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(422).json({
-          errors: errors.array()
+          errors: errors.array(),
         });
       }
       const video = await Video.findById(req.params.id);
@@ -230,17 +226,17 @@ router.delete(
         return res.status(404).json({
           errors: [
             {
-              msg: "Video not found"
-            }
-          ]
+              msg: "Video not found",
+            },
+          ],
         });
       }
       await video.deleteOne();
       return res.status(200).json({
-        msg: "Item deleted"
+        msg: "Item deleted",
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 );

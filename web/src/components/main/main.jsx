@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import SermonBox from "./sermonBox";
 import WelcomeMessage from "./welcomeMessage";
 import HomeWidget from "./homeWidget";
@@ -6,21 +6,25 @@ import QuoteMessage from "./quteMessage";
 import LatestEvents from "./latestEvent";
 import News from "./news";
 import VideosHomePage from "./VideosHomePage";
-import { fetchData } from "../../utils/helpers";
+import { getHomePageVideos } from "../../redux/actions/video";
+import { getHomePageNews } from "../../redux/actions/news";
 
 //redux
 import { connect } from "react-redux";
 import { getEvents } from "../../redux/actions/events";
 
-const Main = ({ getEvents, events }) => {
-  const [videos, setVideos] = useState("");
-  const [news, setNews] = useState("");
-
+const Main = ({
+  getEvents,
+  events,
+  videos,
+  news,
+  getHomePageVideos,
+  getHomePageNews,
+}) => {
   useEffect(() => {
     getEvents();
-    // fetchData("http://localhost:8080/api/events/limit/4", setEvents, "events");
-    fetchData("http://localhost:8080/api/videos/HomePage", setVideos);
-    fetchData("http://localhost:8080/api/news/limit/2", setNews);
+    getHomePageVideos();
+    getHomePageNews();
   }, []);
   return (
     <div id="main">
@@ -29,12 +33,18 @@ const Main = ({ getEvents, events }) => {
       <HomeWidget />
       <QuoteMessage />
       <LatestEvents events={events.events} />
-      <VideosHomePage videos={videos} />
-      <News newsHome={news} />
+      <VideosHomePage videos={videos.HomePageVideos} />
+      <News newsHome={news.homePageNews} />
     </div>
   );
 };
 const mapStateToProps = (state) => ({
   events: state.events,
+  videos: state.videos,
+  news: state.news,
 });
-export default connect(mapStateToProps, { getEvents })(Main);
+export default connect(mapStateToProps, {
+  getEvents,
+  getHomePageVideos,
+  getHomePageNews,
+})(Main);
