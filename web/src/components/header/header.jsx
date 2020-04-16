@@ -2,35 +2,23 @@ import React, { useState, useEffect } from "react";
 import HeaderInfo from "./headerInfo";
 import CountDown from "./countDown";
 import Menue from "./menu";
+import { getMenus } from "../../redux/actions/menus";
+import { connect } from "react-redux";
 
-const Header = () => {
-  const [menus, setMenus] = useState("");
-  const fetchData = async (url, cb, number) => {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        }
-      });
-      const data = await response.json();
-
-      cb(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const Header = ({ menus, getMenus }) => {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/menus", setMenus);
+    getMenus();
   }, []);
   return (
     <header id="header">
       <HeaderInfo />
       <CountDown />
-      <Menue menus={menus} />
+      <Menue menus={menus.menus} />
     </header>
   );
 };
-export default Header;
+
+const mapStateToProps = (state) => ({
+  menus: state.menus,
+});
+export default connect(mapStateToProps, { getMenus })(Header);

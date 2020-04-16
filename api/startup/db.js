@@ -8,7 +8,6 @@ const connectDb = async () => {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
-      
     });
     console.log("MongoDb connected");
   } catch (error) {
