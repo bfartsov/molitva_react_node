@@ -14,3 +14,17 @@ export const getEvents = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const getAllEvents = () => async (dispatch) => {
+  try {
+    const url = process.env.REACT_APP_URL;
+
+    const res = await axios.get(`${url}/api/events`);
+    dispatch({
+      type: GET_EVENTS,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

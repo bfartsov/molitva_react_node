@@ -4,13 +4,13 @@ import PageTitle from "../../main/pageTittle";
 import Event from "../../events/event";
 import img from "../../../images/0233622001395215466_20118_600x458.jpg";
 
-const EventPage = ({ match: { params } }) => {
-  const [events, setEvents] = useState("");
+import { connect } from "react-redux";
+import { getAllEvents } from "../../../redux/actions/events";
 
+const EventPage = ({ events, getAllEvents }) => {
   useEffect(() => {
-    fetchData(`http://localhost:8080/api/events`, setEvents, "events");
+    getAllEvents();
   }, []);
-  console.log(events);
   return (
     <div id="main">
       <PageTitle title={"Предстоящи събития"} />
@@ -21,7 +21,7 @@ const EventPage = ({ match: { params } }) => {
             <div>
               <ul class="row">
                 {events.length > 0 &&
-                  events.map(event => {
+                  events.map((event) => {
                     return (
                       <li class="col-md-3 col-sm-5">
                         <Event
@@ -46,5 +46,7 @@ const EventPage = ({ match: { params } }) => {
     </div>
   );
 };
-
-export default EventPage;
+const mapStateToProps = (state) => ({
+  events: state.events.events,
+});
+export default connect(mapStateToProps, { getAllEvents })(EventPage);
