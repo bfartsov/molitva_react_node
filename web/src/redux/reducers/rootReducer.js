@@ -4,6 +4,7 @@ import events from "./events";
 import videos from "./videos";
 import news from "./news";
 import menus from "./menus";
+import live from "./live";
 
 export default combineReducers({
   banners,
@@ -11,4 +12,5 @@ export default combineReducers({
   videos,
   news,
   menus,
+  live,
 });

@@ -1,5 +1,5 @@
 const express = require("express");
-const winston = require("winston");
+const logger = require("./startup/logger");
 const path = require("path");
 
 const conectedDB = require("./startup/db");
@@ -13,4 +13,4 @@ require("./startup/logging")();
 require("./startup/routes")(app);
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => winston.info(`Server running on ${PORT}`));
+app.listen(PORT, () => logger.info(`Server running on ${PORT}`));

@@ -8,22 +8,20 @@ const { check, validationResult } = require("express-validator");
 // @desc   get live details
 // @access Public
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const live = await Live.find();
     if (live.length <= 0) {
-      return res.status(400).json({
-        msg: "No information found"
+      res.status(400).json({
+        error: {
+          msg: "no live info ",
+        },
       });
     }
     res.status(200).json(live[0]);
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      error: {
-        msg: "Server Error"
-      }
-    });
+    next(error);
   }
 });
 // @route  Post api/live
@@ -32,10 +30,10 @@ router.get("/", async (req, res) => {
 
 router.post(
   "/",
-  
+
   async (req, res, next) => {
     try {
-      console.log(req.body)
+      console.log(req.body);
       const live = await Live.find();
       // if live does not exist create it
       if (live.length <= 0) {
@@ -44,7 +42,7 @@ router.post(
           url,
           type,
           player,
-          text
+          text,
         });
         const savedLive = await newLive.save();
         return res.status(200).json(savedLive);
@@ -53,18 +51,18 @@ router.post(
       // if live exist update it
       if (live) {
         const live = await Live.findOne({
-          name: "live"
+          name: "live",
         });
         live.url = req.body.url;
         live.type = req.body.type;
         live.player = req.body.player;
-        live.text= req.body.text;
+        live.text = req.body.text;
         const updatedLive = await live.save();
         return res.status(200).json(updatedLive);
       }
     } catch (error) {
       console.log(error);
-      next(error)
+      next(error);
     }
   }
 );

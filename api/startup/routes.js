@@ -5,7 +5,7 @@ const error = require("../middleware/error");
 module.exports = (app) => {
   app.use(express.json({ extended: true }));
 
-  app.use(express.urlencoded());
+  app.use(express.urlencoded({ extended: true }));
   app.use(
     cors({
       origin: "*",

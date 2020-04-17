@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../../main/pageTittle";
 import JWPlayer from "./jwplayer";
-const LivePage = () => {
-  const [live, setLive] = useState("");
-  const fetchData = async (url, cb, number) => {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        }
-      });
-      const data = await response.json();
 
-      cb(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import { connect } from "react-redux";
+import { getLive } from "../../../redux/actions/live";
+
+const LivePage = ({ live, getLive }) => {
   useEffect(() => {
-    fetchData("http://localhost:8080/api/live", setLive);
+    getLive();
   }, []);
   return (
     <div id="main">
@@ -42,7 +28,7 @@ const LivePage = () => {
                 <p>
                   <strong
                     dangerouslySetInnerHTML={{
-                      __html: live.text
+                      __html: live.text,
                     }}
                   ></strong>
                 </p>
@@ -106,4 +92,8 @@ const LivePage = () => {
     </div>
   );
 };
-export default LivePage;
+
+const mapStateToProps = (state) => ({
+  live: state.live.live,
+});
+export default connect(mapStateToProps, { getLive })(LivePage);
