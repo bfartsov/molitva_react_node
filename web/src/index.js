@@ -5,13 +5,16 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./index.css";
 import App from "./App";
+import ErrorBoudary from "./components/errorBoudary";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+  <ErrorBoudary>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
+  </ErrorBoudary>,
 
   document.getElementById("wrapper")
 );
