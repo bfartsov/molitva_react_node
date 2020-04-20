@@ -5,6 +5,7 @@ import videos from "./videos";
 import news from "./news";
 import menus from "./menus";
 import live from "./live";
+import nationalPrayer from "./nationalPrayer";
 
 export default combineReducers({
   banners,
@@ -13,4 +14,5 @@ export default combineReducers({
   news,
   menus,
   live,
+  nationalPrayer,
 });

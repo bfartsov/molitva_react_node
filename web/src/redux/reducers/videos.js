@@ -1,7 +1,8 @@
-import { GET_HOMEPAGE_VIDEOS } from "../actions/types";
+import { GET_HOMEPAGE_VIDEOS, GET_VIDEOS } from "../actions/types";
 
 const initialState = {
   HomePageVideos: [],
+  videos: [],
   loading: false,
 };
 
@@ -12,6 +13,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         HomePageVideos: payload,
+        loading: false,
+      };
+    case GET_VIDEOS:
+      return {
+        ...state,
+        videos: payload,
         loading: false,
       };
     default:

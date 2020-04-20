@@ -2,25 +2,25 @@ import React, { useState, useEffect } from "react";
 import { fetchData } from "../../../utils/helpers";
 import PageTitle from "../../main/pageTittle";
 import PageImg from "../../main/pageImg";
-const PrayerPage = props => {
-  const [prayer, setPrayer] = useState("");
+
+//redux
+import { connect } from "react-redux";
+import { getPrayer } from "../../../redux/actions/nationalPrayer";
+const PrayerPage = ({ match, getPrayer, prayer, loading }) => {
   useEffect(() => {
-    fetchData(
-      `http://localhost:8080/api/nationalprayers/${props.match.params.year}`,
-      setPrayer
-    );
-  }, [props.match.params.year]);
-  return (
+    getPrayer(match.params.year);
+    // fetchData(
+    //   `http://localhost:8080/api/nationalprayers/${props.match.params.year}`,
+    //   setPrayer
+    // );
+  }, [match.params.year]);
+  const toRender = !loading ? (
     <div id="main">
       <PageTitle title={prayer.title} />
 
       <section className="about-page">
         <div className="container">
-          <PageImg
-            img={
-              "https://cdn.molitvabg.org/images/resized_1120x342x1570527156170_varna-natiional-prayer.jpg"
-            }
-          />
+          <PageImg img={prayer.img} />
 
           <h1>{prayer.title}</h1>
           <iframe
@@ -36,7 +36,14 @@ const PrayerPage = props => {
         </div>
       </section>
     </div>
+  ) : (
+    ""
   );
-};
 
-export default PrayerPage;
+  return toRender;
+};
+const mapStateToProps = (state) => ({
+  prayer: state.nationalPrayer.prayer,
+  loading: state.nationalPrayer.loading,
+});
+export default connect(mapStateToProps, { getPrayer })(PrayerPage);
