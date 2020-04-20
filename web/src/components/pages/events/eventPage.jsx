@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { fetchData } from "../../../utils/helpers";
 import PageTitle from "../../main/pageTittle";
 import Event from "../../events/event";
-import img from "../../../images/0233622001395215466_20118_600x458.jpg";
 
 import { connect } from "react-redux";
 import { getAllEvents } from "../../../redux/actions/events";
@@ -15,17 +13,17 @@ const EventPage = ({ events, getAllEvents }) => {
     <div id="main">
       <PageTitle title={"Предстоящи събития"} />
 
-      <section class="event-grid">
-        <div class="container">
-          <div class="row">
-            <div>
-              <ul class="row">
+      <section className="event-grid">
+        <div className="container">
+          <div className="row">
+            <div className="container">
+              <ul className="row">
                 {events.length > 0 &&
                   events.map((event) => {
                     return (
-                      <li class="col-md-3 col-sm-5">
+                      <li key={event._id} className="col-md-3 col-sm-12">
                         <Event
-                          img={img}
+                          img={event.img}
                           title={event.title}
                           startTime={event.startTime}
                           endTime={event.endTime}
@@ -33,7 +31,7 @@ const EventPage = ({ events, getAllEvents }) => {
                           city={event.city}
                           description={event.description}
                           date={event.date}
-                          shortDate={event.shortD}
+                          shortDate="12 ap."
                         />
                       </li>
                     );

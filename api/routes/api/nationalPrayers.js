@@ -38,7 +38,6 @@ router.get("/:year", async (req, res, next) => {
     const nationalPrayer = await NationalPrayer.findOne({
       year: +req.params.year,
     });
-    console.log(nationalPrayer);
 
     if (!nationalPrayer) {
       return res.status(400).json({
@@ -90,7 +89,6 @@ router.post("/", upload, auth, async (req, res, next) => {
         ],
       });
     }
-    console.log(req.file);
     const resizedImg = await resizeImage(req.file, 248, 262);
     const url = fullUrl(req);
     const img = path.join(url, resizedImg.options.fileOut);
@@ -104,14 +102,13 @@ router.post("/", upload, auth, async (req, res, next) => {
     const savePrayer = await newPrayer.save();
     res.status(200).json(savePrayer);
   } catch (error) {
-    console.log();
+    console.log(error);
     next(error);
   }
 });
 
 router.put("/:id", upload, auth, async (req, res, next) => {
   try {
-    console.log(req.body);
     const prayer = await NationalPrayer.findById(req.params.id);
     if (!prayer) {
       return res.status(400).json({

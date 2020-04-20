@@ -9,7 +9,7 @@ const Event = ({
   description,
   startTime,
   endTime,
-  date
+  date,
 }) => {
   return (
     <div className="latest-event-box">
