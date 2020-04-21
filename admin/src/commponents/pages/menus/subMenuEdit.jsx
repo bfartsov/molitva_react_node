@@ -40,6 +40,7 @@ const SubMenuedit = ({ match, edit, menu, editMenu, history, location }) => {
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
   return (
     <section id="main-content">
       <section className="wrapper">

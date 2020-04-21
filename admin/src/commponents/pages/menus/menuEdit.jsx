@@ -43,6 +43,8 @@ const EditMenu = ({
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleCancel = () => history.push("/banners");
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -118,7 +120,10 @@ const EditMenu = ({
                     </div>
                   </div>
 
-                  <Buttons handnleSave={handnleSave} />
+                  <Buttons
+                    handleCancel={handleCancel}
+                    handnleSave={handnleSave}
+                  />
                 </form>
               )}
               {menu.subMenu && menu.subMenu.length > 0 && (

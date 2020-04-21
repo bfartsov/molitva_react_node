@@ -23,6 +23,8 @@ const AddEvent = ({ match, saveEvent, history }) => {
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleCancel = () => history.push("/events");
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -164,7 +166,10 @@ const AddEvent = ({ match, saveEvent, history }) => {
                   </div>
                 </div>
 
-                <Buttons handnleSave={(e) => handnleSave(e)} />
+                <Buttons
+                  handleCancel={(e) => handleCancel()}
+                  handnleSave={(e) => handnleSave(e)}
+                />
               </form>
             </div>
           </div>

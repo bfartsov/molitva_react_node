@@ -13,7 +13,6 @@ export const getMenus = () => async (dispatch) => {
         });
       return menu;
     });
-    console.log(sortedMenus);
     dispatch({
       type: GET_MENUS,
       payload: sortedMenus,

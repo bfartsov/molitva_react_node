@@ -21,13 +21,14 @@ const AddMenu = ({ history, loading, menu, getFrontMenus, addMenu }) => {
   const handnleSave = (e) => {
     e.preventDefault();
 
-    console.log(formData);
     addMenu(formData, history);
   };
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  console.log(formData);
+
+  const handleCancel = () => history.push("/banners");
+
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -120,7 +121,12 @@ const AddMenu = ({ history, loading, menu, getFrontMenus, addMenu }) => {
                       </select>
                     </div>
                   </div>
-                  <Buttons handnleSave={handnleSave} />
+                  <Buttons
+                    handleCancel={() => {
+                      handleCancel();
+                    }}
+                    handnleSave={handnleSave}
+                  />
                 </form>
               )}
             </div>
