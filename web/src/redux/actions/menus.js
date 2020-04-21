@@ -5,9 +5,18 @@ export const getMenus = () => async (dispatch) => {
   try {
     const url = process.env.REACT_APP_URL;
     const res = await axios.get(`${url}/api/menus`);
+    const sortedMenus = res.data.map((item) => {
+      const menu = { ...item };
+      item.subMenu &&
+        item.subMenu.sort((a, b) => {
+          return a.order - b.order;
+        });
+      return menu;
+    });
+    console.log(sortedMenus);
     dispatch({
       type: GET_MENUS,
-      payload: res.data,
+      payload: sortedMenus,
     });
   } catch (error) {
     console.log(error);

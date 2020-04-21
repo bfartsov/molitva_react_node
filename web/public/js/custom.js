@@ -1,6 +1,6 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
   //For Pretty Photo Validation
-  $("a[data-rel]").each(function() {
+  $("a[data-rel]").each(function () {
     $(this).attr("rel", $(this).data("rel"));
   });
 
@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
       auto: true,
       hideControlOnEnd: true,
       speed: 3000,
-      pause: 10000
+      pause: 10000,
     });
   }
 
@@ -22,23 +22,20 @@ jQuery(document).ready(function($) {
 
   $("#search-box-form").hide();
   //Search Area Function on Header
-  $("a.btn-search").click(function() {
+  $("a.btn-search").click(function () {
     $("#search-box-form").toggle("slide");
   });
-  $("a.crose").click(function() {
+  $("a.crose").click(function () {
     $("#search-box-form").toggle("slide");
   });
   //Next Event Countdown on Heared
   const endDate = async () => {
     try {
-      const timer = await fetch(
-        "https://admin.molitvabg.org/timer/endDate",
-        {}
-      );
+      const timer = await fetch("http://localhost:8080/api/timer/");
       const timerResponse = await timer.json();
       return {
         date: timerResponse.date,
-        time: timerResponse.time
+        time: timerResponse.time,
       };
     } catch (error) {
       console.log(error);
@@ -51,12 +48,12 @@ jQuery(document).ready(function($) {
     const day = days.date.split("-");
     //const day = new Date(days.date).getUTCDate();
     const newDate = new Date(day[0], day[1] - 1, day[2], time[0], time[1]);
-
+    console.log(newDate);
     if ($(".countdown").length) {
       $(".countdown").final_countdown({
         start: parseInt(new Date().getTime() / 1000),
         end: parseInt(newDate / 1000),
-        now: parseInt(new Date().getTime() / 1000)
+        now: parseInt(new Date().getTime() / 1000),
       });
     }
   };
@@ -70,7 +67,7 @@ jQuery(document).ready(function($) {
     var austDay = new Date();
     austDay = new Date(austDay.getFullYear() + 1, 1 - 1, 26);
     $(".defaultCountdown").countdown({
-      until: austDay
+      until: austDay,
     });
     $("#year").text(austDay.getFullYear());
   }
@@ -78,7 +75,7 @@ jQuery(document).ready(function($) {
   //Home Timelines Slider
   if ($("#timelines-slider").length) {
     $("#timelines-slider").bxSlider({
-      pagerCustom: "#bx-pager"
+      pagerCustom: "#bx-pager",
     });
   }
 
@@ -86,14 +83,14 @@ jQuery(document).ready(function($) {
     $("#footer-tweet").bxSlider({
       mode: "fade",
       auto: true,
-      captions: true
+      captions: true,
     });
   }
 
   //Timeline Page Slider
   if ($(".timeline-page-slider").length) {
     $(".timeline-page-slider").bxSlider({
-      pagerCustom: "#bx-pager"
+      pagerCustom: "#bx-pager",
     });
   }
 
@@ -101,7 +98,7 @@ jQuery(document).ready(function($) {
   if ($("#post-slider").length) {
     $("#post-slider").bxSlider({
       mode: "fade",
-      autoControls: true
+      autoControls: true,
     });
   }
 
@@ -111,43 +108,43 @@ jQuery(document).ready(function($) {
     image_array = [
       {
         image: "content/our_team/1.jpg",
-        link_url: "content/our_team/1big.jpg"
+        link_url: "content/our_team/1big.jpg",
         //link_rel: 'prettyPhoto'
       },
       // image for the first layer, goes with the text from id="sw0"
       {
         image: "content/our_team/2.jpg",
-        link_url: "content/our_team/2big.jpg"
+        link_url: "content/our_team/2big.jpg",
         //link_rel: 'prettyPhoto'
       },
       // image for the second layer, goes with the text from id="sw1"
       {
         image: "content/our_team/3.jpg",
-        link_url: "content/our_team/3big.jpg"
+        link_url: "content/our_team/3big.jpg",
         //link_rel: 'prettyPhoto'
       },
       // image for the third layer, goes with the text from id="sw2"
       {
         image: "content/our_team/4.jpg",
-        link_url: "content/our_team/4big.jpg"
+        link_url: "content/our_team/4big.jpg",
         //link_rel: 'prettyPhoto'
       },
       // ...
       {
         image: "content/our_team/5.jpg",
-        link_url: "content/our_team/5big.jpg"
+        link_url: "content/our_team/5big.jpg",
         //link_rel: 'prettyPhoto'
       },
       {
         image: "content/our_team/6.jpg",
         link_url: "content/our_team/6big.jpg",
-        link_rel: "prettyPhoto"
+        link_rel: "prettyPhoto",
       },
       {
         image: "content/our_team/7.jpg",
-        link_url: "content/our_team/7big.jpg"
+        link_url: "content/our_team/7big.jpg",
         //link_rel: 'prettyPhoto'
-      }
+      },
     ];
     $("#slider1").content_slider({
       // bind plugin to div id="slider1"
@@ -161,7 +158,7 @@ jQuery(document).ready(function($) {
       border_radius: -1, // -1 = circle, 0 and other = radius
       automatic_height_resize: 1,
       border_on_off: 0,
-      allow_shadow: 0
+      allow_shadow: 0,
     });
   }
 
@@ -171,12 +168,12 @@ jQuery(document).ready(function($) {
       animation_speed: "normal",
       theme: "light_square",
       slideshow: 3000,
-      autoplay_slideshow: true
+      autoplay_slideshow: true,
     });
     $(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({
       animation_speed: "fast",
       slideshow: 10000,
-      hideflash: true
+      hideflash: true,
     });
   }
   //Masonry Gallery
@@ -184,7 +181,7 @@ jQuery(document).ready(function($) {
     $("#container").BlocksIt({
       numOfCol: 4,
       offsetX: 15,
-      offsetY: 15
+      offsetY: 15,
     });
   }
 
@@ -199,7 +196,7 @@ jQuery(document).ready(function($) {
       speed: 300, //speed of animation
       action: "click", //options: 'click' or 'hover', action to trigger animation
       topPos: "189px", //position from the top
-      fixedPosition: false //options: true makes it stick(fixed position) on scroll
+      fixedPosition: false, //options: true makes it stick(fixed position) on scroll
     });
   }
   //Google Map on Event Page
@@ -217,9 +214,9 @@ jQuery(document).ready(function($) {
       styles: [
         {
           saturation: -100,
-          lightness: 10
-        }
-      ]
+          lightness: 10,
+        },
+      ],
     };
     map = new google.maps.Map(
       document.getElementById("map_contact_1"),
@@ -230,7 +227,7 @@ jQuery(document).ready(function($) {
     var marker = new google.maps.Marker({
       position: map.getCenter(),
       map: map,
-      icon: "images/map-icon.png"
+      icon: "images/map-icon.png",
     });
     marker.getPosition();
     //End marker
@@ -238,21 +235,18 @@ jQuery(document).ready(function($) {
     //Set info window
     var infowindow = new google.maps.InfoWindow({
       content: "",
-      position: myLatLng
+      position: myLatLng,
     });
     infowindow.open(map);
   }
 
   //Tab Active Function
   if ($(".accordion-body").length) {
-    $(".accordion-body").on("show", function(e) {
-      $(e.currentTarget)
-        .parent()
-        .find(".accordion-heading")
-        .addClass("active");
+    $(".accordion-body").on("show", function (e) {
+      $(e.currentTarget).parent().find(".accordion-heading").addClass("active");
     });
 
-    $(".accordion-body").on("hide", function(e) {
+    $(".accordion-body").on("hide", function (e) {
       $(e.currentTarget)
         .parent()
         .find(".accordion-heading")
@@ -272,17 +266,17 @@ jQuery(document).ready(function($) {
       responsiveBreakpoints: {
         portrait: {
           changePoint: 480,
-          visibleItems: 1
+          visibleItems: 1,
         },
         landscape: {
           changePoint: 640,
-          visibleItems: 2
+          visibleItems: 2,
         },
         tablet: {
           changePoint: 768,
-          visibleItems: 3
-        }
-      }
+          visibleItems: 3,
+        },
+      },
     });
   }
 

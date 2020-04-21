@@ -1,21 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const BannerSchema = new Schema({
   title: {
     type: String,
-    required: true
-},
-img: {
-
-},
-eventDate: {
-},
-date: {
+    required: true,
+  },
+  img: {},
+  eventDate: {},
+  date: {
     type: Date,
-    default: Date.now
-}
-
+    default: Date.now,
+  },
 });
 
-mongoose.model('banner', BannerSchema);
+mongoose.model("banner", BannerSchema);

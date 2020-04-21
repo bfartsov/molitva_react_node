@@ -4,8 +4,8 @@ const path = require("path");
 const fullUrl = require("../helpers/fullUrl");
 const Banner = mongoose.model("banner");
 const resizeImg = require("../helpers/resize");
+const bannerValidationShema = require("../models/bannerValidationSchema");
 
-const { validationResult } = require("express-validator");
 // get all banners
 const getBanners = async (req, res, next) => {
   try {
@@ -47,18 +47,29 @@ const getBanner = async (req, res, next) => {
 // add Banners
 const addBanner = async (req, res, next) => {
   try {
-    const url = fullUrl(req);
-    const resizedImage = await resizeImg(req.file, 1800, 550);
-    const banner = `${url}/${resizedImage.options.fileOut}`;
+    const { error, value } = bannerValidationShema.validate(req.body);
+    let banner = "";
+    if (req.file) {
+      const url = fullUrl(req);
+      const resizedImage = await resizeImg(req.file, 1800, 550);
+      banner = `${url}/${resizedImage.options.fileOut}`;
+    } else {
+      const error = {};
+      error.status = 400;
+      error.message = "Img is required";
+      return next(error);
+    }
+    if (error) {
+      error.status = 400;
+      return next(error);
+    }
 
     const newBanner = new Banner({
       title: req.body.title,
       img: banner,
       eventDate: req.body.eventDate,
     });
-    console.log(newBanner);
     const saveBanner = await newBanner.save();
-    console.log(saveBanner);
     res.status(200).json(saveBanner);
   } catch (error) {
     console.log(error);
@@ -96,7 +107,7 @@ const editBanner = async (req, res, next) => {
     res.status(200).json(banner);
   } catch (error) {
     console.log(error);
-    res.json(error);
+    next(error);
   }
 };
 
@@ -110,7 +121,7 @@ const deleteBanner = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json(error);
+    next(error);
   }
 };
 
