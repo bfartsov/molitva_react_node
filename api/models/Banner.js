@@ -7,7 +7,10 @@ const BannerSchema = new Schema({
     required: true,
   },
   img: {},
-  eventDate: {},
+  eventDate: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,

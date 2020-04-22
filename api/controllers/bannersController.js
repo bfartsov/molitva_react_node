@@ -1,23 +1,17 @@
 require("../models/Banner");
 const mongoose = require("mongoose");
-const path = require("path");
 const fullUrl = require("../helpers/fullUrl");
 const Banner = mongoose.model("banner");
 const resizeImg = require("../helpers/resize");
 const bannerValidationShema = require("../models/bannerValidationSchema");
+const ErrorResponse = require("../helpers/errorResponse");
 
 // get all banners
 const getBanners = async (req, res, next) => {
   try {
     const banners = await Banner.find();
     if (banners.length <= 0) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "No banners",
-          },
-        ],
-      });
+      return next(new ErrorResponse("No banners found", 404));
     }
     res.status(200).json(banners);
   } catch (error) {
@@ -29,13 +23,7 @@ const getBanner = async (req, res, next) => {
   try {
     const banner = await Banner.findById(req.params.id);
     if (!banner) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "Banner does not exist",
-          },
-        ],
-      });
+      return next(new ErrorResponse("No banner found", 404));
     }
     res.status(200).json(banner);
   } catch (error) {
@@ -47,17 +35,14 @@ const getBanner = async (req, res, next) => {
 // add Banners
 const addBanner = async (req, res, next) => {
   try {
-    const { error, value } = bannerValidationShema.validate(req.body);
+    const { error } = bannerValidationShema.validate(req.body);
     let banner = "";
     if (req.file) {
       const url = fullUrl(req);
       const resizedImage = await resizeImg(req.file, 1800, 550);
       banner = `${url}/${resizedImage.options.fileOut}`;
     } else {
-      const error = {};
-      error.status = 400;
-      error.message = "Img is required";
-      return next(error);
+      return next(new ErrorResponse("Image is required", 400));
     }
     if (error) {
       error.status = 400;
@@ -73,35 +58,25 @@ const addBanner = async (req, res, next) => {
     res.status(200).json(saveBanner);
   } catch (error) {
     console.log(error);
-    res.status(400).json({
-      errors: [
-        {
-          msg: error.message,
-        },
-      ],
-    });
+    next(error);
   }
 };
 
 // edit banner by ID
 const editBanner = async (req, res, next) => {
   try {
-    const url = fullUrl(req);
-
-    const resizedImage = await resizeImg(req.file, 1800, 550);
-    const bannerImg = `${url}/${resizedImage.options.fileOut}`;
     const banner = await Banner.findById(req.params.id);
     if (!banner) {
-      res.status(400).json({
-        errors: [
-          {
-            msg: "No banner found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("Banner not found", 404));
     }
+    if (req.file) {
+      const url = fullUrl(req);
+      const resizedImage = await resizeImg(req.file, 1800, 550);
+      const bannerImg = `${url}/${resizedImage.options.fileOut}`;
+      banner.img = bannerImg;
+    }
+
     banner.title = req.body.title;
-    banner.img = bannerImg;
     banner.eventDate = req.body.eventDate;
     banner.save();
     res.status(200).json(banner);

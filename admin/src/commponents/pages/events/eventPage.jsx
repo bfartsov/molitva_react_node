@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Alert from '../../alert'
+import Alert from "../../alert";
 import { connect } from "react-redux";
 import { getEvents, removeEvent } from "../../../redux/actions/events";
 import "../../../css/table-responsive.css";
 
-const EventPage = ({ events, getEvents, loading, history, removeEvent, location }) => {
+const EventPage = ({
+  events,
+  getEvents,
+  loading,
+  history,
+  removeEvent,
+  location,
+}) => {
   useEffect(() => {
-    getEvents()
+    getEvents();
   }, []);
 
-  const handleDelete = id => {
-    console.log(id)
-    removeEvent(id)
+  const handleDelete = (id) => {
+    console.log(id);
+    removeEvent(id);
   };
   return (
     <section id="main-content">
@@ -26,15 +33,17 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
                 <Alert />
               </h4>
               <section id="unseen">
-
-                <button className="btn btn-theme" onClick={() => history.push('/events/add')} >
+                <button
+                  className="btn btn-theme"
+                  onClick={() => history.push("/events/add")}
+                >
                   Add Event
                 </button>
                 <table className="table table-bordered table-striped table-condensed">
                   <thead>
                     <tr>
                       <th> Title</th>
-                      <th> Plce</th>
+                      <th> Location</th>
                       <th> Date</th>
                       <th> Start</th>
                       <th> End</th>
@@ -45,38 +54,40 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
                     </tr>
                   </thead>
                   <tbody>
-                    {events.length > 0 && !loading && events.map(event => {
-                      return (
-                        <tr key={event._id}>
-                          <td> {event.title}</td>
-                          <td> {event.place}</td>
-                          <td> {event.date}</td>
-                          <td> {event.startTime}</td>
-                          <td> {event.endTime}</td>
-                          <td> {event.region}</td>
-                          <td> {event.city}</td>
-                          <td>
-                            <button
-                              onClick={() => {
-                                history.push(
-                                  `${location.pathname}/edit/${event._id}`
-                                );
-                              }}
-                              className="btn btn-primary btn-xs"
-                            >
-                              <i className="fa fa-pencil"></i>
-                            </button>
-                            <button
-                              id={event._id}
-                              onClick={() => handleDelete(event._id)}
-                              className="btn remove btn-danger btn-xs"
-                            >
-                              <i className="fa fa-trash-o "></i>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {events.length > 0 &&
+                      !loading &&
+                      events.map((event) => {
+                        return (
+                          <tr key={event._id}>
+                            <td> {event.title}</td>
+                            <td> {event.location}</td>
+                            <td> {event.date}</td>
+                            <td> {event.startTime}</td>
+                            <td> {event.endTime}</td>
+                            <td> {event.region}</td>
+                            <td> {event.city}</td>
+                            <td>
+                              <button
+                                onClick={() => {
+                                  history.push(
+                                    `${location.pathname}/edit/${event._id}`
+                                  );
+                                }}
+                                className="btn btn-primary btn-xs"
+                              >
+                                <i className="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                id={event._id}
+                                onClick={() => handleDelete(event._id)}
+                                className="btn remove btn-danger btn-xs"
+                              >
+                                <i className="fa fa-trash-o "></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </section>
@@ -86,9 +97,9 @@ const EventPage = ({ events, getEvents, loading, history, removeEvent, location 
       </section>
     </section>
   );
-}
-const mapStateToProps = state => ({
+};
+const mapStateToProps = (state) => ({
   events: state.events.events,
-  loading: state.events.loading
+  loading: state.events.loading,
 });
 export default connect(mapStateToProps, { getEvents, removeEvent })(EventPage);

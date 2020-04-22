@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { saveEvent } from "../../../redux/actions/events";
+import Alert from "../../alert";
 
 import Buttons from "../../edit/button";
-const AddEvent = ({ match, saveEvent, history }) => {
+const AddEvent = ({ saveEvent, history }) => {
   const [formData, setFormData] = useState({
     title: "",
-    place: "",
+    location: "",
     date: "",
     startTime: "",
     endTime: "",
@@ -35,7 +36,9 @@ const AddEvent = ({ match, saveEvent, history }) => {
         <div className="row mt">
           <div className="col-lg-12">
             <div className="form-panel">
-              <h4 className="mb"></h4>
+              <h4 className="mb">
+                <Alert />
+              </h4>
 
               <form className="form-horizontal style-form">
                 <div className="form-group">
@@ -54,14 +57,14 @@ const AddEvent = ({ match, saveEvent, history }) => {
                 </div>
                 <div className="form-group">
                   <label className="col-sm-2 col-sm-2 control-label">
-                    Place
+                    location
                   </label>
                   <div className="col-sm-10">
                     <input
                       onChange={(e) => onChange(e)}
                       type="text"
-                      defaultValue={formData.place}
-                      name="place"
+                      defaultValue={formData.location}
+                      name="location"
                       className="form-control"
                     />
                   </div>

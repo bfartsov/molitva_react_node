@@ -45,7 +45,7 @@ export const saveBanner = (data, history) => async (dispach) => {
     res.status === 200 && dispach(getBanners);
     res.status === 200 && history.push("/banners");
   } catch (error) {
-    if ((error.response.status = 400)) {
+    if (error.response.status === 400) {
       const msg = error.response.data.error.msg;
       dispach(setAlert(msg, "danger"));
       console.log(error.response);

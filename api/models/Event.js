@@ -1,38 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
   title: {
     type: String,
-    require: true
+    require: true,
   },
-  place: {
-    type: String
-  },
+  location: {},
   date: {
-    type: String
+    type: String,
   },
   sortingDate: {
-    type: Date
+    type: Date,
   },
   startTime: {
-    type: String
+    type: String,
   },
-  endTime: {
-
-  },
+  endTime: {},
   region: {
-    type: String
+    type: String,
   },
-  city: {
-
-  },
-  description: {
-
-  },
-  img: {
-
-  }
+  city: {},
+  description: {},
+  img: {},
 });
 
-mongoose.model('event', EventSchema);
+mongoose.model("event", EventSchema);

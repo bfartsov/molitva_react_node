@@ -2,45 +2,45 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
 import { save } from "../../../redux/actions/save";
+import Alert from "../../alert";
 
 import Buttons from "../../edit/button";
-const EditEvent = ({ match, edit, event, save, history}) => {
+const EditEvent = ({ match, edit, event, save, history }) => {
   const [formData, setFormData] = useState({
-      title: '',
-    place: '',
-    date: '',
-    startTime: '',
-    endTime: '',
-    reagion: '',
-    city: '',
-    description: '',
-    img: ''
+    title: "",
+    location: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    region: "",
+    city: "",
+    description: "",
+    img: "",
   });
   useEffect(() => {
     edit("events", match.params.id);
     setFormData({
-      title: event.title ? event.title : '',
-      place: event.place ? event.pPlace : '',
-      date: event.date ? event.date : '',
-      startTime: event.startTime ? event.startTime : '',
-      endTime: event.endTime ? event.endTime : '',
-      reagion: event.region ? event.region : '',
-      city: event.city ? event.city : '',
-      description: event.description? event.description: '',
-      img: event.img ? event.img : ''
-    })
+      title: event.title ? event.title : "",
+      location: event.location ? event.location : "",
+      date: event.date ? event.date : "",
+      startTime: event.startTime ? event.startTime : "",
+      endTime: event.endTime ? event.endTime : "",
+      region: event.region ? event.region : "",
+      city: event.city ? event.city : "",
+      description: event.description ? event.description : "",
+      img: event.img ? event.img : "",
+    });
   }, [event.loading]);
 
-
-
-  const handnleSave = e => {
+  const handnleSave = (e) => {
     e.preventDefault();
     const url = `http://localhost:8080/api/events/${match.params.id}`;
-    save(url, formData, history, '/events');
+    save(url, formData, history, "/events");
   };
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleCancel = ()=> history.push('/events');
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleCancel = () => history.push("/events");
 
   return (
     <section id="main-content">
@@ -53,6 +53,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
           <div className="col-lg-12">
             <div className="form-panel">
               <h4 className="mb">
+                <Alert />
               </h4>
               {event && !event.loading && (
                 <form className="form-horizontal style-form">
@@ -62,7 +63,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
                         defaultValue={event.title}
                         name="title"
@@ -72,14 +73,14 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                   </div>
                   <div className="form-group">
                     <label className="col-sm-2 col-sm-2 control-label">
-                      Place
+                      location
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
-                        defaultValue={event.place}
-                        name="place"
+                        defaultValue={event.location}
+                        name="location"
                         className="form-control"
                       />
                     </div>
@@ -90,7 +91,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="date"
                         defaultValue={event.date}
                         name="date"
@@ -104,7 +105,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="time"
                         defaultValue={event.startTime}
                         name="startTime"
@@ -118,7 +119,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="time"
                         defaultValue={event.endTime}
                         name="endTime"
@@ -132,7 +133,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
                         defaultValue={event.region}
                         name="region"
@@ -146,7 +147,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
                         defaultValue={event.city}
                         name="city"
@@ -160,9 +161,9 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
-                        defaultValue={event.desciption}
+                        defaultValue={event.description}
                         name="description"
                         className="form-control"
                       />
@@ -174,7 +175,9 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e=>setFormData({...formData, img: e.target.files[0]})}
+                        onChange={(e) =>
+                          setFormData({ ...formData, img: e.target.files[0] })
+                        }
                         type="file"
                         name="img"
                         className="default"
@@ -182,8 +185,10 @@ const EditEvent = ({ match, edit, event, save, history}) => {
                     </div>
                   </div>
 
-
-                  <Buttons handleCancel={handleCancel} handnleSave={handnleSave} />
+                  <Buttons
+                    handleCancel={handleCancel}
+                    handnleSave={handnleSave}
+                  />
                 </form>
               )}
             </div>
@@ -193,7 +198,7 @@ const EditEvent = ({ match, edit, event, save, history}) => {
     </section>
   );
 };
-const mapStateToProps = state => ({
-  event: state.edit
+const mapStateToProps = (state) => ({
+  event: state.edit,
 });
 export default connect(mapStateToProps, { edit, save })(EditEvent);
