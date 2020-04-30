@@ -8,8 +8,6 @@ const {
 } = require("../../controllers/menuController");
 const { protect } = require("../../middleware/auth");
 
-// @route  GET api/menus
-// @access Public
 router.route("/").get(getMenus).post(protect, postMenu);
 router.route("/id/:id").get(getMenu);
 router.route("/:id").put(protect, putMenu).delete(protect, deleteMenu);
