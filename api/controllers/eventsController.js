@@ -15,7 +15,7 @@ const getEvents = async (req, res, next) => {
     res.status(200).json(events);
   } catch (error) {
     console.log(error.message);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 // get surternumbe of events
@@ -29,7 +29,7 @@ const getEventsNumber = async (req, res, next) => {
     res.status(200).json(events);
   } catch (error) {
     console.log(error.message);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -43,7 +43,7 @@ const getEvent = async (req, res, next) => {
     res.status(200).json(event);
   } catch (error) {
     console.log(error.message);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -91,7 +91,7 @@ const addEvent = async (req, res, next) => {
     res.status(200).json(saveEvent);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 // Update an Event by ID
@@ -136,7 +136,7 @@ const updateEvent = async (req, res, next) => {
     const updatedEvent = await event.save();
     return res.status(200).json(updatedEvent);
   } catch (error) {
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 // delete Event
@@ -149,7 +149,7 @@ const deleteEvent = async (req, res, next) => {
     const deleteEvent = await event.deleteOne();
     return res.status(200).json(deleteEvent);
   } catch (errors) {
-    next(errors);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 module.exports = {

@@ -6,7 +6,7 @@ const fullUrl = require("../../helpers/fullUrl");
 const path = require("path");
 require("../../models/Video");
 const Video = mongoose.model("video");
-const auth = require("../../middleware/auth");
+const { protect } = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 // @route  GET api/Videos
@@ -120,7 +120,7 @@ router.get(
 router.post(
   "/",
 
-  auth,
+  protect,
   upload,
   async (req, res) => {
     try {
@@ -162,7 +162,7 @@ router.put(
   //     .trim()
   // ],
   upload,
-  auth,
+  protect,
   async (req, res, next) => {
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
@@ -212,7 +212,7 @@ router.put(
 router.delete(
   "/:id",
   check("id", "Invalid Id").isMongoId().trim(),
-  auth,
+  protect,
   async (req, res, next) => {
     try {
       const errors = validationResult(req);

@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const upload = require("../../helpers/upload");
 const resizeImage = require("../../helpers/resize");
 const fullUrl = require("../../helpers/fullUrl");
-const path = require("path");
 require("../../models/News");
 const News = mongoose.model("news");
-const auth = require("../../middleware/auth");
+const { protect } = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
 // @route  GET api/news
@@ -128,7 +127,7 @@ router.post(
   "/",
 
   upload,
-  auth,
+  protect,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -171,7 +170,7 @@ router.put(
     check("id", "Invalid Id").isMongoId().trim(),
   ],
   upload,
-  auth,
+  protect,
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -214,7 +213,7 @@ router.put(
 router.delete(
   "/:id",
   check("id", "Invalid Id").isMongoId().trim(),
-  auth,
+  protect,
   async (req, res, next) => {
     try {
       const errors = validationResult(req);

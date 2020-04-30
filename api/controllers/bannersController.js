@@ -28,7 +28,7 @@ const getBanner = async (req, res, next) => {
     res.status(200).json(banner);
   } catch (error) {
     console.log(error.message);
-    res.json(error.message);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -46,7 +46,7 @@ const addBanner = async (req, res, next) => {
     }
     if (error) {
       error.status = 400;
-      return next(error);
+      return next(new ErrorResponse(error, error.status));
     }
 
     const newBanner = new Banner({
@@ -58,7 +58,7 @@ const addBanner = async (req, res, next) => {
     res.status(200).json(saveBanner);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -82,7 +82,7 @@ const editBanner = async (req, res, next) => {
     res.status(200).json(banner);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -96,7 +96,7 @@ const deleteBanner = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 

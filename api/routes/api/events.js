@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const auth = require("../../middleware/auth");
+const { protect } = require("../../middleware/auth");
 const upload = require("../../helpers/upload");
 const {
   getEvents,
@@ -7,7 +7,7 @@ const {
   addEvent,
   updateEvent,
   deleteEvent,
-  getEventsNumber
+  getEventsNumber,
 } = require("../../controllers/eventsController");
 const { check } = require("express-validator");
 
@@ -33,11 +33,11 @@ router.get("/id/:id", getEvent);
 router.post(
   "/",
   [
-    auth,
+    protect,
     // check("title", "title is required").exists(),
     // check("date", "Date is required").exists(),
     // check("img", "Image is required").exists(),
-    upload
+    upload,
   ],
   addEvent
 );
@@ -49,11 +49,11 @@ router.post(
 router.put(
   "/:id",
   [
-    auth,
+    protect,
     // check("title", "title is required").exists(),
     // check("date", "Date is required").exists(),
     // check("img", "Image is required").exists(),
-    upload
+    upload,
   ],
   updateEvent
 );
@@ -61,6 +61,6 @@ router.put(
 // @route  PUT api/events/
 // @desc   Delete an Event
 // @access Private
-router.delete("/:id", auth, deleteEvent);
+router.delete("/:id", protect, deleteEvent);
 
 module.exports = router;

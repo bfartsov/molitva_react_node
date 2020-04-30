@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { getLive, postLive } = require("../../controllers/liveController");
-const mongoose = require("mongoose");
-const auth = require("../../middleware/auth");
+const { protect } = require("../../middleware/auth");
 
 require("../../models/Live");
 
@@ -14,6 +13,6 @@ router.get("/", getLive);
 // @desc   get live details
 // @access Public
 
-router.post("/", auth, postLive);
+router.post("/", protect, postLive);
 
 module.exports = router;

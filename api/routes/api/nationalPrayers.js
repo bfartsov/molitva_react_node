@@ -6,8 +6,7 @@ const upload = require("../../helpers/upload");
 const resizeImage = require("../../helpers/resize");
 const fullUrl = require("../../helpers/fullUrl");
 const path = require("path");
-const { check, validationResult } = require("express-validator");
-const auth = require("../../middleware/auth");
+const { protect } = require("../../middleware/auth");
 
 // @route  GET api/nationalprayers
 // @access Public
@@ -77,7 +76,7 @@ router.get("/id/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", upload, auth, async (req, res, next) => {
+router.post("/", upload, protect, async (req, res, next) => {
   try {
     const { text, title, year, video } = req.body;
     if (!req.file) {
@@ -107,7 +106,7 @@ router.post("/", upload, auth, async (req, res, next) => {
   }
 });
 
-router.put("/:id", upload, auth, async (req, res, next) => {
+router.put("/:id", upload, protect, async (req, res, next) => {
   try {
     const prayer = await NationalPrayer.findById(req.params.id);
     if (!prayer) {

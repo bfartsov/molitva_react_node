@@ -12,7 +12,7 @@ const getLive = async (req, res, next) => {
     res.status(200).json(live[0]);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 const postLive = async (req, res, next) => {

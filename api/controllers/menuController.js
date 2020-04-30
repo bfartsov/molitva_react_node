@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-require("../../models/Menu");
+require("../models/Menu");
 const Menus = mongoose.model("menu");
 const ErrorResponse = require("../helpers/errorResponse");
 
@@ -72,11 +72,66 @@ const postMenu = async (req, res, next) => {
     return res.status(200).json(ubdatedMenu);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
-const putMenu = (req, res, next) => {};
-const deleteMenu = (req, res, next) => {};
+const putMenu = async (req, res, next) => {
+  try {
+    const menuItem = await Menus.findById(req.params.id);
+    const { name, url, order, status } = req.body;
+    if (!menuItem) {
+      const mainItem = await Menus.findOne({ "subMenu._id": req.params.id });
+      const itemIndex = mainItem.subMenu.findIndex((item) => {
+        const items = item._id == req.params.id;
+        return items;
+      });
+
+      const item = mainItem.subMenu[itemIndex];
+      item.name = name;
+      item.url = url;
+      item.status = status;
+      item.order = order;
+      mainItem.subMenu.splice(itemIndex, 1, item);
+      const saveIitem = await mainItem.save();
+      return res.status(200).json(saveIitem);
+    }
+    menuItem.name = name;
+    menuItem.url = url;
+    menuItem.status = status;
+    menuItem.order = order;
+    const save = await menuItem.save();
+    return res.status(200).json(save);
+  } catch (error) {
+    console.log(error);
+    next(new ErrorResponse(error.message, error.status));
+  }
+};
+
+const deleteMenu = async (req, res, next) => {
+  try {
+    const menuItem = await Menus.findById(req.params.id);
+    if (!menuItem) {
+      const mainItem = await Menus.findOne({ "subMenu._id": req.params.id });
+      const removeItem = mainItem.subMenu.findIndex((item) => {
+        const items = item._id == req.params.id;
+        return items;
+      });
+      mainItem.subMenu.splice(removeItem, 1);
+      await mainItem.save();
+
+      return res.status(200).json({
+        msg: "Item deleted",
+      });
+    }
+    await Menus.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+      msg: "Item deleted",
+    });
+  } catch (error) {
+    console.log(error);
+    next(new ErrorResponse(error.message, error.status));
+  }
+};
 
 module.exports = {
   getMenu,

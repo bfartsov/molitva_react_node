@@ -1,25 +1,50 @@
-const jwt = require('jsonwebtoken');
-const config = require('config');
+const mongoose = require("mongoose");
 
-module.exports = function (req, res, next) {
+require("../models/User");
+const User = mongoose.model("user");
+const jwt = require("jsonwebtoken");
+
+const config = require("config");
+const jstSecret = config.get("jwToken");
+
+const newToken = (user) => {
+  return jwt.sign({ id: user._id }, jstSecret, {
+    expiresIn: 3600,
+  });
+};
+const verifyToken = (token) =>
+  new Promise((resolve, reject) => {
+    jwt.verify(token, jstSecret, (err, payload) => {
+      if (err) return reject(err);
+      resolve(payload);
+    });
+  });
+
+const protect = (req, res, next) => {
   /// get the token from the header
 
-  const token = req.header('x-auth-token');
+  const token = req.header("x-auth-token");
   // check if no token
   if (!token) {
     return res.status(401).json({
-      msg: 'No token, authorization denied'
+      msg: "No token, authorization denied",
     });
-  };
+  }
 
   try {
-    const decoded = jwt.verify(token, config.get('jwToken'));
-    req.user = decoded.user;
+    const user = verifyToken(token, config.get("jwToken"));
+    req.user = user;
     next();
   } catch (error) {
     console.log(error);
     res.status(401).json({
-      msg: 'Token is not valid'
+      msg: "Token is not valid",
     });
   }
+};
+
+module.exports = {
+  newToken,
+  verifyToken,
+  protect,
 };

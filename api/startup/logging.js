@@ -9,7 +9,7 @@ module.exports = () => {
     transports: [
       new winston.transports.Console(),
       new winston.transports.File({ filename: "combined.log" }),
-      new winston.transports.MongoDB({ db: db, leverl: "info" }),
+      new winston.transports.MongoDB({ db: db, level: "error" }),
     ],
   });
   logger.exceptions.handle(
