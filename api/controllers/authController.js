@@ -27,8 +27,7 @@ const register = async (req, res, next) => {
       email,
       password,
     };
-    const salt = await bcrypt.genSalt(10);
-    newUser.password = await bcrypt.hash(password, salt);
+
     const saveUser = await new User(newUser).save();
 
     const token = newToken(saveUser);
@@ -67,9 +66,9 @@ const me = async (req, res, next) => {
       // const usertoken = req.headers.authorization;
       // const token = usertoken.split(" ");
       const token = req.headers["x-auth-token"];
-      const user = verifyToken(token);
+      const user = await verifyToken(token);
       if (user) {
-        return res.status(200).json(user.user);
+        return res.status(200).json(user);
       } else {
         res.status(400).json({
           errors: [{ msg: "Invalid token" }],

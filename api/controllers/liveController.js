@@ -17,7 +17,6 @@ const getLive = async (req, res, next) => {
 };
 const postLive = async (req, res, next) => {
   try {
-    console.log(req.body);
     const live = await Live.find();
     // if live does not exist create it
     if (live.length <= 0) {

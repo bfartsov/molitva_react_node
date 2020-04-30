@@ -14,9 +14,10 @@ const newToken = (user) => {
 };
 const verifyToken = (token) =>
   new Promise((resolve, reject) => {
-    jwt.verify(token, jstSecret, (err, payload) => {
+    jwt.verify(token, jstSecret, async (err, payload) => {
       if (err) return reject(err);
-      resolve(payload);
+      const user = await User.findOne({ _id: payload.id }).select("-password");
+      return resolve(user);
     });
   });
 

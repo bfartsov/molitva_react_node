@@ -1,8 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-
+const helmet = require("helmet");
 const error = require("../middleware/error");
 module.exports = (app) => {
+  app.disable("x-powered-by");
+  app.use(helmet);
   app.use(express.json({ extended: true }));
 
   app.use(express.urlencoded({ extended: true }));
