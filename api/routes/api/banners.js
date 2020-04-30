@@ -7,9 +7,8 @@ const {
   getBanner,
   addBanner,
   editBanner,
-  deleteBanner
+  deleteBanner,
 } = require("../../controllers/bannersController");
-const { check } = require("express-validator");
 
 // @route  GET api/banners
 // @desc   get All banners
@@ -31,7 +30,6 @@ router.post(
   upload,
 
   addBanner
-
 );
 
 // @route  PUT api/banners/:id
@@ -44,7 +42,7 @@ router.put(
     auth,
     // check("title", "Please enter title").exists(),
     // check("img", "please add a banner").exists(),
-    upload
+    upload,
   ],
   editBanner
 );

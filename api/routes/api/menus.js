@@ -2,7 +2,6 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 require("../../models/Menu");
 const Menus = mongoose.model("menu");
-const { check, validationResult } = require("express-validator");
 
 // @route  GET api/menus
 // @access Public
