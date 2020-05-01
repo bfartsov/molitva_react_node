@@ -12,5 +12,15 @@ app.use(express.static(publicFolder));
 require("./startup/logging")();
 require("./startup/routes")(app);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => logger.info(`Server running on ${PORT}`));
+const start = async () => {
+  try {
+    conectedDB();
+
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => logger.info(`Server running on ${PORT}`));
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+module.exports = { app, start };

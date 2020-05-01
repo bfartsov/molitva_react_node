@@ -6,3 +6,4 @@ api/uncaughtExceptions.log
 api/exceptions.log
 api/exceptions.log
 api/public/img
+node_modules

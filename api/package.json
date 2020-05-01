@@ -29,7 +29,6 @@
     "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "eslint": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -37,6 +36,18 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^7.1.2"
+    "jest": "^23.6.0",
+    "mock-req-res": "^1.0.2",
+    "nodemon": "^1.18.3",
+    "prettier": "^1.15.2",
+    "rimraf": "^2.6.2",
+    "supertest": "^3.3.0"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "<rootDir>/test-db-setup.js",
+    "restoreMocks": true
   }
 }

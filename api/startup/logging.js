@@ -13,8 +13,7 @@ module.exports = () => {
     ],
   });
   logger.exceptions.handle(
-    new winston.transports.File({ filename: "exceptions.log" }),
-    new winston.transports.MongoDB({ db: db, level: "error" })
+    new winston.transports.File({ filename: "exceptions.log" })
   );
 
   process.on("unhandledRejection", (ex) => {

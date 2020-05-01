@@ -9,19 +9,19 @@ const userSchema = new Schema({
   password: String,
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.password.isMdified("password")) {
+userSchema.pre("save", async function(next) {
+  if (!this.isModified("password")) {
     return next();
   }
   try {
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
   } catch (error) {
     next(error);
   }
 });
 
-userSchema.methods.checkPassword = function (password) {
+userSchema.methods.checkPassword = function(password) {
   return new Promise(async (resolve, reject) => {
     const isMatch = await bcrypt.compare(password, this.password);
     if (!isMatch) {
