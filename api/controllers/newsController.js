@@ -3,22 +3,17 @@ const resizeImage = require("../helpers/resize");
 const fullUrl = require("../helpers/fullUrl");
 require("../models/News");
 const News = mongoose.model("news");
+const ErrorResponse = require("../helpers/errorResponse");
 
 const getNews = async (req, res, next) => {
   try {
     const news = await News.find();
     if (news.length <= 0) {
-      return res.status(400).json({
-        error: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
     res.status(200).json(news);
   } catch (error) {
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -26,60 +21,41 @@ const getNewsByNumber = async (req, res, next) => {
   try {
     const news = await News.find().limit(+req.params.number);
     if (news.length <= 0) {
-      return res.status(400).json({
-        error: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
 
     res.status(200).json(news);
   } catch (error) {
     console.log(error.message);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 const getNewsById = async (req, res, next) => {
   try {
     const singleNews = await News.findById(req.params.id);
     if (!singleNews) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
     return res.status(200).json(singleNews);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 const getNewsByLink = async (req, res, next) => {
   try {
     const singleNews = await News.findOne({ link: req.params.link });
     if (!singleNews) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
     return res.status(200).json(singleNews);
   } catch (error) {
     console.log(error);
-
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
-const postNews = async (req, res) => {
+const postNews = async (req, res, next) => {
   try {
     const resizedImg = await resizeImage(req.file, 248, 262);
     const url = fullUrl(req);
@@ -96,7 +72,7 @@ const postNews = async (req, res) => {
     return res.status(200).json(saveNews);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -108,13 +84,7 @@ const putNews = async (req, res, next) => {
     const { title, text, link } = req.body;
     const singleNews = await News.findById(req.params.id);
     if (!singleNews) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
     singleNews.title = title;
     singleNews.text = text;
@@ -124,7 +94,7 @@ const putNews = async (req, res, next) => {
     return res.status(200).json(updatedNews);
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
@@ -132,20 +102,14 @@ const deleteNews = async (req, res, next) => {
   try {
     const singleNews = await News.findById(req.params.id);
     if (!singleNews) {
-      return res.status(404).json({
-        errors: [
-          {
-            msg: "News not found",
-          },
-        ],
-      });
+      return next(new ErrorResponse("News not found", 404));
     }
     await singleNews.deleteOne();
     return res.status(200).json({
       msg: "Item deleted",
     });
   } catch (errors) {
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 
