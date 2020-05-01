@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const resizeImage = require("../../helpers/resize");
-const fullUrl = require("../../helpers/fullUrl");
-require("../../models/Video");
+const resizeImage = require("../helpers/resize");
+const fullUrl = require("../helpers/fullUrl");
+require("../models/Video");
 const Video = mongoose.model("video");
 const ErrorResponse = require("../helpers/errorResponse");
 
@@ -85,7 +85,22 @@ const postVideo = async (req, res, next) => {
   }
 };
 
-const putVideo = async (req, res, next, next) => {
+const deleteVideo = async (req, res, next) => {
+  try {
+    const video = await Video.findById(req.params.id);
+    if (!video) {
+      return next(new ErrorResponse("No videos found", 404));
+    }
+    await video.deleteOne();
+    return res.status(200).json({
+      msg: "Item deleted",
+    });
+  } catch (error) {
+    next(new ErrorResponse(error.message, error.status));
+  }
+};
+
+const putVideo = async (req, res, next) => {
   try {
     const video = await Video.findById(req.params.id);
     if (!video) {
@@ -110,21 +125,6 @@ const putVideo = async (req, res, next, next) => {
     return res.status(200).json(updatedVideo);
   } catch (error) {
     console.log(error);
-    next(new ErrorResponse(error.message, error.status));
-  }
-};
-
-const deleteVideo = async (req, res, next) => {
-  try {
-    const video = await Video.findById(req.params.id);
-    if (!video) {
-      return next(new ErrorResponse("No videos found", 404));
-    }
-    await video.deleteOne();
-    return res.status(200).json({
-      msg: "Item deleted",
-    });
-  } catch (error) {
     next(new ErrorResponse(error.message, error.status));
   }
 };

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-require("../../models/Timer");
+require("../models/Timer");
 const Timer = mongoose.model("timer");
 const ErrorResponse = require("../helpers/errorResponse");
 
