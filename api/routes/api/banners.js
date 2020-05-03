@@ -14,7 +14,11 @@ router.route("/").get(getBanners);
 
 router.route("/:id").get(getBanner);
 
-router.route("/").post(protect, upload).post(addBanner);
-router.route("/:id").post(protect, upload).put(editBanner).delete(deleteBanner);
+router.route("/").post(protect, upload, addBanner);
+
+router
+  .route("/:id")
+  .put(protect, upload, editBanner)
+  .delete(protect, deleteBanner);
 
 module.exports = router;

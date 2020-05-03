@@ -9,11 +9,10 @@ const User = mongoose.model("user");
 const Timer = mongoose.model("timer");
 const Live = mongoose.model("live");
 const models = { User, Timer, Live };
+const config = require("config");
 
 const url =
-  process.env.MONGODB_URI ||
-  process.env.DB_URL ||
-  "mongodb://localhost:27017/tipe-devapi-testing";
+  config.get("mongoURI") || "mongodb://localhost:27017/molitvaapi-test";
 
 global.newId = () => {
   return mongoose.Types.ObjectId();

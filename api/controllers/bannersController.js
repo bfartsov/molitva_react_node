@@ -9,6 +9,8 @@ const ErrorResponse = require("../helpers/errorResponse");
 // get all banners
 const getBanners = async (req, res, next) => {
   try {
+    const id = mongoose.Types.ObjectId();
+    console.log(id);
     const banners = await Banner.find();
     if (banners.length <= 0) {
       return next(new ErrorResponse("No banners found", 404));
@@ -42,10 +44,10 @@ const addBanner = async (req, res, next) => {
       const resizedImage = await resizeImg(req.file, 1800, 550);
       banner = `${url}/${resizedImage.options.fileOut}`;
     } else {
-      return next(new ErrorResponse("Image is required", 400));
+      return next(new ErrorResponse("Image is required", 401));
     }
     if (error) {
-      error.status = 400;
+      error.status = 401;
       return next(new ErrorResponse(error, error.status));
     }
 

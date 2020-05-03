@@ -21,7 +21,7 @@ const verifyToken = (token) =>
     });
   });
 
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   /// get the token from the header
 
   const token = req.header("x-auth-token");
@@ -33,7 +33,7 @@ const protect = (req, res, next) => {
   }
 
   try {
-    const user = verifyToken(token, config.get("jwToken"));
+    const user = await verifyToken(token, config.get("jwToken"));
     req.user = user;
     next();
   } catch (error) {
