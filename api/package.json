@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node index.js",
-    "test": "NODE_ENV=testing node_modules/.bin/jest --forceExit --detectOpenHandles  --silent"
+    "test": "NODE_ENV=testing node_modules/.bin/jest --forceExit --detectOpenHandles  --silent --coverage"
   },
   "author": "Bfartsov",
   "license": "ISC",

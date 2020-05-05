@@ -1,6 +1,6 @@
 const router = require("../events");
 
-describe("banner route", () => {
+describe("events route", () => {
   test("has crud routes", () => {
     const routes = [
       { path: "/", method: "get" },
@@ -8,7 +8,7 @@ describe("banner route", () => {
       { path: "/:id", method: "delete" },
       { path: "/:id", method: "put" },
       { path: "/", method: "post" },
-      { path: "/limit/:numb", method: "get" },
+      { path: "/limit/:number", method: "get" },
     ];
 
     routes.forEach((route) => {

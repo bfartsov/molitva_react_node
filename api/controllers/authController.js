@@ -70,18 +70,14 @@ const me = async (req, res, next) => {
       if (user) {
         return res.status(200).json(user);
       } else {
-        res.status(400).json({
-          errors: [{ msg: "Invalid token" }],
-        });
+        return next(new ErrorResponse("invalid token", 400));
       }
     } else {
-      res.status(400).json({
-        errors: [{ msg: "token missing" }],
-      });
+      next(new ErrorResponse("Missing token", 400));
     }
   } catch (error) {
     console.log(error);
-    next(error);
+    next(new ErrorResponse(error.message, error.status));
   }
 };
 

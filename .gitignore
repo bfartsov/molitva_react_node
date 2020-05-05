@@ -7,3 +7,5 @@ api/exceptions.log
 api/exceptions.log
 api/public/img
 node_modules
+api/coverage
+api/combined.log

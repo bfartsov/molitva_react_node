@@ -9,8 +9,6 @@ const ErrorResponse = require("../helpers/errorResponse");
 // get all banners
 const getBanners = async (req, res, next) => {
   try {
-    const id = mongoose.Types.ObjectId();
-    console.log(id);
     const banners = await Banner.find();
     if (banners.length <= 0) {
       return next(new ErrorResponse("No banners found", 404));
@@ -67,7 +65,10 @@ const addBanner = async (req, res, next) => {
 // edit banner by ID
 const editBanner = async (req, res, next) => {
   try {
+    const { error } = bannerValidationShema.validate(req.body);
+
     const banner = await Banner.findById(req.params.id);
+
     if (!banner) {
       return next(new ErrorResponse("Banner not found", 404));
     }
@@ -77,6 +78,7 @@ const editBanner = async (req, res, next) => {
       const bannerImg = `${url}/${resizedImage.options.fileOut}`;
       banner.img = bannerImg;
     }
+    if (error) next(new ErrorResponse(error, 401));
 
     banner.title = req.body.title;
     banner.eventDate = req.body.eventDate;
@@ -92,6 +94,7 @@ const editBanner = async (req, res, next) => {
 const deleteBanner = async (req, res, next) => {
   try {
     const banner = await Banner.findById(req.params.id);
+    if (!banner) next(new ErrorResponse("Banner not found", 404));
     await banner.remove();
     res.status(200).json({
       msg: "Item deleted",

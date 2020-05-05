@@ -5,7 +5,6 @@ require("../models/Timer");
 const { newToken } = require("../middleware/auth");
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
-const path = require("path");
 describe("API Authentication:", () => {
   let token;
   beforeEach(async () => {
@@ -75,22 +74,5 @@ describe("API Authentication:", () => {
       .send({ url: "testUrl" });
     expect(response.statusCode).toBe(200);
     expect(response.body.url).toBe("testUrl");
-  });
-  test("access allowed-banner", async () => {
-    let response = await request(app)
-      .post("/api/banners")
-      .set("x-auth-token", token)
-      .field("title", "testTitle")
-      .field("eventDate", "12/12/12")
-      .attach("img", path.join(__dirname, "1.png"));
-    expect(response.statusCode).toBe(200);
-  });
-  test("bed request - banners", async () => {
-    let response = await request(app)
-      .post("/api/banners")
-      .set("x-auth-token", token)
-      .field("eventDate", "12/12/12")
-      .attach("img", path.join(__dirname, "1.png"));
-    expect(response.statusCode).toBe(401);
   });
 });
