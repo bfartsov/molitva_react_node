@@ -5,6 +5,7 @@ const resizeImage = require("../helpers/resize");
 const fullUrl = require("../helpers/fullUrl");
 const path = require("path");
 const ErrorResponse = require("../helpers/errorResponse");
+const npValidationSchema = require("../models/NationalPrayerValidationSchema");
 
 const getPrayers = async (req, res, next) => {
   try {
@@ -56,6 +57,13 @@ const postPrayer = async (req, res, next) => {
     if (!req.file) {
       return next(new ErrorResponse("Image is requied", 400));
     }
+    const { error } = npValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const resizedImg = await resizeImage(req.file, 248, 262);
     const url = fullUrl(req);
     const img = path.join(url, resizedImg.options.fileOut);
@@ -75,6 +83,13 @@ const postPrayer = async (req, res, next) => {
 };
 const putPrayer = async (req, res, next) => {
   try {
+    const { error } = npValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const prayer = await NationalPrayer.findById(req.params.id);
     if (!prayer) {
       return next(new ErrorResponse("Prayer not found", 404));

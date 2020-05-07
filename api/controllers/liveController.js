@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("../models/Live");
 const Live = mongoose.model("live");
 const ErrorResponse = require("../helpers/errorResponse");
+const liveValidationSchema = require("../models/liveValidationSchema");
 
 const getLive = async (req, res, next) => {
   try {
@@ -17,7 +18,15 @@ const getLive = async (req, res, next) => {
 };
 const postLive = async (req, res, next) => {
   try {
+    const { error } = liveValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const live = await Live.find();
+    console.log(req.body);
     // if live does not exist create it
     if (live.length <= 0) {
       const { url, type, player, text } = req.body;

@@ -34,6 +34,7 @@ describe("Api controllers", () => {
       expect(isFunction(addEvent)).toBe(true);
       expect(isFunction(updateEvent)).toBe(true);
       expect(isFunction(updateEvent)).toBe(true);
+      expect(isFunction(deleteEvent)).toBe(true);
     });
   });
 });

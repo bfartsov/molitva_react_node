@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("../models/Menu");
 const Menus = mongoose.model("menu");
 const ErrorResponse = require("../helpers/errorResponse");
+const menuValidationSchema = require("../models/menuValidationSchema");
 
 const getMenus = async (req, res, next) => {
   try {
@@ -36,19 +37,12 @@ const postMenu = async (req, res, next) => {
     const errors = [];
     const { name, url, parentElement, status, order } = req.body;
 
-    if (!url) {
-      errors.push({ msg: "url is required" });
-    }
-    if (!order) {
-      errors.push({ msg: "Order is required" });
-    }
-    if (!name) {
-      errors.push({ msg: "Name is required" });
-    }
-    if (errors.length > 0) {
-      return res.status(400).json({
-        msg: errors,
-      });
+    const { error } = menuValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
     }
     if (parentElement === "topLevel") {
       const newMenuItem = {
@@ -77,6 +71,13 @@ const postMenu = async (req, res, next) => {
 };
 const putMenu = async (req, res, next) => {
   try {
+    const { error } = menuValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const menuItem = await Menus.findById(req.params.id);
     const { name, url, order, status } = req.body;
     if (!menuItem) {

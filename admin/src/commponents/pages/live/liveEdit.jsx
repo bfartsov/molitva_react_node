@@ -4,6 +4,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { connect } from "react-redux";
 import { edit } from "../../../redux/actions/edit";
 import { saveLive } from "../../../redux/actions/live";
+import Alert from "../../alert";
 
 import Buttons from "../../edit/button";
 const EditLive = ({ match, edit, live, history, saveLive }) => {
@@ -31,7 +32,7 @@ const EditLive = ({ match, edit, live, history, saveLive }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const handleCancel = () => history.push("/banners");
-
+  console.log(formData);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -42,7 +43,9 @@ const EditLive = ({ match, edit, live, history, saveLive }) => {
         <div className="row mt">
           <div className="col-lg-12">
             <div className="form-panel">
-              <h4 className="mb"></h4>
+              <h4 className="mb">
+                <Alert />
+              </h4>
               <form className="form-horizontal style-form">
                 <div className="form-group">
                   <label className="col-sm-2 col-sm-2 control-label">Url</label>

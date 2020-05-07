@@ -4,6 +4,7 @@ const fullUrl = require("../helpers/fullUrl");
 require("../models/News");
 const News = mongoose.model("news");
 const ErrorResponse = require("../helpers/errorResponse");
+const newsValidationSchema = require("../models/newsValidationSchema");
 
 const getNews = async (req, res, next) => {
   try {
@@ -57,6 +58,13 @@ const getNewsByLink = async (req, res, next) => {
 
 const postNews = async (req, res, next) => {
   try {
+    const { error } = newsValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const resizedImg = await resizeImage(req.file, 248, 262);
     const url = fullUrl(req);
     const img = `${url}/${resizedImg.options.fileOut}`;
@@ -78,6 +86,13 @@ const postNews = async (req, res, next) => {
 
 const putNews = async (req, res, next) => {
   try {
+    const { error } = newsValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const resizedImg = await resizeImage(req.file, 248, 262);
     const url = fullUrl(req);
     const img = `${url}/${resizedImg.options.fileOut}`;

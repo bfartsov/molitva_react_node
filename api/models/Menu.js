@@ -4,33 +4,33 @@ const Schema = mongoose.Schema;
 const MenusSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   url: {
-    type: String
+    type: String,
   },
   order: {
     type: Number,
-    required: true
+    required: true,
   },
   subMenu: [
     {
       name: {
         type: String,
-        required: true
+        required: true,
       },
       url: {
-        type: String
+        type: String,
       },
       status: {
-        type: String
+        type: String,
       },
-      order: Number
-    }
+      order: Number,
+    },
   ],
   status: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 mongoose.model("menu", MenusSchema);

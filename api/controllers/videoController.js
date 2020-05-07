@@ -4,6 +4,7 @@ const fullUrl = require("../helpers/fullUrl");
 require("../models/Video");
 const Video = mongoose.model("video");
 const ErrorResponse = require("../helpers/errorResponse");
+const videoValidationSchema = require("../models/videoValidationSchema");
 
 const getVideos = async (req, res, next) => {
   try {
@@ -62,6 +63,13 @@ const getVideosById = async (req, res, next) => {
 
 const postVideo = async (req, res, next) => {
   try {
+    const { error } = videoValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const resizeImg = await resizeImage(req.file, 360, 174);
     const url = fullUrl(req);
     const img = `${url}/${resizeImg.options.fileOut}`;
@@ -102,6 +110,13 @@ const deleteVideo = async (req, res, next) => {
 
 const putVideo = async (req, res, next) => {
   try {
+    const { error } = videoValidationSchema.validate(req.body, {
+      allowUnknown: true,
+    });
+    if (error) {
+      console.log(error);
+      return next(new ErrorResponse(error.message, 400));
+    }
     const video = await Video.findById(req.params.id);
     if (!video) {
       return next(new ErrorResponse("No videos found", 404));
