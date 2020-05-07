@@ -7,10 +7,11 @@ const ErrorResponse = require("../helpers/errorResponse");
 const eventValidationSchema = require("../models/eventValidationSchema");
 // get all events
 const getEvents = async (req, res, next) => {
+  console.log(mongoose.Types.ObjectId());
   try {
     const events = await Events.find();
     if (events.length <= 0) {
-      return next(new ErrorResponse("No events found", 400));
+      return next(new ErrorResponse("No events found", 404));
     }
     res.status(200).json(events);
   } catch (error) {
@@ -38,7 +39,7 @@ const getEvent = async (req, res, next) => {
   try {
     const event = await Events.findById(req.params.id);
     if (!event) {
-      return next(new ErrorResponse("No events found", 400));
+      return next(new ErrorResponse("No event found", 404));
     }
     res.status(200).json(event);
   } catch (error) {
@@ -144,10 +145,12 @@ const deleteEvent = async (req, res, next) => {
   try {
     const event = await Events.findById(req.params.id);
     if (!event) {
-      return next(new ErrorResponse("No events found", 400));
+      return next(new ErrorResponse("No event found", 400));
     }
-    const deleteEvent = await event.deleteOne();
-    return res.status(200).json(deleteEvent);
+    await event.deleteOne();
+    return res.status(200).json({
+      msg: "Item deleted",
+    });
   } catch (errors) {
     next(new ErrorResponse(error.message, error.status));
   }

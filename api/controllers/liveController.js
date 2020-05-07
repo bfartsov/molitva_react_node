@@ -26,7 +26,6 @@ const postLive = async (req, res, next) => {
       return next(new ErrorResponse(error.message, 400));
     }
     const live = await Live.find();
-    console.log(req.body);
     // if live does not exist create it
     if (live.length <= 0) {
       const { url, type, player, text } = req.body;

@@ -15,6 +15,11 @@ const {
   deleteEvent,
 } = require("../eventsController");
 const { isFunction } = require("lodash");
+const {
+  mockNext,
+  mockResponse,
+  mockeRequest,
+} = require("../../helpers/interceptor");
 
 describe("Api controllers", () => {
   describe("banner controller", () => {
@@ -35,6 +40,17 @@ describe("Api controllers", () => {
       expect(isFunction(updateEvent)).toBe(true);
       expect(isFunction(updateEvent)).toBe(true);
       expect(isFunction(deleteEvent)).toBe(true);
+    });
+  });
+
+  describe("Check method 'getBanners'", () => {
+    test("it should call next if no banners found in the db", async () => {
+      let req = mockeRequest();
+      let res = mockResponse();
+
+      const next = mockNext();
+      await getBanners(req, res, next);
+      expect(next).toHaveBeenCalledTimes(1);
     });
   });
 });
