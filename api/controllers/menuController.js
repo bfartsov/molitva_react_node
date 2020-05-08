@@ -8,7 +8,7 @@ const getMenus = async (req, res, next) => {
   try {
     const menus = await Menus.find();
     if (menus.length <= 0) {
-      next(new ErrorResponse("Menus not found", 404));
+      return next(new ErrorResponse("Menus not found", 404));
     }
     const sortedMenus = menus.sort((a, b) => {
       return a.order - b.order;
@@ -23,7 +23,7 @@ const getMenu = async (req, res, next) => {
   try {
     const menu = await Menus.findById(req.params.id);
     if (!menu) {
-      next(new ErrorResponse("No menu found", 404));
+      return next(new ErrorResponse("No menu found", 404));
     }
     res.status(200).json(menu);
   } catch (error) {
@@ -34,14 +34,12 @@ const postMenu = async (req, res, next) => {
   try {
     // const menu = await Menu.find();
 
-    const errors = [];
     const { name, url, parentElement, status, order } = req.body;
 
     const { error } = menuValidationSchema.validate(req.body, {
       allowUnknown: true,
     });
     if (error) {
-      console.log(error);
       return next(new ErrorResponse(error.message, 400));
     }
     if (parentElement === "topLevel") {

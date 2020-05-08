@@ -8,7 +8,7 @@ const getLive = async (req, res, next) => {
   try {
     const live = await Live.find();
     if (live.length <= 0) {
-      return next(new ErrorResponse("live not found"), 404);
+      return next(new ErrorResponse("live not found", 404));
     }
     res.status(200).json(live[0]);
   } catch (error) {

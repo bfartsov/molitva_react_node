@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const config = require("config");
 const jstSecret = config.get("jwToken");
+const ErrorResponse = require("../helpers/errorResponse");
 
 const newToken = (user) => {
   return jwt.sign({ id: user._id }, jstSecret, {
@@ -27,9 +28,7 @@ const protect = async (req, res, next) => {
   const token = req.header("x-auth-token");
   // check if no token
   if (!token) {
-    return res.status(401).json({
-      msg: "No token, authorization denied",
-    });
+    return next(new ErrorResponse("No token, authorization denied", 401));
   }
 
   try {
@@ -38,9 +37,7 @@ const protect = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({
-      msg: "Token is not valid",
-    });
+    next(new ErrorResponse("Token is not valid", 401));
   }
 };
 

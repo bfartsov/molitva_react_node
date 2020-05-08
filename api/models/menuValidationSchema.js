@@ -5,4 +5,5 @@ module.exports = bannerValidationShema = joy.object({
 
   order: joy.number().required(),
   subMenu: joy.array(),
+  parentElement: joy.string().required(),
 });
