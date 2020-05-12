@@ -11,6 +11,7 @@ app.use("/public", express.static(publicFolder));
 app.use(express.static(publicFolder));
 require("./startup/logging")();
 require("./startup/routes")(app);
+require("./helpers/cache");
 
 const start = async () => {
   try {
