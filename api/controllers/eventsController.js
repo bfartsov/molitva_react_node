@@ -24,7 +24,9 @@ const getEvents = async (req, res, next) => {
 // get surternumbe of events
 const getEventsNumber = async (req, res, next) => {
   try {
-    const events = await Events.find().limit(+req.params.number);
+    const events = await Events.find()
+      .sort({ date: -1 })
+      .limit(+req.params.number);
     if (events.length <= 0) {
       return next(new ErrorResponse("No events found", 400));
     }

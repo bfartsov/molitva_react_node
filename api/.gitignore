@@ -2,3 +2,4 @@ node_modules,
 public/img,
 combined.log,
 uncaughtExceptions.log
+public/images

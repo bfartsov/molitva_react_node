@@ -7,7 +7,7 @@ class CountDown extends React.Component {
       <section className="logo-row">
         <div className="container">
           <strong className="logo">
-            <a href="index.html">
+            <a href="/">
               <img src={logo} alt="logo" />
             </a>
           </strong>

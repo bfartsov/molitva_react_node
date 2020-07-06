@@ -5,6 +5,7 @@ require("../models/News");
 const News = mongoose.model("news");
 const ErrorResponse = require("../helpers/errorResponse");
 const newsValidationSchema = require("../models/newsValidationSchema");
+const config = require("config");
 
 const getNews = async (req, res, next) => {
   try {
@@ -12,6 +13,8 @@ const getNews = async (req, res, next) => {
     if (news.length <= 0) {
       return next(new ErrorResponse("News not found", 404));
     }
+    const CDN = config.get("CDN");
+    news.forEach((news) => (news.img = CDN + "/" + news.img));
     res.status(200).json(news);
   } catch (error) {
     next(new ErrorResponse(error.message, error.status));
@@ -24,7 +27,8 @@ const getNewsByNumber = async (req, res, next) => {
     if (news.length <= 0) {
       return next(new ErrorResponse("News not found", 404));
     }
-
+    const CDN = config.get("CDN");
+    news.forEach((news) => (news.img = CDN + "/" + news.img));
     res.status(200).json(news);
   } catch (error) {
     console.log(error.message);

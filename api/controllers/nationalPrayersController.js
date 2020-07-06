@@ -6,6 +6,7 @@ const fullUrl = require("../helpers/fullUrl");
 const path = require("path");
 const ErrorResponse = require("../helpers/errorResponse");
 const npValidationSchema = require("../models/NationalPrayerValidationSchema");
+const config = require("config");
 
 const getPrayers = async (req, res, next) => {
   try {
@@ -14,6 +15,8 @@ const getPrayers = async (req, res, next) => {
     if (nationalPrayer.length <= 0) {
       return next(new ErrorResponse("no Prayer found", 404));
     }
+    const CDN = config.get("CDN");
+    nationalPrayer.forEach((prayer) => (prayer.img = CDN + "/" + prayer.img));
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);
@@ -30,6 +33,9 @@ const getPrayerByYear = async (req, res, next) => {
     if (!nationalPrayer) {
       return next(new ErrorResponse("Prayer not found", 404));
     }
+    const CDN = config.get("CDN");
+    // nationalPrayer.img = CDN + "/" + prayer.img;
+    nationalPrayer.img = CDN + "/" + nationalPrayer.img;
     res.status(200).json(nationalPrayer);
   } catch (error) {
     console.log(error);

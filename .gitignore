@@ -9,3 +9,4 @@ api/public/img
 node_modules
 api/coverage
 api/combined.log
+api/public/images

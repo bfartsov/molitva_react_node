@@ -31,7 +31,7 @@ const EventPage = ({ events, getAllEvents }) => {
                           city={event.city}
                           description={event.description}
                           date={event.date}
-                          shortDate="12 ap."
+                          shortDate={event.shortDate}
                         />
                       </li>
                     );

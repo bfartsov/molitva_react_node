@@ -12,7 +12,7 @@ const NewsItem = ({ img, title, description, link }) => {
         <div className="text-box">
           <strong className="title">{title}</strong>
           <p>{description}</p>
-          <a href={`/${link}`} className="readmore">
+          <a href={`news/${link}`} className="readmore">
             Прочети още
           </a>
         </div>
