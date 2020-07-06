@@ -5,14 +5,18 @@ require("../models/Video");
 const Video = mongoose.model("video");
 const ErrorResponse = require("../helpers/errorResponse");
 const videoValidationSchema = require("../models/videoValidationSchema");
+const config = require("config");
 
 const getVideos = async (req, res, next) => {
+  const CDN = config.get("CDN");
   try {
     const videos = await Video.find();
     if (videos.length <= 0) {
       return next(new ErrorResponse("No videos found", 404));
     }
+    videos.forEach((video) => (video.img = CDN + "/" + video.img));
 
+    console.log(videos);
     res.status(200).json(videos);
   } catch (error) {
     console.log(error);
@@ -26,7 +30,8 @@ const getFeatureVideos = async (req, res, next) => {
     if (videos.length <= 0) {
       return next(new ErrorResponse("No videos found", 404));
     }
-
+    const CDN = config.get("CDN");
+    videos.forEach((video) => (video.img = CDN + "/" + video.img));
     res.status(200).json(videos);
   } catch (error) {
     next(new ErrorResponse(error.message, error.status));
@@ -39,7 +44,8 @@ const getVideosByYear = async (req, res, next) => {
     if (videos.length === 0) {
       return next(new ErrorResponse("No videos found", 404));
     }
-
+    const CDN = config.get("CDN");
+    videos.forEach((video) => (video.img = CDN + "/" + video.img));
     res.status(200).json(videos);
   } catch (error) {
     console.log(error.message);
@@ -53,7 +59,8 @@ const getVideosById = async (req, res, next) => {
     if (!video) {
       return next(new ErrorResponse("No videos found", 404));
     }
-
+    const CDN = config.get("CDN");
+    video.img = CDN + "/" + video.img;
     res.status(200).json(video);
   } catch (error) {
     console.log(error);

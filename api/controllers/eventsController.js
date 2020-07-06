@@ -5,14 +5,16 @@ require("../models/Event");
 const Events = mongoose.model("event");
 const ErrorResponse = require("../helpers/errorResponse");
 const eventValidationSchema = require("../models/eventValidationSchema");
+const config = require("config");
 // get all events
 const getEvents = async (req, res, next) => {
-  console.log(mongoose.Types.ObjectId());
   try {
     const events = await Events.find();
     if (events.length <= 0) {
       return next(new ErrorResponse("No events found", 404));
     }
+    const CDN = config.get("CDN");
+    events.forEach((event) => (event.img = CDN + "/" + event.img));
     res.status(200).json(events);
   } catch (error) {
     console.log(error.message);
@@ -26,7 +28,8 @@ const getEventsNumber = async (req, res, next) => {
     if (events.length <= 0) {
       return next(new ErrorResponse("No events found", 400));
     }
-
+    const CDN = config.get("CDN");
+    events.forEach((event) => (event.img = CDN + "/" + event.img));
     res.status(200).json(events);
   } catch (error) {
     console.log(error.message);
@@ -41,6 +44,8 @@ const getEvent = async (req, res, next) => {
     if (!event) {
       return next(new ErrorResponse("No event found", 404));
     }
+    const CDN = config.get("CDN");
+    event.img = CDN + "/" + event.img;
     res.status(200).json(event);
   } catch (error) {
     console.log(error.message);

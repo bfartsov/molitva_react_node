@@ -5,6 +5,7 @@ const Banner = mongoose.model("banner");
 const resizeImg = require("../helpers/resize");
 const bannerValidationShema = require("../models/bannerValidationSchema");
 const ErrorResponse = require("../helpers/errorResponse");
+const config = require("config");
 
 // get all banners
 const getBanners = async (req, res, next) => {
@@ -13,6 +14,8 @@ const getBanners = async (req, res, next) => {
     if (banners.length <= 0) {
       return next(new ErrorResponse("No banners found", 404));
     }
+    const CDN = config.get("CDN");
+    banners.forEach((banner) => (banner.img = CDN + "/" + banner.img));
     res.status(200).json(banners);
   } catch (error) {
     console.log(error);
@@ -25,6 +28,8 @@ const getBanner = async (req, res, next) => {
     if (!banner) {
       return next(new ErrorResponse("No banner found", 404));
     }
+    const CDN = config.get("CDN");
+    banner.img = CDN + "/" + banner.img;
     res.status(200).json(banner);
   } catch (error) {
     console.log(error.message);

@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 
 //setting up public folder
-const public = path.join(__dirname, "../public/img");
+const public = path.join(__dirname, "../public/images");
 app.use("/public", express.static(public));
 app.use(express.static(public));
 
