@@ -78,8 +78,9 @@ const postVideo = async (req, res, next) => {
       return next(new ErrorResponse(error.message, 400));
     }
     const resizeImg = await resizeImage(req.file, 360, 174);
-    const url = fullUrl(req);
-    const img = `${url}/${resizeImg.options.fileOut}`;
+    const image = resizeImg.options.fileOut.split("/");
+
+    const img = image[2];
 
     const { title, description, video, dateCreated, feature } = req.body;
     let year = new Date(dateCreated).getFullYear();
@@ -132,9 +133,10 @@ const putVideo = async (req, res, next) => {
     const { dateCreated } = req.body;
     let year = new Date(dateCreated).getFullYear();
 
-    const url = fullUrl(req);
     const resizeImg = await resizeImage(req.file, 360, 174);
-    const img = `${url}/${resizeImg.options.fileOut}`;
+    const image = resizeImg.options.fileOut.split("/");
+
+    const img = image[2];
 
     video.title = req.body.title;
     video.description = req.body.description;

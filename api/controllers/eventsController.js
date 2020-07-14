@@ -81,7 +81,9 @@ const addEvent = async (req, res, next) => {
     }
     const url = fullUrl(req);
     const resizedImage = await resizeImg(req.file, 263, 320);
-    const eventImg = `${url}/${resizedImage.options.fileOut}`;
+    const img = resizedImage.options.fileOut.split("/");
+
+    const eventImg = img[2];
 
     const newEvent = {
       title,
@@ -130,7 +132,9 @@ const updateEvent = async (req, res, next) => {
     }
     if (req.file) {
       const resizedImage = await resizeImg(req.file, 263, 320);
-      const eventImg = `${url}/${resizedImage.options.fileOut}`;
+      const img = resizedImage.options.fileOut.split("/");
+
+      const eventImg = img[2];
       event.img = eventImg;
     }
     event.title = title;

@@ -13,7 +13,7 @@ const {
 
 router.route("/").get(getBanners);
 
-router.route("/:id").get(validObjectId, getBanner);
+router.route("/id/:id").get(validObjectId, getBanner);
 
 router.route("/").post(protect, upload, addBanner);
 

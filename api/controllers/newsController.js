@@ -70,8 +70,9 @@ const postNews = async (req, res, next) => {
       return next(new ErrorResponse(error.message, 400));
     }
     const resizedImg = await resizeImage(req.file, 248, 262);
-    const url = fullUrl(req);
-    const img = `${url}/${resizedImg.options.fileOut}`;
+    const image = resizedImg.options.fileOut.split("/");
+
+    const img = image[2];
 
     const { title, text, link } = req.body;
     const newNews = new News({
@@ -98,8 +99,9 @@ const putNews = async (req, res, next) => {
       return next(new ErrorResponse(error.message, 400));
     }
     const resizedImg = await resizeImage(req.file, 248, 262);
-    const url = fullUrl(req);
-    const img = `${url}/${resizedImg.options.fileOut}`;
+    const image = resizedImg.options.fileOut.split("/");
+
+    const img = image[2];
     const { title, text, link } = req.body;
     const singleNews = await News.findById(req.params.id);
     if (!singleNews) {

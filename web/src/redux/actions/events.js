@@ -8,7 +8,6 @@ export const getEvents = () => async (dispatch) => {
     const url = process.env.REACT_APP_URL;
 
     const res = await axios.get(`${url}/api/events/limit/4`);
-    console.log(res.data);
     const data = res.data.filter((event) => {
       const now = new Date();
       const today = new Date(
@@ -16,7 +15,6 @@ export const getEvents = () => async (dispatch) => {
       );
       return new Date(event.date) >= today;
     });
-    console.log(data);
 
     data.forEach((event) => {
       moment.locale("bg");

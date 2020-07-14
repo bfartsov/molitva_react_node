@@ -43,9 +43,11 @@ const addBanner = async (req, res, next) => {
     const { error } = bannerValidationShema.validate(req.body);
     let banner = "";
     if (req.file) {
-      const url = fullUrl(req);
       const resizedImage = await resizeImg(req.file, 1800, 550);
-      banner = `${url}/${resizedImage.options.fileOut}`;
+      const img = resizedImage.options.fileOut.split("/");
+
+      const bannerImg = img[2];
+      banner = bannerImg;
     } else {
       return next(new ErrorResponse("Image is required", 401));
     }
@@ -78,16 +80,18 @@ const editBanner = async (req, res, next) => {
       return next(new ErrorResponse("Banner not found", 404));
     }
     if (req.file) {
-      const url = fullUrl(req);
       const resizedImage = await resizeImg(req.file, 1800, 550);
-      const bannerImg = `${url}/${resizedImage.options.fileOut}`;
+      const img = resizedImage.options.fileOut.split("/");
+
+      const bannerImg = img[2];
       banner.img = bannerImg;
     }
     if (error) next(new ErrorResponse(error, 401));
 
     banner.title = req.body.title;
     banner.eventDate = req.body.eventDate;
-    banner.save();
+    await banner.save();
+    console.log(banner);
     res.status(200).json(banner);
   } catch (error) {
     console.log(error);

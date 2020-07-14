@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import Alert from '../../alert'
+import Alert from "../../alert";
 
 import { edit } from "../../../redux/actions/edit";
 import { save } from "../../../redux/actions/save";
@@ -17,22 +17,21 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
     setFormData({
       title: !banner.loading && banner ? banner.title : "",
       img: !banner.loading && banner ? banner.banner : "",
-      eventDate: !banner.loading && banner ? banner.eventDate : ""
-    })
+      eventDate: !banner.loading && banner ? banner.eventDate : "",
+    });
   }, [banner.loading]);
 
-
-
-  const handnleSave = e => {
+  const handnleSave = (e) => {
     e.preventDefault();
     const url = `http://localhost:8080/api/banners/${match.params.id}`;
 
-    save(url, formData, history, '/banners');
+    save(url, formData, history, "/banners");
   };
 
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleCancel = ()=> history.push('/banners');
-
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleCancel = () => history.push("/banners");
+  console.log(banner);
   return (
     <section id="main-content">
       <section className="wrapper">
@@ -54,9 +53,9 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        onChange={e => onChange(e)}
+                        onChange={(e) => onChange(e)}
                         type="text"
-                        defaultValue={banner.title}
+                        value={banner.title}
                         name="title"
                         className="form-control"
                       />
@@ -69,7 +68,9 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
                     </label>
                     <div className="col-md-4">
                       <input
-                        onChange={e => setFormData({ ...formData, img: e.target.files[0] })}
+                        onChange={(e) =>
+                          setFormData({ ...formData, img: e.target.files[0] })
+                        }
                         type="file"
                         name="img"
                         className="default"
@@ -81,12 +82,9 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
                       Date
                     </label>
                     <div className="col-sm-9">
-                      <div
-
-                        className="input-append date dpYears"
-                      >
+                      <div className="input-append date dpYears">
                         <input
-                          onChange={e => onChange(e)}
+                          onChange={(e) => onChange(e)}
                           type="date"
                           name="eventDate"
                           defaultValue={banner.eventDate}
@@ -103,7 +101,10 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
                     </div>
                   </div>
 
-                  <Buttons handleCancel={handleCancel} handnleSave={handnleSave} />
+                  <Buttons
+                    handleCancel={handleCancel}
+                    handnleSave={handnleSave}
+                  />
                 </form>
               )}
             </div>
@@ -113,7 +114,7 @@ const EditBanner = ({ match, edit, banner, save, history }) => {
     </section>
   );
 };
-const mapStateToProps = state => ({
-  banner: state.edit
+const mapStateToProps = (state) => ({
+  banner: state.edit,
 });
 export default connect(mapStateToProps, { edit, save })(EditBanner);

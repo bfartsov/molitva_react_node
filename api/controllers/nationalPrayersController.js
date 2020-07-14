@@ -71,8 +71,9 @@ const postPrayer = async (req, res, next) => {
       return next(new ErrorResponse(error.message, 400));
     }
     const resizedImg = await resizeImage(req.file, 248, 262);
-    const url = fullUrl(req);
-    const img = path.join(url, resizedImg.options.fileOut);
+    const image = resizedImg.options.fileOut.split("/");
+
+    const img = image[2];
     const newPrayer = new NationalPrayer({
       text,
       title,
@@ -102,9 +103,9 @@ const putPrayer = async (req, res, next) => {
     }
     if (req.file) {
       const resizedImg = await resizeImage(req.file, 248, 262);
-      const url = fullUrl(req);
-      const img = path.join(url, resizedImg.options.fileOut);
-      prayer.img = img;
+      const img = resizedImg.options.fileOut.split("/");
+
+      prayer.img = img[2];
     }
 
     prayer.text = req.body.text;

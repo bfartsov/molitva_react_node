@@ -11,7 +11,7 @@ export const getBanners = () => async (dispatch) => {
       const today = new Date(
         Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
       );
-      return new Date(banner.date) >= today;
+      return new Date(banner.eventDate) >= today;
     });
     console.log(data);
     dispatch({
