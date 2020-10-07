@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb://localhost:27017/molitvaapi-prod",
+  "mongoURI": "mongodb://mongodb:27017/molitvaapi-prod",
   "jwToken": "mysecrettoken",
   "redisURL": "redis://127.0.0.1:6379",
   "port": 8081,

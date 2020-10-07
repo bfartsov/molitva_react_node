@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost:27017/molitvaapi-testing",
+  "mongoURI": "mongodb://mongodb:27018/molitvaapi-testing",
   "jwToken": "mysecrettoken"
 }

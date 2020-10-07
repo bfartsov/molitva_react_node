@@ -9,4 +9,4 @@ ENV PATH /home/node/app/node_modules/.bin:$PATH
 COPY . .
 
 
-CMD ["pm2-runtime","process.json", "--watch", "--env dev"]
+CMD ["pm2-runtime","process.json", "--env development"]

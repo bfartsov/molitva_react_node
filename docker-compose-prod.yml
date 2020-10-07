@@ -4,40 +4,26 @@ services:
     container_name: molitvabg
     build:
       context: ./web
-      dockerfile: Dockerfile
-    volumes:
-      - ./web:/home/node/app/
-      - /home/node/app/node_modules
-    environment:
-      env_file: .env
-      NODE_ENV: development
+      dockerfile: Dockerfile.prod
     expose:
-      - 3000
+      - 889
     networks:
       - molitvabg
     ports:
-      - "0.0.0.0:3000:3000"
+      - "0.0.0.0:889:80"
     links:
       - api
   admin:
     container_name: admin.molitvabg
     build:
       context: ./admin
-      dockerfile: Dockerfile
-    volumes:
-      - ./admin:/home/node/app/
-      - /home/node/app/node_modules
-    environment:
-      env_file: .env
-      NODE_ENV: development
+      dockerfile: Dockerfile.prod
     expose:
-      - 2000
+      - 888
     networks:
       - molitvabg
     ports:
-      - "0.0.0.0:2000:2000"
-    links:
-      - api
+      - "0.0.0.0:888:80"
 
   api:
     container_name: api
@@ -54,7 +40,7 @@ services:
     environment:
       CHOKIDAR_USEPOLLING: "true"
       env_file: .env
-      NODE_ENV: development
+      NODE_ENV: prodaction
     networks:
       - molitvabg
     links:
