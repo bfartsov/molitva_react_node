@@ -3,10 +3,11 @@ RUN mkdir -p /home/node/app
 WORKDIR /home/node/app/
 
 COPY package*.json ./ 
-RUN npm install
+RUN npm install --production
 RUN npm install -g pm2
 ENV PATH /home/node/app/node_modules/.bin:$PATH
 COPY . .
 
 
-CMD ["pm2-runtime","process.json", "--env prodaction"]
+
+CMD [ "pm2-runtime", "start", "process.json",  "--env", "production"]
